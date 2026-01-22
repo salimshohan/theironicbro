@@ -78,5 +78,126 @@
         "image": "https://placehold.co/600x400/1e90ff/white?text=Loading...",
         "excerpt": "WiFi speed matches my motivation to study. It works perfectly until I actually need to submit a file.",
         "link": "view.html?post=internet-pain.md"
+    },
+    {
+        "id": 11,
+        "title": "The Dead Group Chat",
+        "date": "Jan 12, 2026",
+        "image": "https://placehold.co/600x400/2c3e50/white?text=Dead+Chat",
+        "excerpt": "A group of 10 people. 9 are mute, 1 is asking for notes. The legendary silence of university group chats.",
+        "link": "view.html?post=dead-group-chat.md"
+    },
+    {
+        "id": 12,
+        "title": "Mom vs. Mobile",
+        "date": "Jan 11, 2026",
+        "image": "https://placehold.co/600x400/e74c3c/white?text=Mom+Logic",
+        "excerpt": "Headache? Because of mobile. Failed exam? Mobile. Global warming? Definitely that damn mobile phone.",
+        "link": "view.html?post=mom-vs-mobile.md"
+    },
+    {
+        "id": 13,
+        "title": "Rickshaw Fare Battles",
+        "date": "Jan 10, 2026",
+        "image": "https://placehold.co/600x400/f39c12/white?text=5+Taka+War",
+        "excerpt": "Fighting for 5 taka with a Rickshaw Mama is an Olympic sport. 'Mama 20 taka jaben?' 'Na, 50.' - The daily struggle.",
+        "link": "view.html?post=rickshaw-fare.md"
+    },
+    {
+        "id": 14,
+        "title": "The 'Seen' Zone",
+        "date": "Jan 09, 2026",
+        "image": "https://placehold.co/600x400/8e44ad/white?text=Seen+Zone",
+        "excerpt": "Worse than the friend zone. You sent a meme, she saw it, and didn't even react. Emotional damage level: 100.",
+        "link": "view.html?post=seen-zone.md"
+    },
+    {
+        "id": 15,
+        "title": "Load Shedding Logic",
+        "date": "Jan 08, 2026",
+        "image": "https://placehold.co/600x400/34495e/white?text=No+Electricity",
+        "excerpt": "Electricity goes exactly when you start gaming or studying. The mosquitoes celebrate, you suffer.",
+        "link": "view.html?post=load-shedding.md"
+    },
+    {
+        "id": 16,
+        "title": "The Resume Lie",
+        "date": "Jan 07, 2026",
+        "image": "https://placehold.co/600x400/27ae60/white?text=Resume+Skills",
+        "excerpt": "Skill: 'Proficient in Excel'. Reality: I only know how to color the cells yellow. Corporate life awaits.",
+        "link": "view.html?post=resume-lie.md"
+    },
+    {
+        "id": 17,
+        "title": "Barber Shop Trauma",
+        "date": "Jan 06, 2026",
+        "image": "https://placehold.co/600x400/d35400/white?text=Bad+Haircut",
+        "excerpt": "I said 'Trim a little'. He made me look like a peeled potato. Now I have to wear a cap for 2 months.",
+        "link": "view.html?post=barber-trauma.md"
+    },
+    {
+        "id": 18,
+        "title": "Siblings: The Enemy",
+        "date": "Jan 05, 2026",
+        "image": "https://placehold.co/600x400/c0392b/white?text=Siblings",
+        "excerpt": "Fighting over the TV remote or charger is our love language. Also, 'Ammu!!' is their ultimate weapon.",
+        "link": "view.html?post=siblings-war.md"
+    },
+    {
+        "id": 19,
+        "title": "Unexpected Quiz",
+        "date": "Jan 04, 2026",
+        "image": "https://placehold.co/600x400/7f8c8d/white?text=Surprise+Test",
+        "excerpt": "Teacher: 'Take out a piece of paper.' Me: 'My soul has left the chat.' The horror of surprise quizzes.",
+        "link": "view.html?post=unexpected-quiz.md"
+    },
+    {
+        "id": 20,
+        "title": "Midnight Cravings",
+        "date": "Jan 03, 2026",
+        "image": "https://placehold.co/600x400/e67e22/white?text=Maggi+Noodles",
+        "excerpt": "Why do I feel like a Masterchef at 2 AM making Maggi? The kitchen is silent, but my stomach is loud.",
+        "link": "view.html?post=midnight-cravings.md"
+    },
+    {
+        "id": 21,
+        "title": "The 'Sir' Confusion",
+        "date": "Jan 02, 2026",
+        "image": "https://placehold.co/600x400/16a085/white?text=Sir+vs+Bhaiya",
+        "excerpt": "Calling a senior 'Bhaiya' and getting ignored vs. calling him 'Sir' and getting bullied. The freshman dilemma.",
+        "link": "view.html?post=sir-confusion.md"
+    },
+    {
+        "id": 22,
+        "title": "Exam Hall Eye Contact",
+        "date": "Jan 01, 2026",
+        "image": "https://placehold.co/600x400/2980b9/white?text=Awkward+Look",
+        "excerpt": "When you look at your friend for answers, but the Invigilator thinks you are falling in love. Awkward.",
+        "link": "view.html?post=exam-eye-contact.md"
+    },
+    {
+        "id": 23,
+        "title": "New Year Resolution",
+        "date": "Dec 31, 2025",
+        "image": "https://placehold.co/600x400/8e44ad/white?text=Gym+Fail",
+        "excerpt": "Day 1: I will go to the gym. Day 3: I am tired. Day 7: Who needs muscles anyway? The cycle repeats.",
+        "link": "view.html?post=resolution-fail.md"
+    },
+    {
+        "id": 24,
+        "title": "Bachelor Life Cooking",
+        "date": "Dec 30, 2025",
+        "image": "https://placehold.co/600x400/d35400/white?text=Burnt+Egg",
+        "excerpt": "Expectation: 5-star meal. Reality: Burnt egg and half-cooked rice. Survival mode is ON.",
+        "link": "view.html?post=bachelor-cooking.md"
+    },
+    {
+        "id": 25,
+        "title": "Teacher's Favorite",
+        "date": "Dec 29, 2025",
+        "image": "https://placehold.co/600x400/27ae60/white?text=Chatu+Friend",
+        "excerpt": "That one student who reminds the teacher about the homework. The entire class unites to hate him.",
+        "link": "view.html?post=teachers-pet.md"
     }
+
 ]
