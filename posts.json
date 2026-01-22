@@ -1,0 +1,34 @@
+[
+    {
+        "id": 1,
+        "title": "Exam Night Realizations",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/ff4757/white?text=Exam+Meme",
+        "excerpt": "When the syllabus is an ocean but you only know how to swim in a bathtub. A classic student tragedy.",
+        "link": "/blog/exam-night.md"
+    },
+    {
+        "id": 2,
+        "title": "Tom's Logic 2026",
+        "date": "Jan 20, 2026",
+        "image": "https://placehold.co/600x400/2f3542/white?text=Tom+Thinking",
+        "excerpt": "Why does Tom always fail against Jerry? A deep dive into his strategic failures this year.",
+        "link": "/blog/tom-logic.md"
+    },
+    {
+        "id": 3,
+        "title": "The 'Nah Bro' Moment",
+        "date": "Jan 18, 2026",
+        "image": "https://placehold.co/600x400/70a1ff/white?text=Nah+Bro",
+        "excerpt": "That awkward moment when your friend suggests studying on a Friday night. The ultimate guide to saying NO.",
+        "link": "/blog/nah-bro.md"
+    },
+    {
+        "id": 4,
+        "title": "Savar Traffic Chronicles",
+        "date": "Jan 15, 2026",
+        "image": "https://placehold.co/600x400/ffa502/white?text=Traffic+Jam",
+        "excerpt": "Legend says people are still stuck in the jam from last Eid. A local report from Bank Town.",
+        "link": "/blog/traffic-jam.md"
+    }
+]
