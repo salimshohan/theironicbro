@@ -3,32 +3,80 @@
         "id": 1,
         "title": "Exam Night Realizations",
         "date": "Jan 22, 2026",
-        "image": "https://placehold.co/600x400/ff4757/white?text=Exam+Meme",
-        "excerpt": "When the syllabus is an ocean but you only know how to swim in a bathtub. A classic student tragedy.",
-        "link": "/view.html?post=exam.md"
+        "image": "https://placehold.co/600x400/ff4757/white?text=Exam+Night",
+        "excerpt": "When the syllabus is an ocean but you only know how to swim in a bathtub. The ultimate student tragedy.",
+        "link": "view.html?post=exam-night.md"
     },
     {
         "id": 2,
         "title": "Tom's Logic 2026",
-        "date": "Jan 20, 2026",
+        "date": "Jan 21, 2026",
         "image": "https://placehold.co/600x400/2f3542/white?text=Tom+Thinking",
-        "excerpt": "Why does Tom always fail against Jerry? A deep dive into his strategic failures this year.",
-        "link": "/blog/tom-logic.md"
+        "excerpt": "Why does Tom always fail against Jerry? A scientific analysis of his catastrophic planning failures.",
+        "link": "view.html?post=tom-logic.md"
     },
     {
         "id": 3,
-        "title": "The 'Nah Bro' Moment",
-        "date": "Jan 18, 2026",
-        "image": "https://placehold.co/600x400/70a1ff/white?text=Nah+Bro",
-        "excerpt": "That awkward moment when your friend suggests studying on a Friday night. The ultimate guide to saying NO.",
-        "link": "/blog/nah-bro.md"
+        "title": "The Viva Board Trauma",
+        "date": "Jan 20, 2026",
+        "image": "https://placehold.co/600x400/70a1ff/white?text=Viva+Board",
+        "excerpt": "Teacher: 'Tell me about yourself.' Me: 'Sir, I was born at a very young age.' Sweating in AC explained.",
+        "link": "view.html?post=viva-trauma.md"
     },
     {
         "id": 4,
-        "title": "Savar Traffic Chronicles",
+        "title": "8 AM Winter Classes",
+        "date": "Jan 19, 2026",
+        "image": "https://placehold.co/600x400/ffa502/white?text=Winter+Sleep",
+        "excerpt": "Leaving the blanket in winter morning is the hardest breakup ever. Why do 8 AM classes even exist?",
+        "link": "view.html?post=winter-class.md"
+    },
+    {
+        "id": 5,
+        "title": "The Group Project Myth",
+        "date": "Jan 18, 2026",
+        "image": "https://placehold.co/600x400/2ed573/white?text=Group+Project",
+        "excerpt": "One person does the work, three people provide 'moral support'. The reality of university group projects.",
+        "link": "view.html?post=group-project.md"
+    },
+    {
+        "id": 6,
+        "title": "Relatives & GPA",
+        "date": "Jan 17, 2026",
+        "image": "https://placehold.co/600x400/ff6b81/white?text=Relatives",
+        "excerpt": "That one aunt who calls on result day just to ruin your mood. 'Babu, GPA koto?' - The horror story.",
+        "link": "view.html?post=relatives-gpa.md"
+    },
+    {
+        "id": 7,
+        "title": "Assignment Engineering",
+        "date": "Jan 16, 2026",
+        "image": "https://placehold.co/600x400/5352ed/white?text=Assignment",
+        "excerpt": "Copying from Wikipedia, changing the font, and praying the teacher doesn't notice. The art of Ctrl+C Ctrl+V.",
+        "link": "view.html?post=assignment.md"
+    },
+    {
+        "id": 8,
+        "title": "The 'Treat' Paradox",
         "date": "Jan 15, 2026",
-        "image": "https://placehold.co/600x400/ffa502/white?text=Traffic+Jam",
-        "excerpt": "Legend says people are still stuck in the jam from last Eid. A local report from Bank Town.",
-        "link": "/blog/traffic-jam.md"
+        "image": "https://placehold.co/600x400/3742fa/white?text=Empty+Wallet",
+        "excerpt": "Friends asking for a treat when you have exactly 10 taka in your pocket. The struggle is real.",
+        "link": "view.html?post=treat-paradox.md"
+    },
+    {
+        "id": 9,
+        "title": "Brain During Exam",
+        "date": "Jan 14, 2026",
+        "image": "https://placehold.co/600x400/ff4757/white?text=Brain+Freeze",
+        "excerpt": "Brain at home: Einstein. Brain in exam hall: Plays random songs and forgets 2+2. Why does this happen?",
+        "link": "view.html?post=brain-exam.md"
+    },
+    {
+        "id": 10,
+        "title": "Slow Internet Pain",
+        "date": "Jan 13, 2026",
+        "image": "https://placehold.co/600x400/1e90ff/white?text=Loading...",
+        "excerpt": "WiFi speed matches my motivation to study. It works perfectly until I actually need to submit a file.",
+        "link": "view.html?post=internet-pain.md"
     }
 ]
