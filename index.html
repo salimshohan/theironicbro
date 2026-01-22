@@ -8,130 +8,168 @@
     <style>
         /* --- Global Styles --- */
         :root {
-            --bg-body: #050505;
-            --bg-nav: #0f1014;
+            /* Lighter Dark Theme */
+            --bg-body: #121212;       /* Soft Black */
+            --bg-nav: #1e1e1e;        /* Lighter Grey for Nav */
+            --bg-card: #1e1e1e;       /* Card Background */
+            --bg-sidebar: #252526;    /* Sidebar Color */
+            
             --primary: #d63384; 
-            --text-main: #ffffff;
-            --text-muted: #a1a1aa;
-            --border: #27272a;
+            --text-main: #e0e0e0;     /* Soft White */
+            --text-muted: #a0a0a0;
+            --border: #333333;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        
+        /* --- Content Protection (No Copy) --- */
         body { 
             background-color: var(--bg-body); 
             color: var(--text-main); 
             padding-top: 70px;
+            font-family: 'Segoe UI', sans-serif;
+            
+            /* Disable Text Selection */
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none; /* IE 10 and IE 11 */
+            user-select: none; /* Standard syntax */
         }
         
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         a { text-decoration: none; color: inherit; transition: 0.3s; }
-        ul { list-style: none; }
+        img { pointer-events: none; /* Disable image dragging */ }
 
         /* --- Navbar Styles --- */
         .navbar {
             position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
             background-color: var(--bg-nav);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid var(--border);
+            height: 70px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
         .nav-container {
             display: flex; justify-content: space-between; align-items: center;
-            height: 70px; padding: 0 20px; max-width: 1200px; margin: 0 auto;
-            background-color: var(--bg-nav); /* Ensure solid background for header part */
-            position: relative; z-index: 1001;
+            height: 100%; padding: 0 20px; max-width: 1200px; margin: 0 auto;
         }
 
-        .logo {
-            font-size: 1.2rem; font-weight: 800; letter-spacing: 1px;
-            text-transform: uppercase;
-            background: linear-gradient(90deg, #6c5ce7, var(--primary));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        /* Image Logo */
+        .logo-img {
+            height: 45px; /* Adjust size */
+            width: auto;
+            object-fit: contain;
         }
 
         .menu-toggle {
-            background: none; border: none; color: white;
-            font-size: 1.5rem; cursor: pointer; padding: 5px;
+            background: none; border: none; color: var(--text-main);
+            font-size: 1.6rem; cursor: pointer; padding: 5px;
         }
 
-        /* --- Dropdown Animation (Slide Down) --- */
-        .nav-menu {
-            position: absolute; top: 70px; left: 0; width: 100%;
-            background-color: var(--bg-nav);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            
-            /* Hidden State */
-            max-height: 0;
-            overflow: hidden;
-            opacity: 0;
-            transition: max-height 0.4s ease-out, opacity 0.3s ease;
-            z-index: 999;
+        /* --- Sidebar Animation (Right Slide) --- */
+        .sidebar {
+            position: fixed; top: 0; right: -280px; /* Hidden initially */
+            width: 280px; height: 100vh;
+            background-color: var(--bg-sidebar);
+            z-index: 1002;
+            transition: right 0.3s ease-in-out;
+            padding: 20px;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.5);
         }
 
-        /* Active State (Visible) */
-        .nav-menu.active {
-            max-height: 300px; /* Adjust if menu items increase */
-            opacity: 1;
-            border-top: 1px solid rgba(255,255,255,0.05);
-        }
+        .sidebar.active { right: 0; }
 
-        .nav-menu a {
-            display: block; padding: 15px 25px;
-            color: var(--text-muted); font-weight: 500;
-            border-bottom: 1px solid rgba(255,255,255,0.03);
+        .sidebar-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 30px; border-bottom: 1px solid var(--border); padding-bottom: 15px;
         }
-        .nav-menu a:hover { color: var(--primary); background: rgba(255,255,255,0.02); padding-left: 30px; }
+        
+        .close-btn { font-size: 1.5rem; color: var(--text-muted); cursor: pointer; }
+        .close-btn:hover { color: var(--primary); }
+
+        .sidebar-menu a {
+            display: block; padding: 15px 10px;
+            color: var(--text-main); font-weight: 500; font-size: 1.1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .sidebar-menu a:hover { color: var(--primary); padding-left: 15px; background: rgba(255,255,255,0.03); }
+
+        /* Overlay Backdrop */
+        .overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); z-index: 1001;
+            display: none; opacity: 0; transition: opacity 0.3s;
+            backdrop-filter: blur(3px);
+        }
+        .overlay.active { display: block; opacity: 1; }
 
         /* --- Content --- */
         .container { max-width: 1100px; margin: 40px auto; padding: 0 20px; min-height: 60vh; }
         .section-title { font-size: 1.8rem; margin-bottom: 30px; border-left: 4px solid var(--primary); padding-left: 15px; }
 
         .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; margin-bottom: 50px; }
-        .blog-card { background: #121212; border: 1px solid #1f1f1f; border-radius: 12px; overflow: hidden; transition: 0.3s; }
-        .blog-card:hover { transform: translateY(-5px); border-color: var(--primary); }
+
+        /* Clickable Card Styles */
+        .blog-card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 12px; overflow: hidden; transition: 0.3s;
+            cursor: pointer; /* Hand cursor for entire card */
+            position: relative;
+        }
+        .blog-card:hover { transform: translateY(-7px); border-color: var(--primary); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        
         .blog-img { width: 100%; height: 200px; object-fit: cover; opacity: 0.9; }
         .blog-content { padding: 20px; }
         .blog-date { font-size: 0.8rem; color: var(--primary); margin-bottom: 8px; }
-        .blog-title { font-size: 1.2rem; font-weight: 600; margin-bottom: 10px; line-height: 1.4; }
-        .blog-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
-        .read-more { display: inline-block; margin-top: 15px; font-size: 0.9rem; color: white; border-bottom: 1px solid var(--primary); }
+        .blog-title { font-size: 1.3rem; font-weight: 600; margin-bottom: 10px; line-height: 1.3; color: #fff; }
+        .blog-desc { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; }
+        
+        /* Make the link cover the whole card */
+        .card-link-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1;
+        }
 
         /* --- Pagination --- */
-        .pagination { display: none; /* Hidden by default */ justify-content: center; gap: 15px; margin-bottom: 50px; }
-        .page-btn { padding: 10px 25px; background: #1f1f1f; border: 1px solid #333; color: white; cursor: pointer; border-radius: 5px; }
+        .pagination { display: none; justify-content: center; gap: 15px; margin-bottom: 50px; }
+        .page-btn { padding: 10px 25px; background: var(--bg-card); border: 1px solid var(--border); color: white; cursor: pointer; border-radius: 5px; }
         .page-btn:hover:not(:disabled) { background: var(--primary); border-color: var(--primary); }
-        .page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
         /* --- Footer --- */
-        footer { background-color: #080808; border-top: 1px solid #1f1f1f; padding: 50px 20px; text-align: center; }
-        .footer-logo { font-size: 1.5rem; font-weight: bold; margin-bottom: 20px; color: white; letter-spacing: 2px; }
+        footer { background-color: #0d0d0d; border-top: 1px solid var(--border); padding: 50px 20px; text-align: center; }
         .social-icons { display: flex; justify-content: center; gap: 20px; margin-bottom: 20px; }
         .social-link {
-            width: 40px; height: 40px; border-radius: 50%; background: #1f1f1f;
+            width: 40px; height: 40px; border-radius: 50%; background: #222;
             display: flex; align-items: center; justify-content: center;
-            font-size: 1.1rem; transition: 0.3s; color: white !important; text-decoration: none;
+            font-size: 1.1rem; transition: 0.3s; color: white !important;
         }
         .social-link:hover { background: var(--primary); transform: translateY(-3px); }
-        .copyright { color: #555; font-size: 0.85rem; }
+        .copyright { color: #666; font-size: 0.85rem; }
 
     </style>
 </head>
-<body>
-
-    <nav class="navbar">
+<body oncontextmenu="return false;"> <nav class="navbar">
         <div class="nav-container">
-            <div class="logo">THE IRONIC BRO</div>
-            <button class="menu-toggle" onclick="toggleMenu()">
+            <a href="index.html">
+                <img src="https://i.postimg.cc/QtjCXTph/logo-tib.png" alt="The Ironic Bro" class="logo-img">
+            </a>
+            <button class="menu-toggle" onclick="toggleSidebar()">
                 <i class="fas fa-bars"></i>
             </button>
         </div>
-        
-        <div class="nav-menu" id="navMenu">
-            <a href="index.html">Home</a>
-            <a href="#">About Us</a>
-            <a href="#">Contact Us</a>
-            <a href="#">Terms & Conditions</a>
-        </div>
     </nav>
+
+    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h3 style="color:white;">Menu</h3>
+            <div class="close-btn" onclick="toggleSidebar()"><i class="fas fa-times"></i></div>
+        </div>
+        <div class="sidebar-menu">
+            <a href="index.html"><i class="fas fa-home" style="margin-right:10px;"></i> Home</a>
+            <a href="#"><i class="fas fa-info-circle" style="margin-right:10px;"></i> About Us</a>
+            <a href="#"><i class="fas fa-envelope" style="margin-right:10px;"></i> Contact Us</a>
+            <a href="#"><i class="fas fa-file-contract" style="margin-right:10px;"></i> Terms & Conditions</a>
+        </div>
+    </div>
 
     <div class="container">
         <div class="section-title">Fresh Drops</div>
@@ -147,7 +185,7 @@
     </div>
 
     <footer>
-        <div class="footer-logo">THE IRONIC BRO</div>
+        <img src="https://i.postimg.cc/QtjCXTph/logo-tib.png" alt="Logo" style="height:40px; margin-bottom:20px; opacity:0.8;">
         
         <div class="social-icons">
             <a href="https://facebook.com/theironicbro" class="social-link"><i class="fab fa-facebook-f"></i></a>
@@ -161,42 +199,48 @@
     </footer>
 
     <script>
-        // 1. Toggle Navbar with Animation
-        function toggleMenu() {
-            const menu = document.getElementById('navMenu');
-            menu.classList.toggle('active');
+        // 1. Sidebar Toggle Logic
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
             
-            // Icon change logic (Optional: turn bars to times)
-            const icon = document.querySelector('.menu-toggle i');
-            if(menu.classList.contains('active')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-            } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        // 2. Prevent Key Combinations (Ctrl+C, Ctrl+U, etc.)
+        document.onkeydown = function(e) {
+            if(event.keyCode == 123) { // F12
+                return false;
+            }
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { // Ctrl+Shift+I
+                return false;
+            }
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) { // Ctrl+Shift+C
+                return false;
+            }
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { // Ctrl+Shift+J
+                return false;
+            }
+            if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { // Ctrl+U
+                return false;
             }
         }
 
-        // 2. Pagination Logic (Fixed)
+        // 3. Post Loading Logic
         let allPosts = [];
         let currentPage = 1;
         const postsPerPage = 15;
 
         async function loadPosts() {
             const container = document.getElementById('blogContainer');
-            
             try {
                 const response = await fetch('posts.json');
                 if (!response.ok) throw new Error("JSON not found");
-                
-                // Get Real Data Only (No Dummy Data Generation)
                 allPosts = await response.json();
-
                 renderPosts();
-
             } catch (error) {
-                console.error(error);
-                container.innerHTML = `<p style="color: var(--primary);">Please ensure posts.json exists and run on Live Server.</p>`;
+                container.innerHTML = `<p style="color: var(--primary);">Please ensure posts.json exists.</p>`;
             }
         }
 
@@ -204,21 +248,19 @@
             const container = document.getElementById('blogContainer');
             container.innerHTML = '';
 
-            // Pagination Slicing
             const start = (currentPage - 1) * postsPerPage;
             const end = start + postsPerPage;
             const paginatedPosts = allPosts.slice(start, end);
 
-            // Generate HTML
             paginatedPosts.forEach(post => {
+                // Whole Card is now clickable via the <a> overlay
                 const card = `
-                    <div class="blog-card">
+                    <div class="blog-card" onclick="window.location.href='${post.link}'">
                         <img src="${post.image}" alt="${post.title}" class="blog-img">
                         <div class="blog-content">
                             <div class="blog-date">${post.date}</div>
                             <h3 class="blog-title">${post.title}</h3>
                             <p class="blog-desc">${post.excerpt}</p>
-                            <a href="${post.link}" class="read-more">View Meme</a>
                         </div>
                     </div>
                 `;
@@ -230,27 +272,19 @@
 
         function updatePaginationButtons() {
             const controls = document.getElementById('paginationControls');
-            
-            // HIDE PAGINATION IF POSTS ARE LESS THAN OR EQUAL TO 15
             if (allPosts.length <= postsPerPage) {
                 controls.style.display = 'none';
-                return;
             } else {
                 controls.style.display = 'flex';
+                document.getElementById('prevBtn').disabled = currentPage === 1;
+                document.getElementById('nextBtn').disabled = currentPage === Math.ceil(allPosts.length / postsPerPage);
             }
-
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
-            const totalPages = Math.ceil(allPosts.length / postsPerPage);
-
-            prevBtn.disabled = currentPage === 1;
-            nextBtn.disabled = currentPage === totalPages;
         }
 
         function changePage(direction) {
             currentPage += direction;
             renderPosts();
-            document.querySelector('.container').scrollIntoView({behavior: 'smooth'});
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         document.addEventListener('DOMContentLoaded', loadPosts);
