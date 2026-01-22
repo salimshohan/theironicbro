@@ -1,129 +1,231 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
-  <meta charset="UTF-8" />
-  <title>The Ironic Bro</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Ironic Bro | Home of Sarcasm</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #ff4757;
+            --secondary-color: #2f3542;
+            --bg-color: #f1f2f6;
+            --text-color: #2f3542;
+            --card-bg: #ffffff;
+            --nav-bg: rgba(255, 255, 255, 0.95);
+        }
 
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+        [data-theme="dark"] {
+            --primary-color: #ff6b81;
+            --secondary-color: #dfe4ea;
+            --bg-color: #1e272e;
+            --text-color: #f1f2f6;
+            --card-bg: #2f3542;
+            --nav-bg: rgba(30, 39, 46, 0.95);
+        }
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Inter', sans-serif;
-    }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; transition: background 0.3s, color 0.3s; }
+        
+        body { background-color: var(--bg-color); color: var(--text-color); }
 
-    body {
-      background: #0f0f0f;
-      color: #f2f2f2;
-    }
+        /* Navbar */
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 15px 5%;
+            background: var(--nav-bg); backdrop-filter: blur(10px);
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary-color); text-transform: uppercase; letter-spacing: 2px; }
+        .nav-links a { margin-left: 20px; text-decoration: none; color: var(--text-color); font-weight: 500; }
+        .nav-links a:hover { color: var(--primary-color); }
+        .theme-toggle { cursor: pointer; font-size: 1.2rem; }
 
-    header {
-      padding: 80px 20px 60px;
-      text-align: center;
-    }
+        /* Hero Section */
+        .hero {
+            height: 90vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            background: linear-gradient(45deg, #ff4757, #2f3542);
+            color: white; padding: 20px;
+        }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 20px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        .hero p { font-size: 1.2rem; margin-bottom: 30px; max-width: 600px; }
+        .cta-btn {
+            padding: 12px 30px; background: white; color: #ff4757;
+            text-decoration: none; font-weight: bold; border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: transform 0.2s;
+        }
+        .cta-btn:hover { transform: scale(1.05); }
 
-    header h1 {
-      font-size: 3rem;
-      font-weight: 700;
-      letter-spacing: -1px;
-    }
+        /* Features / Meme Categories */
+        .section-title { text-align: center; margin: 50px 0 30px; font-size: 2rem; color: var(--primary-color); }
+        
+        .gallery {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px; padding: 0 5%; max-width: 1200px; margin: 0 auto;
+        }
+        .meme-card {
+            background: var(--card-bg); border-radius: 15px; overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); position: relative;
+        }
+        .meme-card img { width: 100%; height: 200px; object-fit: cover; }
+        .meme-info { padding: 15px; }
+        .meme-tag { background: var(--primary-color); color: white; padding: 3px 10px; border-radius: 20px; font-size: 0.8rem; }
+        .watermark { position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.5); color: white; padding: 2px 8px; font-size: 0.7rem; border-radius: 4px; }
 
-    header p {
-      margin-top: 12px;
-      font-size: 1.1rem;
-      opacity: 0.7;
-    }
+        /* Meme Generator Tool */
+        .generator-section {
+            background: var(--card-bg); padding: 40px; margin: 50px 5%;
+            border-radius: 20px; text-align: center; box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+        .gen-controls input {
+            padding: 10px; margin: 5px; border: 2px solid #ddd; border-radius: 5px; width: 70%;
+        }
+        .gen-canvas {
+            margin-top: 20px; border: 2px dashed var(--primary-color); 
+            height: 200px; display: flex; align-items: center; justify-content: center;
+            color: var(--text-color); font-style: italic;
+        }
 
-    .cta {
-      margin-top: 25px;
-    }
+        /* Footer */
+        footer {
+            background: #2f3542; color: white; padding: 40px 5%;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;
+        }
+        footer h3 { color: var(--primary-color); margin-bottom: 15px; }
+        footer p, footer li { margin-bottom: 10px; color: #dfe4ea; font-size: 0.9rem; list-style: none; }
+        .social-icons i { margin-right: 15px; font-size: 1.2rem; cursor: pointer; }
+        .contact-info i { width: 25px; color: var(--primary-color); }
 
-    .cta a {
-      text-decoration: none;
-      color: #000;
-      background: #fff;
-      padding: 10px 18px;
-      border-radius: 6px;
-      font-weight: 600;
-    }
-
-    section {
-      padding: 40px 20px;
-      max-width: 1200px;
-      margin: auto;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-    }
-
-    .card {
-      background: #161616;
-      border-radius: 12px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .card img {
-      width: 100%;
-      display: block;
-    }
-
-    .watermark {
-      position: absolute;
-      bottom: 8px;
-      right: 10px;
-      font-size: 12px;
-      opacity: 0.6;
-    }
-
-    footer {
-      text-align: center;
-      padding: 40px 20px;
-      font-size: 14px;
-      opacity: 0.5;
-    }
-  </style>
+    </style>
 </head>
 <body>
 
-<header>
-  <h1>The Ironic Bro</h1>
-  <p>Posting English memes so you don’t have to explain your personality.</p>
+    <nav>
+        <div class="logo"><i class="fas fa-mask"></i> The Ironic Bro</div>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#memes">Memes</a>
+            <a href="#generator">Create</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <div class="theme-toggle" onclick="toggleTheme()">
+            <i class="fas fa-moon"></i>
+        </div>
+    </nav>
 
-  <div class="cta">
-    <a href="https://facebook.com" target="_blank">Follow on Facebook</a>
-  </div>
-</header>
+    <section class="hero" id="home">
+        <h1>Welcome to the sarcasm hub</h1>
+        <p>"জীবন যখন লেবু দেয়, তখন আমরা সেটা দিয়ে মিম বানাই।"</p>
+        <a href="#memes" class="cta-btn">Explore Memes <i class="fas fa-arrow-down"></i></a>
+    </section>
 
-<section>
-  <div class="grid">
-    <div class="card">
-      <img src="memes/meme1.jpg" alt="meme">
-      <div class="watermark">The Ironic Bro</div>
-    </div>
+    <h2 class="section-title">Trending Now 🔥</h2>
+    <section class="gallery" id="memes">
+        <div class="meme-card">
+            <div class="watermark">@theironicbro</div>
+            <img src="https://placehold.co/400x300/ff4757/white?text=Exam+Night+Meme" alt="Meme">
+            <div class="meme-info">
+                <span class="meme-tag">Student Life</span>
+                <h3>পড়ালেখা vs আমি</h3>
+                <p>যখন সিলেবাস সাগরের মতো কিন্তু আমার জ্ঞান পুকুরের মতো।</p>
+                <div style="margin-top: 10px; display: flex; justify-content: space-between;">
+                    <span><i class="far fa-heart"></i> 1.2k</span>
+                    <span><i class="far fa-share-square"></i> Share</span>
+                </div>
+            </div>
+        </div>
 
-    <div class="card">
-      <img src="memes/meme2.jpg" alt="meme">
-      <div class="watermark">The Ironic Bro</div>
-    </div>
+        <div class="meme-card">
+            <div class="watermark">@theironicbro</div>
+            <img src="https://placehold.co/400x300/2f3542/white?text=Tom+Thinking" alt="Meme">
+            <div class="meme-info">
+                <span class="meme-tag">Tom & Jerry</span>
+                <h3>Tom এর লজিক</h3>
+                <p>Jerry কে ধরার প্ল্যান যখন আবার ফেইল করে...</p>
+                <div style="margin-top: 10px; display: flex; justify-content: space-between;">
+                    <span><i class="far fa-heart"></i> 856</span>
+                    <span><i class="far fa-share-square"></i> Share</span>
+                </div>
+            </div>
+        </div>
 
-    <div class="card">
-      <img src="memes/meme3.jpg" alt="meme">
-      <div class="watermark">The Ironic Bro</div>
-    </div>
-  </div>
-</section>
+        <div class="meme-card">
+            <div class="watermark">@theironicbro</div>
+            <img src="https://placehold.co/400x300/70a1ff/white?text=Sarcasm+101" alt="Meme">
+            <div class="meme-info">
+                <span class="meme-tag">Sarcasm</span>
+                <h3>Nah Bro</h3>
+                <p>বন্ধুর পচা জোকস শুনে আমার রিয়েকশন।</p>
+                <div style="margin-top: 10px; display: flex; justify-content: space-between;">
+                    <span><i class="far fa-heart"></i> 2.5k</span>
+                    <span><i class="far fa-share-square"></i> Share</span>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<footer>
-  © 2026 The Ironic Bro. No feelings were harmed.
-</footer>
+    <h2 class="section-title">Be The Ironic Bro 🎨</h2>
+    <section class="generator-section" id="generator">
+        <h3>Quick Caption Generator</h3>
+        <p>তোমার নিজের মিম আইডিয়া এখানে লিখো!</p>
+        <div class="gen-controls">
+            <input type="text" id="memeText" placeholder="Write something funny here..." oninput="updatePreview()">
+        </div>
+        <div class="gen-canvas" id="previewCanvas">
+            <h2 id="previewText">Your Text Will Appear Here</h2>
+        </div>
+        <button class="cta-btn" style="margin-top: 20px; cursor: pointer;" onclick="alert('Feature coming soon!')">Download Meme</button>
+    </section>
 
+    <footer id="contact">
+        <div>
+            <h3>The Ironic Bro</h3>
+            <p>We deliver irony, fresh and daily. Official page for meme lovers.</p>
+            <div class="social-icons">
+                <i class="fab fa-facebook"></i>
+                <i class="fab fa-instagram"></i>
+                <i class="fab fa-twitter"></i>
+            </div>
+        </div>
+        <div>
+            <h3>Quick Links</h3>
+            <li><a href="#" style="color:white; text-decoration:none;">Submit a Meme</a></li>
+            <li><a href="#" style="color:white; text-decoration:none;">Advertise</a></li>
+            <li><a href="#" style="color:white; text-decoration:none;">Terms of Service</a></li>
+        </div>
+        <div>
+            <h3>Contact Us</h3>
+            <div class="contact-info">
+                <p><i class="fas fa-map-marker-alt"></i> 3/2 Bank Town, Savar - 1242, Dhaka</p>
+                <p><i class="fas fa-phone"></i> +8801623801432</p>
+                <p><i class="fas fa-envelope"></i> contact@theironicbro.com</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Dark Mode Toggle Logic
+        function toggleTheme() {
+            const body = document.body;
+            const icon = document.querySelector('.theme-toggle i');
+            
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
+        }
+
+        // Simple Live Preview for Generator
+        function updatePreview() {
+            const text = document.getElementById('memeText').value;
+            const preview = document.getElementById('previewText');
+            preview.innerText = text ? text : "Your Text Will Appear Here";
+        }
+    </script>
 </body>
 </html>
