@@ -152,10 +152,31 @@
             transition: 0.1s;
         }
 
-        /* --- Pagination --- */
-        .pagination { display: none; justify-content: center; gap: 15px; margin-bottom: 50px; }
-        .page-btn { padding: 12px 30px; background: var(--bg-card); border: 1px solid var(--border); color: white; cursor: pointer; border-radius: 8px; font-weight: 600; transition: 0.3s; }
-        .page-btn:hover:not(:disabled) { background: var(--primary); border-color: var(--primary); transform: translateY(-2px); }
+        /* --- Load More Button (See More) --- */
+        .load-more-container { text-align: center; margin-bottom: 50px; margin-top: 20px; }
+        
+        .see-more-btn {
+            padding: 14px 40px;
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: white;
+            cursor: pointer;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .see-more-btn:hover {
+            background: var(--primary);
+            box-shadow: 0 0 20px rgba(214, 51, 132, 0.5);
+            transform: translateY(-3px);
+        }
+        
+        /* Spinner */
+        .fa-spinner { margin-right: 8px; }
 
         /* --- Footer (Text Restored) --- */
         footer { 
@@ -219,9 +240,10 @@
             <p style="color: var(--text-muted);">Loading awesome memes...</p>
         </div>
 
-        <div class="pagination" id="paginationControls">
-            <button class="page-btn" id="prevBtn" onclick="changePage(-1)">Previous</button>
-            <button class="page-btn" id="nextBtn" onclick="changePage(1)">Next</button>
+        <div class="load-more-container">
+            <button id="seeMoreBtn" class="see-more-btn" onclick="loadMorePosts()" style="display: none;">
+                See More <i class="fas fa-angle-down"></i>
+            </button>
         </div>
     </div>
 
@@ -255,32 +277,45 @@
             if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
         }
 
-        // 3. Post Logic
+        // 3. Post Logic (Updated for Reverse Order + See More)
         let allPosts = [];
-        let currentPage = 1;
-        const postsPerPage = 15;
+        let visiblePostsCount = 0; // Currently shown posts
+        const postsPerBatch = 15;  // How many to load at a time
 
-        async function loadPosts() {
+        async function initPosts() {
             const container = document.getElementById('blogContainer');
             try {
                 const response = await fetch('posts.json');
                 if (!response.ok) throw new Error("JSON not found");
+                
                 allPosts = await response.json();
-                renderPosts();
+                
+                // --- CRITICAL CHANGE: Reverse the array ---
+                // This makes the last item in JSON appear first (Latest on Top)
+                allPosts.reverse(); 
+
+                // Clear "Loading..." text
+                container.innerHTML = '';
+                
+                // Load first batch
+                loadMorePosts();
+
             } catch (error) {
-                container.innerHTML = `<p style="color: var(--primary);">Please ensure posts.json exists.</p>`;
+                container.innerHTML = `<p style="color: var(--primary);">Error: posts.json not found.</p>`;
             }
         }
 
-        function renderPosts() {
+        function loadMorePosts() {
             const container = document.getElementById('blogContainer');
-            container.innerHTML = '';
+            const seeMoreBtn = document.getElementById('seeMoreBtn');
 
-            const start = (currentPage - 1) * postsPerPage;
-            const end = start + postsPerPage;
-            const paginatedPosts = allPosts.slice(start, end);
+            // Calculate range
+            const start = visiblePostsCount;
+            const end = visiblePostsCount + postsPerBatch;
+            const postsToRender = allPosts.slice(start, end);
 
-            paginatedPosts.forEach(post => {
+            // Append new posts (Don't clear container!)
+            postsToRender.forEach(post => {
                 const card = `
                     <div class="blog-card" onclick="window.location.href='${post.link}'">
                         <img src="${post.image}" alt="${post.title}" class="blog-img">
@@ -291,30 +326,25 @@
                         </div>
                     </div>
                 `;
-                container.innerHTML += card;
+                // Add to bottom of container
+                container.insertAdjacentHTML('beforeend', card);
             });
 
-            updatePaginationButtons();
-        }
+            // Update Count
+            visiblePostsCount += postsToRender.length;
 
-        function updatePaginationButtons() {
-            const controls = document.getElementById('paginationControls');
-            if (allPosts.length <= postsPerPage) {
-                controls.style.display = 'none';
+            // Handle Button Visibility
+            if (visiblePostsCount >= allPosts.length) {
+                // No more posts, hide button
+                seeMoreBtn.style.display = 'none';
             } else {
-                controls.style.display = 'flex';
-                document.getElementById('prevBtn').disabled = currentPage === 1;
-                document.getElementById('nextBtn').disabled = currentPage === Math.ceil(allPosts.length / postsPerPage);
+                // More posts available, show button
+                seeMoreBtn.style.display = 'inline-block';
             }
         }
 
-        function changePage(direction) {
-            currentPage += direction;
-            renderPosts();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        document.addEventListener('DOMContentLoaded', loadPosts);
+        // Start Script
+        document.addEventListener('DOMContentLoaded', initPosts);
     </script>
 </body>
 </html>
