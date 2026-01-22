@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post View | The Ironic Bro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        /* --- Reusing Global Styles --- */
+        :root { --bg-body: #050505; --bg-nav: #0f1014; --primary: #d63384; --text-main: #ffffff; --text-muted: #a1a1aa; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--bg-body); color: var(--text-main); padding-top: 70px; }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+
+        /* Navbar */
+        .navbar { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; background-color: var(--bg-nav); border-bottom: 1px solid rgba(255,255,255,0.1); height: 70px; display: flex; align-items: center; padding: 0 20px; }
+        .logo { font-size: 1.2rem; font-weight: 800; text-transform: uppercase; background: linear-gradient(90deg, #6c5ce7, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .back-btn { margin-left: auto; color: white; border: 1px solid var(--primary); padding: 5px 15px; border-radius: 20px; font-size: 0.9rem; }
+        .back-btn:hover { background: var(--primary); }
+
+        /* Content Area */
+        .content-container { max-width: 800px; margin: 40px auto; padding: 0 20px; min-height: 80vh; }
+        
+        /* Markdown Styles */
+        #markdown-content { line-height: 1.8; font-size: 1.1rem; color: #e0e0e0; }
+        #markdown-content h1 { font-size: 2.5rem; margin-bottom: 20px; color: white; line-height: 1.2; }
+        #markdown-content h2 { font-size: 1.8rem; margin-top: 30px; margin-bottom: 15px; color: var(--primary); }
+        #markdown-content h3 { font-size: 1.4rem; margin-top: 25px; color: white; }
+        #markdown-content p { margin-bottom: 20px; }
+        #markdown-content img { width: 100%; border-radius: 10px; margin: 20px 0; border: 1px solid #333; }
+        #markdown-content strong { color: white; }
+        #markdown-content blockquote { border-left: 4px solid var(--primary); padding-left: 15px; color: var(--text-muted); font-style: italic; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 5px; }
+        
+        /* Footer */
+        footer { background-color: #080808; border-top: 1px solid #1f1f1f; padding: 40px 20px; text-align: center; margin-top: 50px; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">The Ironic Bro</div>
+        <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+    </nav>
+
+    <div class="content-container">
+        <div id="markdown-content">
+            <p style="color: grey; text-align: center;">Loading post...</p>
+        </div>
+    </div>
+
+    <footer>
+        <p style="color: #555; font-size: 0.9rem;">&copy; 2026 The Ironic Bro</p>
+    </footer>
+
+    <script>
+        // URL থেকে ফাইলের নাম নেওয়া (যেমন: ?post=exam.md)
+        const urlParams = new URLSearchParams(window.location.search);
+        const postFile = urlParams.get('post');
+
+        if(postFile) {
+            // ওই ফাইলটি ফেচ করা এবং HTML এ কনভার্ট করা
+            fetch(`blog/${postFile}`)
+                .then(response => {
+                    if (!response.ok) throw new Error("Post not found");
+                    return response.text();
+                })
+                .then(text => {
+                    // marked.js দিয়ে Markdown কে HTML বানানো
+                    document.getElementById('markdown-content').innerHTML = marked.parse(text);
+                })
+                .catch(error => {
+                    document.getElementById('markdown-content').innerHTML = `<h2 style="color:red; text-align:center;">Post Not Found 404</h2>`;
+                });
+        } else {
+            document.getElementById('markdown-content').innerHTML = `<h2 style="color:yellow; text-align:center;">No post selected</h2>`;
+        }
+    </script>
+</body>
+</html>
