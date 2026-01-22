@@ -3,7 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>Post View | The Ironic Bro</title>
+    <meta name="description" content="Welcome to The Ironic Bro - The headquarters of relatable student struggles.">
+    
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="">
+    <meta property="og:title" content="The Ironic Bro">
+    <meta property="og:description" content="Relatable memes and student life struggles.">
+    <meta property="og:image" content="https://i.postimg.cc/QtjCXTph/logo-tib.png">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     
@@ -35,7 +44,7 @@
         a { text-decoration: none; color: inherit; transition: 0.3s; }
         img { pointer-events: none; max-width: 100%; height: auto; border-radius: 8px; }
 
-        /* --- Navbar Styles (Same as Home) --- */
+        /* --- Navbar Styles --- */
         .navbar {
             position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
             background-color: var(--bg-nav);
@@ -88,18 +97,17 @@
         }
         .overlay.active { display: block; opacity: 1; }
 
-        /* --- Blog Content Styles (Fixed) --- */
+        /* --- Blog Content Styles --- */
         .content-container { 
             max-width: 900px; margin: 40px auto; 
-            padding: 0 30px; /* Increased Padding */
+            padding: 0 30px;
             min-height: 60vh; 
         }
 
         #markdown-content { color: #e4e4e7; }
         
-        /* Adjusted Font Sizes */
         #markdown-content h1 { 
-            font-size: 2rem; /* Smaller Title */
+            font-size: 2rem; 
             margin-bottom: 20px; color: white; line-height: 1.3; font-weight: 700;
         }
         #markdown-content h2 { font-size: 1.5rem; margin-top: 30px; margin-bottom: 15px; color: var(--primary); border-bottom: 1px solid var(--border); padding-bottom: 10px; }
@@ -107,7 +115,7 @@
         
         #markdown-content p, #markdown-content li { 
             margin-bottom: 18px; 
-            font-size: 1rem; /* Standard readable size */
+            font-size: 1rem; 
             line-height: 1.7; 
             color: #d4d4d8; 
         }
@@ -129,7 +137,6 @@
 
         .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; margin-bottom: 50px; }
 
-        /* Reusing Card Style from Home */
         .blog-card {
             background: var(--bg-card); border: 1px solid var(--border);
             border-radius: 16px; overflow: hidden; position: relative; cursor: pointer;
@@ -144,7 +151,7 @@
         .blog-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 10px; line-height: 1.3; color: #fff; }
         .blog-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
 
-        /* --- Footer Styles (Same as Home) --- */
+        /* --- Footer Styles --- */
         footer { background-color: #111; border-top: 1px solid var(--border); padding: 60px 20px; text-align: center; margin-top: 80px; }
         .footer-logo-text {
             font-size: 1.8rem; font-weight: 900; letter-spacing: 2px;
@@ -185,9 +192,9 @@
         </div>
         <div class="sidebar-menu">
             <a href="index.html"><i class="fas fa-home" style="margin-right:10px;"></i> Home</a>
-            <a href="#"><i class="fas fa-info-circle" style="margin-right:10px;"></i> About Us</a>
-            <a href="#"><i class="fas fa-envelope" style="margin-right:10px;"></i> Contact Us</a>
-            <a href="#"><i class="fas fa-file-contract" style="margin-right:10px;"></i> Terms & Conditions</a>
+            <a href="data/about.html"><i class="fas fa-info-circle" style="margin-right:10px;"></i> About Us</a>
+            <a href="data/contact.html"><i class="fas fa-envelope" style="margin-right:10px;"></i> Contact Us</a>
+            <a href="data/terms.html"><i class="fas fa-file-contract" style="margin-right:10px;"></i> Terms & Conditions</a>
         </div>
     </div>
 
@@ -232,9 +239,36 @@
             if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false;
         }
 
-        // 3. Post Loading & Related Posts Logic
+        // 3. Post Loading & Random Logic
         const urlParams = new URLSearchParams(window.location.search);
         const currentPostFile = urlParams.get('post');
+
+        // Function to update OG Tags & Title dynamically
+        function updatePageMeta(title, image, desc) {
+            // Update Browser Title
+            document.title = title + " | The Ironic Bro";
+
+            // Update Meta Tags for Previews
+            const metas = {
+                "og:title": title + " | The Ironic Bro",
+                "og:description": desc || "Relatable student memes and stories.",
+                "og:image": image || "https://i.postimg.cc/QtjCXTph/logo-tib.png",
+                "og:url": window.location.href
+            };
+
+            for (let property in metas) {
+                let meta = document.querySelector(`meta[property='${property}']`);
+                if (meta) {
+                    meta.setAttribute("content", metas[property]);
+                } else {
+                    // Create if doesn't exist
+                    meta = document.createElement('meta');
+                    meta.setAttribute('property', property);
+                    meta.setAttribute('content', metas[property]);
+                    document.head.appendChild(meta);
+                }
+            }
+        }
 
         // Main Logic
         async function initPage() {
@@ -244,9 +278,18 @@
                 if (!response.ok) throw new Error("JSON not found");
                 const allPosts = await response.json();
 
+                // Find Current Post Metadata
+                const currentPost = allPosts.find(p => p.link.includes(currentPostFile));
+
                 // A. Render Current Post
                 if(currentPostFile) {
                     try {
+                        // 1. Set Title & OG Tags based on JSON data
+                        if (currentPost) {
+                            updatePageMeta(currentPost.title, currentPost.image, currentPost.excerpt);
+                        }
+
+                        // 2. Fetch Markdown
                         const postRes = await fetch(`blog/${currentPostFile}`);
                         if(!postRes.ok) throw new Error("Markdown not found");
                         const text = await postRes.text();
@@ -267,14 +310,20 @@
                         </div>`;
                 }
 
-                // B. Render Related Posts (7 Cards, Excluding Current)
+                // B. Render Random Related Posts
                 const relatedContainer = document.getElementById('relatedContainer');
                 
-                // Filter out the current post
-                const relevantPosts = allPosts.filter(p => !p.link.includes(currentPostFile)).slice(0, 7);
+                // 1. Filter out the current post
+                let relevantPosts = allPosts.filter(p => !p.link.includes(currentPostFile));
 
-                if(relevantPosts.length > 0) {
-                    relevantPosts.forEach(post => {
+                // 2. SHUFFLE / RANDOMIZE the array
+                relevantPosts.sort(() => Math.random() - 0.5);
+
+                // 3. Take first 7 posts
+                const randomPosts = relevantPosts.slice(0, 7);
+
+                if(randomPosts.length > 0) {
+                    randomPosts.forEach(post => {
                         const card = `
                             <div class="blog-card" onclick="window.location.href='${post.link}'">
                                 <img src="${post.image}" alt="${post.title}" class="blog-img">
