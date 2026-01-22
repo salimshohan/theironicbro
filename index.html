@@ -3,194 +3,207 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Ironic Bro | Sarcasm Hub</title>
+    <title>The Ironic Bro | Home</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Global Styles */
+        /* --- Global Reset & Variables --- */
         :root {
             --primary: #ff4757;
             --dark: #1e272e;
-            --light: #f1f2f6;
-            --glass: rgba(255, 255, 255, 0.9);
-            --shadow: 0 4px 20px rgba(0,0,0,0.1);
+            --bg: #f1f2f6;
+            --glass: rgba(255, 255, 255, 0.8);
+            --border: rgba(0,0,0,0.08);
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background: var(--light); color: var(--dark); }
-        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background: var(--bg); color: var(--dark); padding-top: 80px; }
+        a { text-decoration: none; color: inherit; }
 
-        /* Improved Header / Navbar */
+        /* --- App Style Header (Matching MCQ App) --- */
         nav {
-            position: sticky; top: 0; z-index: 1000;
-            background: var(--glass); backdrop-filter: blur(15px);
-            padding: 15px 5%; display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
+            position: fixed; top: 0; left: 0; width: 100%;
+            height: 70px; z-index: 1000;
+            background: var(--glass); backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 5%;
         }
-        .logo { font-size: 1.8rem; font-weight: 800; color: var(--primary); letter-spacing: -1px; }
-        .logo span { color: var(--dark); }
         
-        .nav-menu { display: flex; gap: 30px; align-items: center; }
-        .nav-menu a { font-weight: 600; font-size: 0.95rem; position: relative; }
-        .nav-menu a::after {
-            content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0;
-            background: var(--primary); transition: 0.3s;
+        /* Logo with Circle Border */
+        .brand { display: flex; align-items: center; gap: 12px; }
+        .brand-logo {
+            width: 45px; height: 45px;
+            border: 2px solid var(--primary); /* Circle Border */
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; color: var(--primary); background: white;
         }
-        .nav-menu a:hover { color: var(--primary); }
-        .nav-menu a:hover::after { width: 100%; }
+        .brand-name { font-size: 1.4rem; font-weight: 700; color: var(--dark); letter-spacing: -0.5px; }
+
+        .nav-links { display: flex; gap: 25px; align-items: center; }
+        .nav-links a { font-weight: 500; font-size: 0.95rem; color: #57606f; transition: 0.3s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary); }
         
+        /* Button in Navbar */
         .nav-btn {
-            background: var(--dark); color: white !important; padding: 10px 25px;
-            border-radius: 50px; font-weight: 500;
+            padding: 8px 20px; border-radius: 50px;
+            background: var(--dark); color: white !important;
+            font-size: 0.9rem; font-weight: 600;
         }
-        .nav-btn:hover { background: var(--primary); transform: translateY(-2px); }
+        .nav-btn:hover { background: var(--primary); }
 
-        /* Hero Section */
-        .hero {
-            height: 80vh; display: flex; align-items: center; justify-content: center;
-            flex-direction: column; text-align: center; background: white;
-            padding: 0 20px;
-        }
-        .hero h1 { font-size: 4rem; margin-bottom: 15px; line-height: 1.2; }
-        .hero span { color: var(--primary); }
-        .hero p { font-size: 1.2rem; color: #57606f; max-width: 600px; margin-bottom: 30px; }
-        .buttons { display: flex; gap: 15px; }
-        .btn { padding: 12px 30px; border-radius: 8px; font-weight: 600; cursor: pointer; border: none; }
-        .btn-primary { background: var(--primary); color: white; box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4); }
-        .btn-outline { border: 2px solid var(--dark); background: transparent; }
-        .btn:hover { transform: translateY(-3px); }
-
-        /* Meme Grid */
-        .container { max-width: 1200px; margin: 80px auto; padding: 0 20px; }
-        .section-header { margin-bottom: 40px; display: flex; justify-content: space-between; align-items: flex-end; }
-        .section-header h2 { font-size: 2.5rem; }
+        /* --- Fresh Drops (Blog Style) --- */
+        .container { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
         
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; }
-        .card {
-            background: white; border-radius: 15px; overflow: hidden;
-            box-shadow: var(--shadow); transition: 0.3s;
+        .section-header { margin-bottom: 30px; border-left: 5px solid var(--primary); padding-left: 15px; }
+        .section-header h2 { font-size: 1.8rem; }
+        
+        /* Blog Grid */
+        .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; }
+        
+        .blog-card {
+            background: white; border-radius: 12px; overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.3s;
+            border: 1px solid var(--border);
+            display: flex; flex-direction: column;
         }
-        .card:hover { transform: translateY(-10px); }
-        .card img { width: 100%; height: 250px; object-fit: cover; }
-        .card-body { padding: 20px; }
-        .tag { background: #dfe4ea; font-size: 0.8rem; padding: 4px 10px; border-radius: 4px; font-weight: 600; }
-        .card-title { margin: 10px 0; font-size: 1.2rem; }
-        .card-footer { display: flex; justify-content: space-between; color: #a4b0be; font-size: 0.9rem; margin-top: 15px; }
+        .blog-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+        
+        .blog-img { width: 100%; height: 200px; object-fit: cover; background: #ddd; }
+        
+        .blog-content { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
+        .blog-date { font-size: 0.8rem; color: #a4b0be; margin-bottom: 8px; }
+        .blog-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 10px; line-height: 1.4; }
+        .blog-desc { font-size: 0.95rem; color: #57606f; line-height: 1.6; margin-bottom: 20px; flex-grow: 1; }
+        
+        .read-more { font-size: 0.9rem; font-weight: 600; color: var(--primary); display: flex; align-items: center; gap: 5px; cursor: pointer;}
 
-        /* Improved Footer */
+        /* --- Simplified Footer --- */
         footer {
-            background: var(--dark); color: white; padding: 60px 5% 20px;
-            margin-top: 100px;
+            margin-top: 80px; background: white; border-top: 1px solid var(--border);
+            padding: 50px 5%;
         }
-        .footer-content {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px; border-bottom: 1px solid #57606f; padding-bottom: 40px;
+        .footer-grid {
+            max-width: 1000px; margin: 0 auto;
+            display: grid; grid-template-columns: 1.5fr 1fr; gap: 50px;
         }
-        .footer-col h3 { color: var(--primary); margin-bottom: 20px; }
-        .footer-col p { color: #a4b0be; line-height: 1.6; }
-        .footer-links li { list-style: none; margin-bottom: 12px; }
-        .footer-links a { color: #dfe4ea; }
-        .footer-links a:hover { color: var(--primary); padding-left: 5px; }
+        .footer-brand h3 { color: var(--primary); margin-bottom: 15px; }
+        .footer-brand p { color: #57606f; font-size: 0.95rem; line-height: 1.6; }
         
-        .copyright { text-align: center; margin-top: 20px; color: #747d8c; font-size: 0.9rem; }
+        .contact-item { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; color: var(--dark); }
+        .contact-item i { color: var(--primary); width: 20px; }
+        
+        @media (max-width: 768px) {
+            .footer-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; } /* Mobile Menu would go here */
+        }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="logo">The Ironic <span>Bro</span></div>
-        <div class="nav-menu">
-            <a href="index.html" style="color: var(--primary);">Home</a>
-            <a href="generator.html">Meme Generator</a>
-            <a href="#">Trending</a>
-            <a href="#">Shop</a>
+        <div class="brand">
+            <div class="brand-logo"><i class="fas fa-mask"></i></div>
+            <div class="brand-name">The Ironic Bro</div>
         </div>
-        <a href="#footer" class="nav-btn">Contact Us</a>
+        <div class="nav-links">
+            <a href="index.html" class="active">Home</a>
+            <a href="generator.html">Meme Generator</a> <a href="#" class="nav-btn">Follow Us</a>
+        </div>
     </nav>
-
-    <section class="hero">
-        <h1>Sarcasm Served <br> <span>Daily & Fresh</span></h1>
-        <p>The official headquarters for high-quality memes, ironic humor, and relatable content. Join the brotherhood.</p>
-        <div class="buttons">
-            <button class="btn btn-primary" onclick="window.location.href='generator.html'">Create Meme</button>
-            <button class="btn btn-outline">Explore Gallery</button>
-        </div>
-    </section>
 
     <div class="container">
         <div class="section-header">
-            <h2>Fresh Drops 🔥</h2>
-            <a href="#">View All <i class="fas fa-arrow-right"></i></a>
+            <h2>Fresh Drops</h2>
+            <p style="color: #777; font-size: 0.9rem;">Latest sarcasm served hot from the oven.</p>
         </div>
-        
-        <div class="grid">
-            <div class="card">
-                <img src="https://placehold.co/400x300/ff4757/white?text=Coding+Meme" alt="Meme">
-                <div class="card-body">
-                    <span class="tag">Programmer</span>
-                    <h3 class="card-title">My Code Works?</h3>
-                    <div class="card-footer">
-                        <span><i class="far fa-heart"></i> 2.4k</span>
-                        <span><i class="far fa-comment"></i> 45</span>
-                    </div>
-                </div>
-            </div>
 
-            <div class="card">
-                <img src="https://placehold.co/400x300/2ed573/white?text=Life+Meme" alt="Meme">
-                <div class="card-body">
-                    <span class="tag">Real Life</span>
-                    <h3 class="card-title">Adulting is Hard</h3>
-                    <div class="card-footer">
-                        <span><i class="far fa-heart"></i> 1.8k</span>
-                        <span><i class="far fa-comment"></i> 22</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="https://placehold.co/400x300/3742fa/white?text=Weekend" alt="Meme">
-                <div class="card-body">
-                    <span class="tag">Weekend</span>
-                    <h3 class="card-title">Sunday Night Fear</h3>
-                    <div class="card-footer">
-                        <span><i class="far fa-heart"></i> 5.1k</span>
-                        <span><i class="far fa-comment"></i> 120</span>
-                    </div>
-                </div>
-            </div>
+        <div class="blog-grid" id="blogContainer">
+            <div style="text-align: center; width: 100%; color: #777;">Loading fresh memes...</div>
         </div>
     </div>
 
-    <footer id="footer">
-        <div class="footer-content">
-            <div class="footer-col">
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
                 <h3>The Ironic Bro</h3>
-                <p>We turn pain into laughter. The leading sarcasm provider in the region since 2024.</p>
-                <div style="margin-top: 20px; font-size: 1.2rem;">
-                    <i class="fab fa-facebook" style="margin-right:15px;"></i>
-                    <i class="fab fa-instagram" style="margin-right:15px;"></i>
-                    <i class="fab fa-twitter"></i>
+                <p>We turn pain into laughter. The official headquarters for high-quality memes and ironic humor.</p>
+                <div style="margin-top: 20px; color: #a4b0be; font-size: 0.9rem;">
+                    &copy; 2026 The Ironic Bro. All Rights Reserved.
                 </div>
             </div>
-            <div class="footer-col">
-                <h3>Explore</h3>
-                <ul class="footer-links">
-                    <li><a href="#">Trending Memes</a></li>
-                    <li><a href="generator.html">Meme Generator</a></li>
-                    <li><a href="#">Submit Content</a></li>
-                    <li><a href="#">Merchandise</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h3>Contact</h3>
-                <ul class="footer-links">
-                    <li><a href="#">3/2 Bank Town, Savar, Dhaka</a></li>
-                    <li><a href="#">+8801623801432</a></li>
-                    <li><a href="#">support@ironicbro.com</a></li>
-                </ul>
+            
+            <div class="footer-contact">
+                <h4 style="margin-bottom: 20px;">Contact</h4>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i> 
+                    <span>3/2 Bank Town, Savar - 1242, Dhaka</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i> 
+                    <span>+8801623801432</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i> 
+                    <span>contact@theironicbro.com</span>
+                </div>
             </div>
         </div>
-        <p class="copyright">&copy; 2026 The Ironic Bro. All Rights Reserved.</p>
     </footer>
+
+    <script>
+        // এই অ্যারেটি আপনার ব্লগ ফোল্ডারের ফাইলের তালিকা হিসেবে কাজ করবে
+        // আপনি নতুন পোস্ট দিলে এখানে একটি অবজেক্ট অ্যাড করে দিলেই হবে
+        const blogPosts = [
+            {
+                id: 1,
+                title: "Exam Night Realizations",
+                date: "Jan 22, 2026",
+                image: "https://placehold.co/600x400/ff4757/white?text=Exam+Meme",
+                excerpt: "When you realize the syllabus is an ocean and you know how to swim in a bathtub. Check out this classic student life moment.",
+                link: "/blog/exam-night-meme.md"
+            },
+            {
+                id: 2,
+                title: "Tom's Logic Explained",
+                date: "Jan 20, 2026",
+                image: "https://placehold.co/600x400/2f3542/white?text=Tom+Thinking",
+                excerpt: "Why does Tom always fail? Here is a detailed breakdown of his catastrophic planning failures in 2025.",
+                link: "/blog/tom-logic.md"
+            },
+            {
+                id: 3,
+                title: "The 'Nah Bro' Moment",
+                date: "Jan 18, 2026",
+                image: "https://placehold.co/600x400/70a1ff/white?text=Nah+Bro",
+                excerpt: "That awkward moment when your friend suggests studying on a Friday night. The ultimate refusal guide.",
+                link: "/blog/nah-bro.md"
+            }
+        ];
+
+        // Function to render posts
+        function loadPosts() {
+            const container = document.getElementById('blogContainer');
+            container.innerHTML = ''; // Clear loading text
+
+            blogPosts.forEach(post => {
+                const card = `
+                    <div class="blog-card">
+                        <img src="${post.image}" alt="${post.title}" class="blog-img">
+                        <div class="blog-content">
+                            <span class="blog-date">${post.date}</span>
+                            <h3 class="blog-title">${post.title}</h3>
+                            <p class="blog-desc">${post.excerpt}</p>
+                            <a href="${post.link}" class="read-more">View Full Meme <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += card;
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', loadPosts);
+    </script>
 
 </body>
 </html>
