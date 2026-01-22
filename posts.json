@@ -1,203 +1,406 @@
+নিশ্চয়ই! আগের সব বাংলা বা লোকাল শব্দ বাদ দিয়ে ৫০টি সম্পূর্ণ ইংরেজিতে (Worldwide Friendly) তৈরি পোস্টের JSON কোড নিচে দেওয়া হলো।
+সবগুলোর তারিখ আজকের (Jan 22, 2026) দেওয়া হয়েছে। আপনি আপনার posts.json ফাইলের সবকিছু মুছে এই পুরো কোডটি পেস্ট করে দিন।
+posts.json (Total 50 Posts)
 [
     {
         "id": 1,
-        "title": "Exam Night Realizations",
+        "title": "The Alarm Clock Betrayal",
         "date": "Jan 22, 2026",
-        "image": "https://placehold.co/600x400/ff4757/white?text=Exam+Night",
-        "excerpt": "When the syllabus is an ocean but you only know how to swim in a bathtub. The ultimate student tragedy.",
-        "link": "view.html?post=exam-night.md"
+        "image": "https://placehold.co/600x400/2c3e50/white?text=5+More+Minutes",
+        "excerpt": "I set 10 alarms. I woke up for none. The mystery of how I turn them off in my sleep remains unsolved.",
+        "link": "view.html?post=alarm-clock.md"
     },
     {
         "id": 2,
-        "title": "Tom's Logic 2026",
-        "date": "Jan 21, 2026",
-        "image": "https://placehold.co/600x400/2f3542/white?text=Tom+Thinking",
-        "excerpt": "Why does Tom always fail against Jerry? A scientific analysis of his catastrophic planning failures.",
-        "link": "view.html?post=tom-logic.md"
+        "title": "The Syllabus Ocean",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/c0392b/white?text=Exam+Night",
+        "excerpt": "When you start studying the night before and realize the syllabus is deeper than the Pacific Ocean.",
+        "link": "view.html?post=syllabus-ocean.md"
     },
     {
         "id": 3,
-        "title": "The Viva Board Trauma",
-        "date": "Jan 20, 2026",
-        "image": "https://placehold.co/600x400/70a1ff/white?text=Viva+Board",
-        "excerpt": "Teacher: 'Tell me about yourself.' Me: 'Sir, I was born at a very young age.' Sweating in AC explained.",
-        "link": "view.html?post=viva-trauma.md"
-    },
-    {
-        "id": 4,
-        "title": "8 AM Winter Classes",
-        "date": "Jan 19, 2026",
-        "image": "https://placehold.co/600x400/ffa502/white?text=Winter+Sleep",
-        "excerpt": "Leaving the blanket in winter morning is the hardest breakup ever. Why do 8 AM classes even exist?",
-        "link": "view.html?post=winter-class.md"
-    },
-    {
-        "id": 5,
-        "title": "The Group Project Myth",
-        "date": "Jan 18, 2026",
-        "image": "https://placehold.co/600x400/2ed573/white?text=Group+Project",
-        "excerpt": "One person does the work, three people provide 'moral support'. The reality of university group projects.",
+        "title": "The Group Project 'Manager'",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/f39c12/white?text=Free+Loader",
+        "excerpt": "That one team member who does nothing but asks 'So, when are we submitting?' right at the deadline.",
         "link": "view.html?post=group-project.md"
     },
     {
+        "id": 4,
+        "title": "My Diet Starts Tomorrow",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/27ae60/white?text=Pizza+Time",
+        "excerpt": "I ate a salad for lunch and a family-sized pizza for dinner. Balance is key, right?",
+        "link": "view.html?post=diet-fail.md"
+    },
+    {
+        "id": 5,
+        "title": "The 'I am 5 Mins Away' Lie",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/8e44ad/white?text=Still+in+Bed",
+        "excerpt": "I said I'm 5 minutes away. Reality: I am currently looking for my other sock. I haven't left the house.",
+        "link": "view.html?post=late-friend.md"
+    },
+    {
         "id": 6,
-        "title": "Relatives & GPA",
-        "date": "Jan 17, 2026",
-        "image": "https://placehold.co/600x400/ff6b81/white?text=Relatives",
-        "excerpt": "That one aunt who calls on result day just to ruin your mood. 'Babu, GPA koto?' - The horror story.",
-        "link": "view.html?post=relatives-gpa.md"
+        "title": "WiFi When Gaming",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/e74c3c/white?text=999+Ping",
+        "excerpt": "My internet works perfectly for YouTube 4K, but decides to die exactly when I start a ranked match.",
+        "link": "view.html?post=gaming-lag.md"
     },
     {
         "id": 7,
-        "title": "Assignment Engineering",
-        "date": "Jan 16, 2026",
-        "image": "https://placehold.co/600x400/5352ed/white?text=Assignment",
-        "excerpt": "Copying from Wikipedia, changing the font, and praying the teacher doesn't notice. The art of Ctrl+C Ctrl+V.",
-        "link": "view.html?post=assignment.md"
+        "title": "Money Disappearing Act",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/16a085/white?text=Broke+Again",
+        "excerpt": "Got my salary/allowance yesterday. Checked my wallet today. Where did it go? I suspect magic.",
+        "link": "view.html?post=money-gone.md"
     },
     {
         "id": 8,
-        "title": "The 'Treat' Paradox",
-        "date": "Jan 15, 2026",
-        "image": "https://placehold.co/600x400/3742fa/white?text=Empty+Wallet",
-        "excerpt": "Friends asking for a treat when you have exactly 10 taka in your pocket. The struggle is real.",
-        "link": "view.html?post=treat-paradox.md"
+        "title": "The Forgotten Password",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/34495e/white?text=Reset+Password",
+        "excerpt": "Password incorrect. *Changes password*. Error: New password cannot be the same as the old password.",
+        "link": "view.html?post=password-pain.md"
     },
     {
         "id": 9,
-        "title": "Brain During Exam",
-        "date": "Jan 14, 2026",
-        "image": "https://placehold.co/600x400/ff4757/white?text=Brain+Freeze",
-        "excerpt": "Brain at home: Einstein. Brain in exam hall: Plays random songs and forgets 2+2. Why does this happen?",
-        "link": "view.html?post=brain-exam.md"
-    },
-    {
-        "id": 10,
-        "title": "Slow Internet Pain",
-        "date": "Jan 13, 2026",
-        "image": "https://placehold.co/600x400/1e90ff/white?text=Loading...",
-        "excerpt": "WiFi speed matches my motivation to study. It works perfectly until I actually need to submit a file.",
-        "link": "view.html?post=internet-pain.md"
-    },
-    {
-        "id": 11,
-        "title": "The Dead Group Chat",
-        "date": "Jan 12, 2026",
-        "image": "https://placehold.co/600x400/2c3e50/white?text=Dead+Chat",
-        "excerpt": "A group of 10 people. 9 are mute, 1 is asking for notes. The legendary silence of university group chats.",
-        "link": "view.html?post=dead-group-chat.md"
-    },
-    {
-        "id": 12,
-        "title": "Mom vs. Mobile",
-        "date": "Jan 11, 2026",
-        "image": "https://placehold.co/600x400/e74c3c/white?text=Mom+Logic",
-        "excerpt": "Headache? Because of mobile. Failed exam? Mobile. Global warming? Definitely that damn mobile phone.",
-        "link": "view.html?post=mom-vs-mobile.md"
-    },
-    {
-        "id": 13,
-        "title": "Rickshaw Fare Battles",
-        "date": "Jan 10, 2026",
-        "image": "https://placehold.co/600x400/f39c12/white?text=5+Taka+War",
-        "excerpt": "Fighting for 5 taka with a Rickshaw Mama is an Olympic sport. 'Mama 20 taka jaben?' 'Na, 50.' - The daily struggle.",
-        "link": "view.html?post=rickshaw-fare.md"
-    },
-    {
-        "id": 14,
-        "title": "The 'Seen' Zone",
-        "date": "Jan 09, 2026",
-        "image": "https://placehold.co/600x400/8e44ad/white?text=Seen+Zone",
-        "excerpt": "Worse than the friend zone. You sent a meme, she saw it, and didn't even react. Emotional damage level: 100.",
-        "link": "view.html?post=seen-zone.md"
-    },
-    {
-        "id": 15,
-        "title": "Load Shedding Logic",
-        "date": "Jan 08, 2026",
-        "image": "https://placehold.co/600x400/34495e/white?text=No+Electricity",
-        "excerpt": "Electricity goes exactly when you start gaming or studying. The mosquitoes celebrate, you suffer.",
-        "link": "view.html?post=load-shedding.md"
-    },
-    {
-        "id": 16,
-        "title": "The Resume Lie",
-        "date": "Jan 07, 2026",
-        "image": "https://placehold.co/600x400/27ae60/white?text=Resume+Skills",
-        "excerpt": "Skill: 'Proficient in Excel'. Reality: I only know how to color the cells yellow. Corporate life awaits.",
-        "link": "view.html?post=resume-lie.md"
-    },
-    {
-        "id": 17,
-        "title": "Barber Shop Trauma",
-        "date": "Jan 06, 2026",
-        "image": "https://placehold.co/600x400/d35400/white?text=Bad+Haircut",
-        "excerpt": "I said 'Trim a little'. He made me look like a peeled potato. Now I have to wear a cap for 2 months.",
-        "link": "view.html?post=barber-trauma.md"
-    },
-    {
-        "id": 18,
-        "title": "Siblings: The Enemy",
-        "date": "Jan 05, 2026",
-        "image": "https://placehold.co/600x400/c0392b/white?text=Siblings",
-        "excerpt": "Fighting over the TV remote or charger is our love language. Also, 'Ammu!!' is their ultimate weapon.",
+        "title": "Siblings: The Roommates from Hell",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/d35400/white?text=Remote+War",
+        "excerpt": "They steal your charger, eat your food, and snitch on you. Yet, you'd probably donate a kidney for them.",
         "link": "view.html?post=siblings-war.md"
     },
     {
+        "id": 10,
+        "title": "The 'One Last Reel' Trap",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/e1b12c/white?text=Doom+Scrolling",
+        "excerpt": "It was 11 PM. I said 'Just one more reel'. I looked at the clock. It is now 4 AM. Help.",
+        "link": "view.html?post=reels-addiction.md"
+    },
+    {
+        "id": 11,
+        "title": "Teacher's Pet",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/2ecc71/white?text=Homework+Reminder",
+        "excerpt": "That one kid who reminds the teacher about the homework when the bell rings. Public Enemy No. 1.",
+        "link": "view.html?post=teachers-pet.md"
+    },
+    {
+        "id": 12,
+        "title": "Unexpected Guests",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/95a5a6/white?text=Hide+Me",
+        "excerpt": "Relatives arriving without notice. I run to my room and pretend to sleep to avoid social interaction.",
+        "link": "view.html?post=relatives.md"
+    },
+    {
+        "id": 13,
+        "title": "Barber Shop Trauma",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/8e44ad/white?text=Bad+Haircut",
+        "excerpt": "I said 'Just a trim'. He gave me a military buzz cut. Now I have to wear a hat for 3 months.",
+        "link": "view.html?post=barber-fail.md"
+    },
+    {
+        "id": 14,
+        "title": "Phone Battery Anxiety",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/e74c3c/white?text=1%25+Left",
+        "excerpt": "My phone hits 1%. I sprint to the charger like an Olympic athlete. The charger is missing. Panic ensues.",
+        "link": "view.html?post=battery-low.md"
+    },
+    {
+        "id": 15,
+        "title": "The Resume Lie",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/34495e/white?text=Excel+Expert",
+        "excerpt": "Resume: 'Proficient in Excel'. Reality: I only know how to color the cells yellow.",
+        "link": "view.html?post=resume-lie.md"
+    },
+    {
+        "id": 16,
+        "title": "Midnight Masterchef",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/d35400/white?text=Instant+Noodles",
+        "excerpt": "Why does a simple bowl of instant noodles taste like a Michelin star meal at 3 AM?",
+        "link": "view.html?post=midnight-snack.md"
+    },
+    {
+        "id": 17,
+        "title": "The Dead Group Chat",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/7f8c8d/white?text=RIP+Chat",
+        "excerpt": "A group of 10 people. 9 are ghosts, 1 is asking for notes. The legendary silence of student groups.",
+        "link": "view.html?post=dead-chat.md"
+    },
+    {
+        "id": 18,
+        "title": "The 'Seen' Zone",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/2980b9/white?text=Seen+Just+Now",
+        "excerpt": "Worse than the friendzone. You sent a meme, she saw it, and didn't even react. Emotional damage.",
+        "link": "view.html?post=seen-zone.md"
+    },
+    {
         "id": 19,
-        "title": "Unexpected Quiz",
-        "date": "Jan 04, 2026",
-        "image": "https://placehold.co/600x400/7f8c8d/white?text=Surprise+Test",
-        "excerpt": "Teacher: 'Take out a piece of paper.' Me: 'My soul has left the chat.' The horror of surprise quizzes.",
-        "link": "view.html?post=unexpected-quiz.md"
-    },
-    {
-        "id": 20,
-        "title": "Midnight Cravings",
-        "date": "Jan 03, 2026",
-        "image": "https://placehold.co/600x400/e67e22/white?text=Maggi+Noodles",
-        "excerpt": "Why do I feel like a Masterchef at 2 AM making Maggi? The kitchen is silent, but my stomach is loud.",
-        "link": "view.html?post=midnight-cravings.md"
-    },
-    {
-        "id": 21,
-        "title": "The 'Sir' Confusion",
-        "date": "Jan 02, 2026",
-        "image": "https://placehold.co/600x400/16a085/white?text=Sir+vs+Bhaiya",
-        "excerpt": "Calling a senior 'Bhaiya' and getting ignored vs. calling him 'Sir' and getting bullied. The freshman dilemma.",
-        "link": "view.html?post=sir-confusion.md"
-    },
-    {
-        "id": 22,
         "title": "Exam Hall Eye Contact",
-        "date": "Jan 01, 2026",
-        "image": "https://placehold.co/600x400/2980b9/white?text=Awkward+Look",
-        "excerpt": "When you look at your friend for answers, but the Invigilator thinks you are falling in love. Awkward.",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/c0392b/white?text=Awkward",
+        "excerpt": "Looking at your friend for an answer, but the teacher thinks you are falling in love. Awkward.",
         "link": "view.html?post=exam-eye-contact.md"
     },
     {
+        "id": 20,
+        "title": "Online Shopping Regret",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/f1c40f/white?text=Add+to+Cart",
+        "excerpt": "I bought a gadget I don't need with money I don't have to impress people I don't like.",
+        "link": "view.html?post=shopping-fail.md"
+    },
+    {
+        "id": 21,
+        "title": "Monday Morning Blues",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/2c3e50/white?text=I+Hate+Mondays",
+        "excerpt": "Waking up on Monday requires a level of strength that I simply do not possess.",
+        "link": "view.html?post=monday-blues.md"
+    },
+    {
+        "id": 22,
+        "title": "The 'To-Do' List",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/27ae60/white?text=Nothing+Done",
+        "excerpt": "I made a list of 10 things to do today. I did zero. But I made the list, so that counts as work.",
+        "link": "view.html?post=todo-list.md"
+    },
+    {
         "id": 23,
-        "title": "New Year Resolution",
-        "date": "Dec 31, 2025",
-        "image": "https://placehold.co/600x400/8e44ad/white?text=Gym+Fail",
-        "excerpt": "Day 1: I will go to the gym. Day 3: I am tired. Day 7: Who needs muscles anyway? The cycle repeats.",
-        "link": "view.html?post=resolution-fail.md"
+        "title": "Slow Walkers",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/e74c3c/white?text=Move+Faster",
+        "excerpt": "People who walk slowly in a horizontal line on the sidewalk should be illegal.",
+        "link": "view.html?post=slow-walkers.md"
     },
     {
         "id": 24,
-        "title": "Bachelor Life Cooking",
-        "date": "Dec 30, 2025",
-        "image": "https://placehold.co/600x400/d35400/white?text=Burnt+Egg",
-        "excerpt": "Expectation: 5-star meal. Reality: Burnt egg and half-cooked rice. Survival mode is ON.",
-        "link": "view.html?post=bachelor-cooking.md"
+        "title": "The USB Paradox",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/8e44ad/white?text=USB+Flip",
+        "excerpt": "You try to plug it in. Wrong way. Flip it. Wrong way. Flip it back. Now it fits. Why?",
+        "link": "view.html?post=usb-paradox.md"
     },
     {
         "id": 25,
-        "title": "Teacher's Favorite",
-        "date": "Dec 29, 2025",
-        "image": "https://placehold.co/600x400/27ae60/white?text=Chatu+Friend",
-        "excerpt": "That one student who reminds the teacher about the homework. The entire class unites to hate him.",
-        "link": "view.html?post=teachers-pet.md"
+        "title": "Mom's Logic",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/d35400/white?text=Because+Phone",
+        "excerpt": "Headache? Because of the phone. Failed exam? Phone. Global warming? Definitely that damn phone.",
+        "link": "view.html?post=mom-logic.md"
+    },
+    {
+        "id": 26,
+        "title": "Gym Motivation",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/34495e/white?text=Day+1+Only",
+        "excerpt": "Day 1: I will become the Rock. Day 2: My entire body hurts. Day 3: I think I'm good just being a pebble.",
+        "link": "view.html?post=gym-fail.md"
+    },
+    {
+        "id": 27,
+        "title": "Typing... Then Nothing",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/16a085/white?text=Typing...",
+        "excerpt": "Seeing 'Typing...' for 2 minutes and then receiving just 'Ok'. The ultimate betrayal.",
+        "link": "view.html?post=typing-dots.md"
+    },
+    {
+        "id": 28,
+        "title": "Surprise Quiz",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/c0392b/white?text=Paper+Out",
+        "excerpt": "Teacher: 'Take out a piece of paper.' My soul leaves my body instantly.",
+        "link": "view.html?post=surprise-quiz.md"
+    },
+    {
+        "id": 29,
+        "title": "Ignoring Calls",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/f39c12/white?text=Don't+Call",
+        "excerpt": "I stare at my phone ringing until it stops, then I text back: 'Sorry, I was busy'.",
+        "link": "view.html?post=introvert-calls.md"
+    },
+    {
+        "id": 30,
+        "title": "Rainy Day Attendance",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/2980b9/white?text=Skip+Class",
+        "excerpt": "It's drizzling slightly. My brain: 'This is a natural disaster. Stay in bed. Do not go to class.'",
+        "link": "view.html?post=rainy-day.md"
+    },
+    {
+        "id": 31,
+        "title": "The Last Piece of Pizza",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/e67e22/white?text=War+Zone",
+        "excerpt": "The silent war at the dinner table when there is only one slice left. Who will take it?",
+        "link": "view.html?post=last-pizza.md"
+    },
+    {
+        "id": 32,
+        "title": "Overthinking at 3 AM",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/2c3e50/white?text=Why+did+I+say+that",
+        "excerpt": "Brain: 'Hey, remember that embarrassing thing you said 5 years ago? Let's analyze it for 4 hours.'",
+        "link": "view.html?post=overthinking.md"
+    },
+    {
+        "id": 33,
+        "title": "Google MD",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/c0392b/white?text=I+am+Dying",
+        "excerpt": "Me: 'I have a mild headache.' Google: 'You have 3 days to live.' Never google your symptoms.",
+        "link": "view.html?post=google-doctor.md"
+    },
+    {
+        "id": 34,
+        "title": "Public Speaking",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/8e44ad/white?text=Sweating",
+        "excerpt": "My legs shake so much during a presentation that I look like I'm dancing.",
+        "link": "view.html?post=stage-fright.md"
+    },
+    {
+        "id": 35,
+        "title": "The 'I Have Time' Paradox",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/e74c3c/white?text=Procrastination",
+        "excerpt": "Assignment due in 2 weeks? I'll relax. Assignment due tomorrow? Panic mode activated.",
+        "link": "view.html?post=time-paradox.md"
+    },
+    {
+        "id": 36,
+        "title": "Left on Read",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/34495e/white?text=Blue+Ticks",
+        "excerpt": "I see the blue ticks. I know you saw it. Why do you choose violence?",
+        "link": "view.html?post=blue-ticks.md"
+    },
+    {
+        "id": 37,
+        "title": "Math Class Confusion",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/27ae60/white?text=What+is+X",
+        "excerpt": "I zoned out for 5 seconds and now the board is covered in hieroglyphics. What is integration?",
+        "link": "view.html?post=math-fail.md"
+    },
+    {
+        "id": 38,
+        "title": "The Forgot Earphones Tragedy",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/7f8c8d/white?text=No+Music",
+        "excerpt": "A long commute without earphones is just staring at strangers and questioning life choices.",
+        "link": "view.html?post=no-music.md"
+    },
+    {
+        "id": 39,
+        "title": "Group Photo Struggle",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/d35400/white?text=Eyes+Closed",
+        "excerpt": "In every group photo, I am either blinking, talking, or looking like a potato.",
+        "link": "view.html?post=bad-photo.md"
+    },
+    {
+        "id": 40,
+        "title": "Adulting is a Scam",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/2c3e50/white?text=Taxes+&+Bills",
+        "excerpt": "I want to resign from adulthood. I did not sign up for taxes, bills, and back pain.",
+        "link": "view.html?post=adulting.md"
+    },
+    {
+        "id": 41,
+        "title": "Winter Showers",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/3498db/white?text=Cold+Water",
+        "excerpt": "Taking a shower in winter requires more bravery than going to war.",
+        "link": "view.html?post=winter-shower.md"
+    },
+    {
+        "id": 42,
+        "title": "Printer Problems",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/95a5a6/white?text=No+Ink",
+        "excerpt": "Printer works fine all year. The day I need to print an urgent document? 'Out of Magenta'.",
+        "link": "view.html?post=printer-fail.md"
+    },
+    {
+        "id": 43,
+        "title": "The Fake Laugh",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/f39c12/white?text=Hahaha...",
+        "excerpt": "When you didn't hear what someone said, so you just laugh and hope it wasn't a question.",
+        "link": "view.html?post=fake-laugh.md"
+    },
+    {
+        "id": 44,
+        "title": "Battery Low Anxiety",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/c0392b/white?text=Power+Off",
+        "excerpt": "The pure panic when your phone dies and you don't know what to do with your hands in public.",
+        "link": "view.html?post=no-phone.md"
+    },
+    {
+        "id": 45,
+        "title": "The Spider in the Room",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/2c3e50/white?text=It's+Gone",
+        "excerpt": "I saw a spider. I looked away for a second. It's gone. I guess I have to burn the house down now.",
+        "link": "view.html?post=spider-fear.md"
+    },
+    {
+        "id": 46,
+        "title": "Touching Wet Food",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/e74c3c/white?text=Disgusting",
+        "excerpt": "Touching wet food in the sink while washing dishes is the grossest feeling known to mankind.",
+        "link": "view.html?post=wet-food.md"
+    },
+    {
+        "id": 47,
+        "title": "Password Requirements",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/8e44ad/white?text=Uppercase+Symbol",
+        "excerpt": "Must contain 1 uppercase, 1 symbol, a drop of blood, and the maiden name of your great-grandmother.",
+        "link": "view.html?post=password-rules.md"
+    },
+    {
+        "id": 48,
+        "title": "Singing in the Car",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/f1c40f/white?text=Concert",
+        "excerpt": "I sound like Adele in the car. I sound like a dying seal on a recording.",
+        "link": "view.html?post=bad-singer.md"
+    },
+    {
+        "id": 49,
+        "title": "Unsubscribing Emails",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/7f8c8d/white?text=Spam",
+        "excerpt": "I unsubscribed 5 times. Why are you still emailing me about your 10% discount?",
+        "link": "view.html?post=email-spam.md"
+    },
+    {
+        "id": 50,
+        "title": "The 'I'll Do It Later' Lie",
+        "date": "Jan 22, 2026",
+        "image": "https://placehold.co/600x400/27ae60/white?text=Later=Never",
+        "excerpt": "The biggest lie I tell myself every day. 'Later' is a mythical time that never arrives.",
+        "link": "view.html?post=procrastination.md"
     }
-
 ]
+
