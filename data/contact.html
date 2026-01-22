@@ -85,11 +85,11 @@
         .overlay.active { display: block; opacity: 1; }
 
         /* --- Contact Page Specific Styles --- */
-        .container { max-width: 1100px; margin: 50px auto; padding: 0 20px; min-height: 60vh; }
+        .container { max-width: 1000px; margin: 50px auto; padding: 0 20px; min-height: 60vh; }
         .page-title { font-size: 2rem; margin-bottom: 40px; border-left: 5px solid var(--primary); padding-left: 15px; font-weight: 700; color: white; }
 
         .contact-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+            display: grid; grid-template-columns: 1fr 1.5fr; gap: 40px; /* Adjusted ratio */
         }
 
         /* Info Card */
@@ -97,18 +97,13 @@
             background: var(--bg-card); border: 1px solid var(--border);
             border-radius: 16px; padding: 30px; height: 100%;
         }
-        .info-item { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 25px; }
+        .info-item { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 30px; }
         .info-icon { 
-            width: 40px; height: 40px; background: rgba(214, 51, 132, 0.1); 
+            width: 45px; height: 45px; background: rgba(214, 51, 132, 0.1); flex-shrink: 0;
             color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
         }
         .info-text h4 { font-size: 1.1rem; margin-bottom: 5px; color: white; }
         .info-text p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
-
-        /* Map */
-        .map-container {
-            width: 100%; height: 200px; border-radius: 12px; overflow: hidden; margin-top: 20px; border: 1px solid var(--border);
-        }
 
         /* Contact Form */
         .form-card {
@@ -122,10 +117,10 @@
             border-radius: 8px; color: white; font-size: 1rem; outline: none; transition: 0.3s;
         }
         .form-input:focus { border-color: var(--primary); background: #3a3a3a; }
-        textarea.form-input { resize: vertical; min-height: 120px; }
+        textarea.form-input { resize: vertical; min-height: 150px; }
 
         .submit-btn {
-            width: 100%; padding: 12px; background: var(--primary); color: white;
+            width: 100%; padding: 14px; background: var(--primary); color: white;
             border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: 0.3s;
         }
         .submit-btn:hover { background: #b02a6b; transform: translateY(-2px); }
@@ -193,15 +188,7 @@
                     <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
                     <div class="info-text">
                         <h4>Our Office</h4>
-                        <p>3/2 Bank Town, Savar - 1242<br>Dhaka, Bangladesh</p>
-                    </div>
-                </div>
-
-                <div class="info-item">
-                    <div class="info-icon"><i class="fas fa-phone-alt"></i></div>
-                    <div class="info-text">
-                        <h4>Phone Number</h4>
-                        <p>+8801623801432</p>
+                        <p>Binodpur, Motihar<br>Rajshahi, Bangladesh</p>
                     </div>
                 </div>
 
@@ -209,46 +196,47 @@
                     <div class="info-icon"><i class="fas fa-envelope"></i></div>
                     <div class="info-text">
                         <h4>Email Address</h4>
-                        <p>contact@theironicbro.com</p>
+                        <p>theironicbro@proton.me</p>
                     </div>
                 </div>
 
-                <div class="map-container">
-                    <iframe 
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3648.5678!2d90.26!3d23.85!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755e9b!2sSavar!5e0!3m2!1sen!2sbd!4v1600000000000!5m2!1sen!2sbd" 
-                        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
-                    </iframe>
+                <div class="info-item">
+                    <div class="info-icon"><i class="fas fa-clock"></i></div>
+                    <div class="info-text">
+                        <h4>Working Hours</h4>
+                        <p>We are online 24/7 (Mostly).</p>
+                    </div>
                 </div>
             </div>
 
             <div class="form-card">
                 <h3 style="color:white; margin-bottom:25px;">Send a Message</h3>
+                
                 <form id="contactForm" onsubmit="return sendMessage(event)">
                     <div class="form-group">
                         <label class="form-label">Your Name</label>
-                        <input type="text" class="form-input" placeholder="John Doe" required>
+                        <input type="text" name="name" class="form-input" placeholder="Your Full Name" required>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Email Address</label>
-                        <input type="email" class="form-input" placeholder="john@example.com" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Subject</label>
-                        <input type="text" class="form-input" placeholder="Regarding..." required>
+                        <input type="email" name="email" class="form-input" placeholder="you@example.com" required>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Message</label>
-                        <textarea class="form-input" placeholder="Write your message here..." required></textarea>
+                        <textarea name="message" class="form-input" placeholder="Tell us what's on your mind..." required></textarea>
                     </div>
-                    <button type="submit" class="submit-btn">Send Message <i class="fas fa-paper-plane" style="margin-left:5px;"></i></button>
+                    
+                    <button type="submit" class="submit-btn">
+                        Send Message <i class="fas fa-paper-plane" style="margin-left:5px;"></i>
+                    </button>
                 </form>
+
             </div>
         </div>
     </div>
 
     <footer>
         <div class="footer-logo-text">THE IRONIC BRO</div>
-        
         <div class="social-icons">
             <a href="https://facebook.com/theironicbro" class="social-link"><i class="fab fa-facebook-f"></i></a>
             <a href="https://instagram.com/theironicbro" class="social-link"><i class="fab fa-instagram"></i></a>
@@ -256,8 +244,7 @@
             <a href="https://youtube.com/@theironicbro" class="social-link"><i class="fab fa-youtube"></i></a>
             <a href="https://threads.net/@theironicbro" class="social-link"><i class="fa-brands fa-threads"></i></a>
         </div>
-
-        <p class="copyright">&copy; 2026 The Ironic Bro. All rights reserved.</p>
+        <p class="copyright">© 2026 The Ironic Bro. All rights reserved.</p>
     </footer>
 
     <script>
@@ -273,31 +260,53 @@
             if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false;
         }
 
-        // 3. Form Simulation Logic
-        function sendMessage(e) {
+        // 3. Send Message via Formspree (AJAX)
+        async function sendMessage(e) {
             e.preventDefault();
-            const btn = document.querySelector('.submit-btn');
-            const originalText = btn.innerHTML;
             
+            const form = document.getElementById('contactForm');
+            const btn = document.querySelector('.submit-btn');
+            const originalBtnText = btn.innerHTML;
+
             // Loading State
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
             btn.style.opacity = '0.7';
 
-            // Simulate Server Delay
-            setTimeout(() => {
-                btn.innerHTML = '<i class="fas fa-check"></i> Sent Successfully!';
-                btn.style.background = '#2ecc71'; // Green
-                document.getElementById('contactForm').reset();
-                
-                // Reset Button after 3 seconds
-                setTimeout(() => {
-                    btn.innerHTML = originalText;
-                    btn.style.background = 'var(--primary)';
-                    btn.style.opacity = '1';
-                }, 3000);
-            }, 1500);
+            // Prepare Data
+            const formData = new FormData(form);
 
-            return false;
+            try {
+                // YOUR FORMSPREE LINK HERE
+                const response = await fetch("https://formspree.io/f/xojjgolv", {
+                    method: "POST",
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    // Success Message
+                    btn.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
+                    btn.style.background = '#2ecc71'; // Green
+                    form.reset(); // Clear form
+                } else {
+                    // Error Handling
+                    btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Failed to send';
+                    btn.style.background = '#e74c3c'; // Red
+                }
+            } catch (error) {
+                // Network Error
+                btn.innerHTML = '<i class="fas fa-wifi"></i> Network Error';
+                btn.style.background = '#e74c3c';
+            }
+
+            // Restore Button after 3 seconds
+            setTimeout(() => {
+                btn.innerHTML = 'Send Message <i class="fas fa-paper-plane" style="margin-left:5px;"></i>';
+                btn.style.background = 'var(--primary)';
+                btn.style.opacity = '1';
+            }, 3000);
         }
     </script>
 </body>
