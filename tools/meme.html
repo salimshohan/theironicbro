@@ -3,54 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Watermark Tool</title>
+    <title>The Ironic Bro - Watermark Tool</title>
     <style>
-        /* CSS: Modern UI Styling */
+        /* Modern UI Styling */
         :root {
-            --primary-color: #4F46E5;
-            --primary-hover: #4338ca;
-            --bg-color: #f3f4f6;
-            --card-bg: #ffffff;
-            --text-color: #1f2937;
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #334155;
+            --border: #e2e8f0;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
             margin: 0;
             padding: 20px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
         }
 
         .container {
-            background-color: var(--card-bg);
-            padding: 2rem;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            max-width: 900px;
+            background: var(--card);
             width: 100%;
+            max-width: 1000px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.1);
+            padding: 2rem;
             display: grid;
-            grid-template-columns: 1fr 1.5fr;
+            grid-template-columns: 350px 1fr;
             gap: 2rem;
         }
 
         h1 {
             grid-column: 1 / -1;
+            margin: 0 0 1rem 0;
+            color: var(--primary-dark);
+            font-size: 1.5rem;
             text-align: center;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            font-size: 1.8rem;
+            border-bottom: 2px solid var(--bg);
+            padding-bottom: 1rem;
         }
 
-        /* Controls Section */
+        /* Sidebar Controls */
         .controls {
             display: flex;
             flex-direction: column;
             gap: 1.2rem;
+            height: fit-content;
         }
 
         .control-group {
@@ -60,106 +63,124 @@
         }
 
         label {
+            font-size: 0.85rem;
             font-weight: 600;
-            font-size: 0.9rem;
-            color: #4b5563;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        input[type="text"], input[type="number"], input[type="color"] {
-            padding: 10px;
-            border: 2px solid #e5e7eb;
+        input[type="text"], 
+        input[type="number"], 
+        select {
+            padding: 10px 12px;
+            border: 1px solid var(--border);
             border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
+            font-size: 0.95rem;
+            background: #fff;
+            transition: all 0.2s;
         }
 
-        input[type="text"]:focus, input[type="number"]:focus {
+        input:focus, select:focus {
             outline: none;
-            border-color: var(--primary-color);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
         }
 
+        /* Custom Color Input */
+        .color-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid var(--border);
+            padding: 5px;
+            border-radius: 8px;
+        }
+        
+        input[type="color"] {
+            border: none;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            background: none;
+        }
+
+        /* Sliders */
         input[type="range"] {
             width: 100%;
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: var(--primary);
+            border-radius: 50%;
             cursor: pointer;
+            transition: background .15s ease-in-out;
         }
 
-        .file-upload {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+        /* File Upload */
+        .upload-box {
+            border: 2px dashed var(--border);
+            border-radius: 12px;
             padding: 2rem;
-            border: 2px dashed #cbd5e1;
-            border-radius: 12px;
+            text-align: center;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: 0.3s;
+            background: #f8fafc;
+        }
+        
+        .upload-box:hover {
+            border-color: var(--primary);
+            background: #f0fdfa;
         }
 
-        .file-upload:hover {
-            background-color: #f8fafc;
-            border-color: var(--primary-color);
-        }
-
-        .file-upload input {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            cursor: pointer;
-        }
-
-        /* Preview Section */
-        .preview-area {
-            background-color: #e5e7eb;
+        /* Preview Area */
+        .preview-wrapper {
+            background: #e2e8f0; 
             border-radius: 12px;
             display: flex;
-            justify-content: center;
             align-items: center;
-            overflow: hidden;
-            min-height: 300px;
+            justify-content: center;
+            min-height: 400px;
             position: relative;
+            overflow: hidden;
         }
 
-        .preview-area img {
+        #previewImage {
             max-width: 100%;
-            max-height: 400px;
+            max-height: 500px;
             display: block;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
-        #downloadBtn {
-            grid-column: 1 / -1;
-            background-color: var(--primary-color);
+        .btn-download {
+            background: var(--primary);
             color: white;
-            border: none;
-            padding: 15px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.3s;
             text-align: center;
+            padding: 12px;
+            border-radius: 8px;
             text-decoration: none;
-            display: block;
+            font-weight: 600;
             margin-top: 1rem;
+            display: block;
+            transition: 0.2s;
+        }
+        
+        .btn-download:hover {
+            background: var(--primary-dark);
         }
 
-        #downloadBtn:hover {
-            background-color: var(--primary-hover);
-        }
+        .hidden { display: none; }
 
-        #downloadBtn.disabled {
-            background-color: #9ca3af;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
-
-        /* Responsive Design */
         @media (max-width: 768px) {
-            .container {
-                grid-template-columns: 1fr;
-            }
+            .container { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -169,124 +190,186 @@
     <h1>Watermark Generator</h1>
 
     <div class="controls">
-        <div class="control-group">
-            <label>Upload Image</label>
-            <div class="file-upload">
-                <span>📁 Click to Upload Image</span>
-                <input type="file" id="imageInput" accept="image/*">
-            </div>
+        
+        <div class="upload-box" onclick="document.getElementById('imageInput').click()">
+            <p>📁 Click to Upload Image</p>
+            <input type="file" id="imageInput" accept="image/*" class="hidden">
         </div>
 
         <div class="control-group">
             <label>Watermark Text</label>
-            <input type="text" id="watermarkText" placeholder="Enter text" value="@MyBrand">
+            <input type="text" id="wmText" value="@theironicbro">
         </div>
 
-        <div style="display: flex; gap: 10px;">
-            <div class="control-group" style="flex: 1;">
+        <div class="control-group">
+            <label>Position</label>
+            <select id="wmPosition">
+                <option value="bottom-right">Bottom Right</option>
+                <option value="bottom-left">Bottom Left</option>
+                <option value="top-right">Top Right</option>
+                <option value="top-left">Top Left</option>
+                <option value="center">Center</option>
+                <option value="top-center">Top Center</option>
+                <option value="bottom-center">Bottom Center</option>
+            </select>
+        </div>
+
+        <div class="control-group">
+            <label>Offset X (Left/Right)</label>
+            <input type="range" id="offsetX" min="-100" max="100" value="0">
+        </div>
+        <div class="control-group">
+            <label>Offset Y (Up/Down)</label>
+            <input type="range" id="offsetY" min="-100" max="100" value="0">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div class="control-group">
                 <label>Color</label>
-                <input type="color" id="textColor" value="#ffffff" style="width: 100%; height: 45px;">
+                <div class="color-wrapper">
+                    <input type="color" id="wmColor" value="#ffffff">
+                    <span style="font-size: 12px;">Pick</span>
+                </div>
             </div>
-            <div class="control-group" style="flex: 1;">
-                <label>Font Size</label>
-                <input type="number" id="textSize" value="40" min="10" max="200">
+            <div class="control-group">
+                <label>Size (px)</label>
+                <input type="number" id="wmSize" value="40">
             </div>
         </div>
 
         <div class="control-group">
-            <label>Opacity (স্বচ্ছতা)</label>
-            <input type="range" id="opacity" min="0.1" max="1" step="0.1" value="0.8">
+            <label>Opacity</label>
+            <input type="range" id="wmOpacity" min="0.1" max="1" step="0.1" value="0.8">
         </div>
+
+        <a id="downloadBtn" class="btn-download hidden" download="watermarked.png">Download Image</a>
     </div>
 
-    <div class="preview-area">
-        <p id="placeholderText" style="color: #6b7280;">No image uploaded</p>
-        <img id="previewImage" alt="Preview" style="display: none;">
+    <div class="preview-wrapper">
+        <p id="placeholder" style="color: #64748b;">No image selected</p>
+        <img id="previewImage" class="hidden">
+        <canvas id="canvas" class="hidden"></canvas>
     </div>
-
-    <canvas id="canvas" style="display: none;"></canvas>
-
-    <a id="downloadBtn" class="disabled">Download Image</a>
 </div>
 
 <script>
-    // JavaScript Logic
     const imageInput = document.getElementById('imageInput');
-    const watermarkText = document.getElementById('watermarkText');
-    const textColor = document.getElementById('textColor');
-    const textSize = document.getElementById('textSize');
-    const opacity = document.getElementById('opacity');
+    const previewImage = document.getElementById('previewImage');
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
-    const previewImage = document.getElementById('previewImage');
     const downloadBtn = document.getElementById('downloadBtn');
-    const placeholderText = document.getElementById('placeholderText');
+    
+    // Inputs
+    const wmText = document.getElementById('wmText');
+    const wmPosition = document.getElementById('wmPosition');
+    const offsetX = document.getElementById('offsetX');
+    const offsetY = document.getElementById('offsetY');
+    const wmColor = document.getElementById('wmColor');
+    const wmSize = document.getElementById('wmSize');
+    const wmOpacity = document.getElementById('wmOpacity');
 
-    let uploadedImg = new Image();
+    let uploadedImage = new Image();
 
-    // 1. Image Upload Handler
-    imageInput.addEventListener('change', function(e) {
+    // 1. Image Upload
+    imageInput.addEventListener('change', (e) => {
         const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                uploadedImg.src = event.target.result;
-                uploadedImg.onload = function() {
-                    placeholderText.style.display = 'none';
-                    previewImage.style.display = 'block';
-                    downloadBtn.classList.remove('disabled');
-                    drawWatermark(); // Draw immediately after load
-                }
+        if(!file) return;
+        
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            uploadedImage.src = event.target.result;
+            uploadedImage.onload = () => {
+                document.getElementById('placeholder').classList.add('hidden');
+                previewImage.classList.remove('hidden');
+                downloadBtn.classList.remove('hidden');
+                renderWatermark();
             }
-            reader.readAsDataURL(file);
         }
+        reader.readAsDataURL(file);
     });
 
-    // 2. Real-time Update Listeners
-    [watermarkText, textColor, textSize, opacity].forEach(el => {
-        el.addEventListener('input', drawWatermark);
+    // 2. Add Listeners to all inputs
+    [wmText, wmPosition, offsetX, offsetY, wmColor, wmSize, wmOpacity].forEach(input => {
+        input.addEventListener('input', renderWatermark);
     });
 
-    // 3. Main Function to Draw Watermark
-    function drawWatermark() {
-        if (!uploadedImg.src) return;
+    // 3. Render Function
+    function renderWatermark() {
+        if (!uploadedImage.src) return;
 
-        // Set canvas size to match original image size
-        canvas.width = uploadedImg.width;
-        canvas.height = uploadedImg.height;
+        // Set canvas size
+        canvas.width = uploadedImage.width;
+        canvas.height = uploadedImage.height;
 
-        // Clear canvas and draw original image
+        // Draw original image
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(uploadedImg, 0, 0);
+        ctx.drawImage(uploadedImage, 0, 0);
 
-        // Configure Text Styles
-        const size = parseInt(textSize.value);
-        ctx.font = `bold ${size}px 'Segoe UI', sans-serif`;
-        ctx.fillStyle = textColor.value;
-        ctx.globalAlpha = parseFloat(opacity.value);
-        ctx.textAlign = 'right';
-        ctx.textBaseline = 'bottom';
-
-        // Add Shadow for better visibility
+        // Configure Text
+        const fontSize = parseInt(wmSize.value);
+        ctx.font = `bold ${fontSize}px sans-serif`;
+        ctx.fillStyle = wmColor.value;
+        ctx.globalAlpha = parseFloat(wmOpacity.value);
+        
+        // Shadow for better visibility
         ctx.shadowColor = "rgba(0,0,0,0.5)";
         ctx.shadowBlur = 4;
         ctx.shadowOffsetX = 2;
         ctx.shadowOffsetY = 2;
 
-        // Position: Bottom Right with padding
-        const padding = 20; 
-        const x = canvas.width - padding;
-        const y = canvas.height - padding;
-
-        // Draw the text
-        ctx.fillText(watermarkText.value, x, y);
-
-        // Update Preview Image
-        previewImage.src = canvas.toDataURL('image/png');
+        const text = wmText.value;
+        const padding = 20;
+        const offX = parseInt(offsetX.value);
+        const offY = parseInt(offsetY.value);
         
-        // Update Download Link
-        downloadBtn.href = canvas.toDataURL('image/png');
-        downloadBtn.download = 'watermarked-image.png';
+        let x, y;
+
+        // Calculate Position
+        ctx.textBaseline = 'middle'; // Default baseline
+        
+        switch(wmPosition.value) {
+            case 'top-left':
+                ctx.textAlign = 'left';
+                x = padding + offX;
+                y = padding + offY + (fontSize/2);
+                break;
+            case 'top-right':
+                ctx.textAlign = 'right';
+                x = canvas.width - padding + offX;
+                y = padding + offY + (fontSize/2);
+                break;
+            case 'top-center':
+                ctx.textAlign = 'center';
+                x = (canvas.width / 2) + offX;
+                y = padding + offY + (fontSize/2);
+                break;
+            case 'bottom-left':
+                ctx.textAlign = 'left';
+                x = padding + offX;
+                y = canvas.height - padding + offY - (fontSize/2);
+                break;
+            case 'bottom-right':
+                ctx.textAlign = 'right';
+                x = canvas.width - padding + offX;
+                y = canvas.height - padding + offY - (fontSize/2);
+                break;
+            case 'bottom-center':
+                ctx.textAlign = 'center';
+                x = (canvas.width / 2) + offX;
+                y = canvas.height - padding + offY - (fontSize/2);
+                break;
+            case 'center':
+                ctx.textAlign = 'center';
+                x = (canvas.width / 2) + offX;
+                y = (canvas.height / 2) + offY;
+                break;
+        }
+
+        ctx.fillText(text, x, y);
+
+        // Update Preview
+        previewImage.src = canvas.toDataURL();
+        downloadBtn.href = canvas.toDataURL();
     }
 </script>
 
