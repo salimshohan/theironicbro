@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Watermark Tool</title>
+    <style>
+        /* CSS: Modern UI Styling */
+        :root {
+            --primary-color: #4F46E5;
+            --primary-hover: #4338ca;
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-color: #1f2937;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 2rem;
+        }
+
+        h1 {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        /* Controls Section */
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #4b5563;
+        }
+
+        input[type="text"], input[type="number"], input[type="color"] {
+            padding: 10px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus, input[type="number"]:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        input[type="range"] {
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .file-upload {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            border: 2px dashed #cbd5e1;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .file-upload:hover {
+            background-color: #f8fafc;
+            border-color: var(--primary-color);
+        }
+
+        .file-upload input {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        /* Preview Section */
+        .preview-area {
+            background-color: #e5e7eb;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            min-height: 300px;
+            position: relative;
+        }
+
+        .preview-area img {
+            max-width: 100%;
+            max-height: 400px;
+            display: block;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        #downloadBtn {
+            grid-column: 1 / -1;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+            margin-top: 1rem;
+        }
+
+        #downloadBtn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        #downloadBtn.disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Watermark Generator</h1>
+
+    <div class="controls">
+        <div class="control-group">
+            <label>Upload Image</label>
+            <div class="file-upload">
+                <span>📁 Click to Upload Image</span>
+                <input type="file" id="imageInput" accept="image/*">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label>Watermark Text</label>
+            <input type="text" id="watermarkText" placeholder="Enter text" value="@MyBrand">
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+            <div class="control-group" style="flex: 1;">
+                <label>Color</label>
+                <input type="color" id="textColor" value="#ffffff" style="width: 100%; height: 45px;">
+            </div>
+            <div class="control-group" style="flex: 1;">
+                <label>Font Size</label>
+                <input type="number" id="textSize" value="40" min="10" max="200">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label>Opacity (স্বচ্ছতা)</label>
+            <input type="range" id="opacity" min="0.1" max="1" step="0.1" value="0.8">
+        </div>
+    </div>
+
+    <div class="preview-area">
+        <p id="placeholderText" style="color: #6b7280;">No image uploaded</p>
+        <img id="previewImage" alt="Preview" style="display: none;">
+    </div>
+
+    <canvas id="canvas" style="display: none;"></canvas>
+
+    <a id="downloadBtn" class="disabled">Download Image</a>
+</div>
+
+<script>
+    // JavaScript Logic
+    const imageInput = document.getElementById('imageInput');
+    const watermarkText = document.getElementById('watermarkText');
+    const textColor = document.getElementById('textColor');
+    const textSize = document.getElementById('textSize');
+    const opacity = document.getElementById('opacity');
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const previewImage = document.getElementById('previewImage');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const placeholderText = document.getElementById('placeholderText');
+
+    let uploadedImg = new Image();
+
+    // 1. Image Upload Handler
+    imageInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                uploadedImg.src = event.target.result;
+                uploadedImg.onload = function() {
+                    placeholderText.style.display = 'none';
+                    previewImage.style.display = 'block';
+                    downloadBtn.classList.remove('disabled');
+                    drawWatermark(); // Draw immediately after load
+                }
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // 2. Real-time Update Listeners
+    [watermarkText, textColor, textSize, opacity].forEach(el => {
+        el.addEventListener('input', drawWatermark);
+    });
+
+    // 3. Main Function to Draw Watermark
+    function drawWatermark() {
+        if (!uploadedImg.src) return;
+
+        // Set canvas size to match original image size
+        canvas.width = uploadedImg.width;
+        canvas.height = uploadedImg.height;
+
+        // Clear canvas and draw original image
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(uploadedImg, 0, 0);
+
+        // Configure Text Styles
+        const size = parseInt(textSize.value);
+        ctx.font = `bold ${size}px 'Segoe UI', sans-serif`;
+        ctx.fillStyle = textColor.value;
+        ctx.globalAlpha = parseFloat(opacity.value);
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'bottom';
+
+        // Add Shadow for better visibility
+        ctx.shadowColor = "rgba(0,0,0,0.5)";
+        ctx.shadowBlur = 4;
+        ctx.shadowOffsetX = 2;
+        ctx.shadowOffsetY = 2;
+
+        // Position: Bottom Right with padding
+        const padding = 20; 
+        const x = canvas.width - padding;
+        const y = canvas.height - padding;
+
+        // Draw the text
+        ctx.fillText(watermarkText.value, x, y);
+
+        // Update Preview Image
+        previewImage.src = canvas.toDataURL('image/png');
+        
+        // Update Download Link
+        downloadBtn.href = canvas.toDataURL('image/png');
+        downloadBtn.download = 'watermarked-image.png';
+    }
+</script>
+
+</body>
+</html>
