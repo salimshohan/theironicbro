@@ -3,256 +3,297 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Ironic Bro - Ultimate Meme Generator</title>
-    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+    <title>The Ironic Bro - Studio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #f4f4f9;
-            --panel-bg: #ffffff;
-            --border-color: #e0e0e0;
-            --text-color: #333333;
-            --accent-color: #000000; 
-            --accent-hover: #333333;
+            --glass-bg: rgba(255, 255, 255, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.6);
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            --text-color: #2b2b2b;
+            --accent-color: #ff4757;
         }
 
+        /* Animated Mesh Gradient Background */
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            font-family: 'Space Grotesk', sans-serif;
             margin: 0;
-            padding: 20px;
+            padding: 30px 20px;
+            min-height: 100vh;
+            color: var(--text-color);
+            background: linear-gradient(-45deg, #fbc2eb, #a6c1ee, #fdcbf1, #e6dee9);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
             display: flex;
             justify-content: center;
-            min-height: 100vh;
+            align-items: flex-start;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1250px;
             width: 100%;
             display: grid;
-            grid-template-columns: 1fr 380px;
-            gap: 20px;
-            align-items: start;
+            grid-template-columns: 1fr 400px;
+            gap: 30px;
         }
 
-        @media (max-width: 800px) {
+        @media (max-width: 900px) {
             .container {
                 grid-template-columns: 1fr;
             }
         }
 
+        /* Glassmorphism Panels */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            box-shadow: var(--glass-shadow);
+            padding: 25px;
+        }
+
         .preview-section {
-            background-color: var(--panel-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
             min-height: 500px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+            position: relative;
+        }
+
+        .preview-section::before {
+            content: "PREVIEW";
+            position: absolute;
+            top: 20px;
+            left: 25px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: rgba(0,0,0,0.3);
         }
 
         canvas {
             max-width: 100%;
-            max-height: 70vh;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            max-height: 75vh;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        canvas:hover {
+            transform: scale(1.02);
         }
 
         .controls-section {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 20px;
         }
 
-        .panel {
-            background-color: var(--panel-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-        }
-
-        .panel h3 {
+        h3 {
             margin-top: 0;
             margin-bottom: 15px;
-            font-size: 16px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 10px;
+            font-size: 14px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            color: rgba(0,0,0,0.6);
+            font-weight: 700;
         }
 
+        /* Custom Textarea */
         textarea {
             width: 100%;
-            background-color: #f9f9f9;
-            color: var(--text-color);
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            padding: 15px;
+            background: rgba(255, 255, 255, 0.6);
+            border: 2px solid transparent;
+            border-radius: 16px;
+            padding: 20px;
             font-size: 16px;
             font-family: inherit;
+            color: #000;
             box-sizing: border-box;
-            margin-bottom: 5px;
             resize: vertical;
             min-height: 120px;
-            transition: border-color 0.2s;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
         }
 
         textarea:focus {
             outline: none;
-            border-color: var(--accent-color);
+            background: rgba(255, 255, 255, 0.9);
+            border-color: rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
 
-        /* 50 Presets Grid - Scrollable */
+        /* Modern Preset Grid */
         .preset-scroll-area {
-            max-height: 350px;
+            max-height: 320px;
             overflow-y: auto;
-            padding-right: 5px;
-            margin-bottom: 10px;
+            padding-right: 10px;
         }
 
         .preset-scroll-area::-webkit-scrollbar {
             width: 6px;
         }
         .preset-scroll-area::-webkit-scrollbar-thumb {
-            background-color: #ccc;
+            background-color: rgba(0,0,0,0.2);
             border-radius: 10px;
         }
 
         .preset-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
+            gap: 12px;
         }
 
         .preset-btn {
+            background: rgba(255, 255, 255, 0.5);
             border: 2px solid transparent;
-            border-radius: 8px;
-            padding: 8px 5px;
+            border-radius: 12px;
+            padding: 10px 5px;
             cursor: pointer;
-            transition: transform 0.1s, border-color 0.2s;
-            text-align: center;
+            transition: all 0.2s ease;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            background-color: #f0f0f0;
         }
 
         .preset-btn:hover {
-            transform: scale(1.02);
+            background: rgba(255, 255, 255, 0.8);
+            transform: translateY(-2px);
         }
 
         .preset-btn.active {
             border-color: #000;
-            box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
+            background: #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transform: scale(1.05);
         }
 
         .preset-name {
-            font-size: 10px;
-            font-weight: bold;
-            margin-bottom: 5px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #333;
+            text-align: center;
+            width: 100%;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            width: 100%;
         }
 
         .preset-swatch {
-            width: 100%;
-            height: 25px;
-            border-radius: 4px;
+            width: 80%;
+            height: 20px;
+            border-radius: 20px;
             border: 1px solid rgba(0,0,0,0.1);
         }
 
-        /* Aspect Ratio */
+        /* Pill Buttons for Ratio */
         .ratio-buttons {
             display: flex;
             gap: 10px;
+            background: rgba(255,255,255,0.4);
+            padding: 5px;
+            border-radius: 20px;
         }
 
         .ratio-buttons button {
             flex: 1;
-            background-color: #f9f9f9;
+            background: transparent;
             color: var(--text-color);
-            border: 2px solid var(--border-color);
-            padding: 10px;
-            border-radius: 8px;
-            font-weight: bold;
+            border: none;
+            padding: 12px;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 13px;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s ease;
         }
 
         .ratio-buttons button.active {
-            background-color: var(--accent-color);
-            border-color: var(--accent-color);
-            color: white;
+            background: #000;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
+        /* Premium Download Button */
         .download-btn {
-            background-color: var(--accent-color);
+            background: linear-gradient(45deg, #111, #333);
             color: white;
             border: none;
-            padding: 18px;
-            border-radius: 8px;
+            padding: 20px;
+            border-radius: 20px;
             font-size: 16px;
-            font-weight: bold;
+            font-weight: 700;
             cursor: pointer;
             width: 100%;
-            transition: background-color 0.2s;
+            transition: all 0.3s ease;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
         }
 
         .download-btn:hover {
-            background-color: var(--accent-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.4);
+            background: linear-gradient(45deg, #000, #222);
+        }
+
+        .download-btn svg {
+            transition: transform 0.3s ease;
+        }
+
+        .download-btn:hover svg {
+            transform: translateY(3px);
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <div class="preview-section">
+        <div class="glass-panel preview-section">
             <canvas id="memeCanvas"></canvas>
         </div>
 
         <div class="controls-section">
             
-            <div class="panel">
-                <h3>Write Text</h3>
-                <textarea id="memeText">It's better to sleep in class than to fall in love with classmates.</textarea>
+            <div class="glass-panel">
+                <h3>The Text</h3>
+                <textarea id="memeText" placeholder="Type your ironic thought here...">It's better to sleep in class than to fall in love with classmates.</textarea>
             </div>
 
-            <div class="panel">
-                <h3>Choose Style (50 Presets)</h3>
+            <div class="glass-panel">
+                <h3>Aesthetic Presets</h3>
                 <div class="preset-scroll-area">
                     <div class="preset-container" id="presetContainer">
                         </div>
                 </div>
             </div>
 
-            <div class="panel">
-                <h3>Aspect Ratio</h3>
+            <div class="glass-panel">
+                <h3>Canvas Size</h3>
                 <div class="ratio-buttons">
-                    <button class="ratio-btn active" data-width="1080" data-height="1080">1:1 (Square)</button>
-                    <button class="ratio-btn" data-width="1080" data-height="1350">4:5 (Portrait)</button>
-                    <button class="ratio-btn" data-width="1920" data-height="1080">16:9 (Landscape)</button>
+                    <button class="ratio-btn active" data-width="1080" data-height="1080">1:1 Square</button>
+                    <button class="ratio-btn" data-width="1080" data-height="1350">4:5 Portrait</button>
+                    <button class="ratio-btn" data-width="1920" data-height="1080">16:9 Wide</button>
                 </div>
             </div>
 
-            <div class="panel" style="padding: 0; border: none; box-shadow: none; background: transparent;">
-                <button id="downloadBtn" class="download-btn">
-                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                    Download Meme
-                </button>
-            </div>
+            <button id="downloadBtn" class="download-btn">
+                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Save Masterpiece
+            </button>
 
         </div>
     </div>
@@ -269,9 +310,8 @@
         let canvasWidth = 1080;
         let canvasHeight = 1080;
 
-        // 50 Unique Custom Presets with Backgrounds, Text Colors, and Patterns
+        // 50 Unique Custom Presets
         const presets = [
-            // Dark & Moody
             { name: 'Dark Void', bg: '#0d0d0d', text: '#ffffff', pattern: 'dots', pColor: '#222222' },
             { name: 'Matrix', bg: '#000000', text: '#00ff41', pattern: 'grid', pColor: '#003300' },
             { name: 'Midnight Blue', bg: '#0a192f', text: '#64ffda', pattern: 'stripes', pColor: '#112240' },
@@ -280,8 +320,6 @@
             { name: 'Charcoal', bg: '#2b2b2b', text: '#fca311', pattern: 'stripes', pColor: '#3c3c3c' },
             { name: 'Deep Purple', bg: '#120024', text: '#d4af37', pattern: 'dots', pColor: '#240046' },
             { name: 'Hacker', bg: '#0f0f0f', text: '#39ff14', pattern: 'grid', pColor: '#1a1a1a' },
-            
-            // Bright & Pop
             { name: 'Classic Pop', bg: '#ffcc00', text: '#000000', pattern: 'dots', pColor: '#e6b800' },
             { name: 'Bubblegum', bg: '#ff77aa', text: '#ffffff', pattern: 'stripes', pColor: '#ee5588' },
             { name: 'Minty', bg: '#aaffcc', text: '#005522', pattern: 'grid', pColor: '#88eeaa' },
@@ -290,8 +328,6 @@
             { name: 'Lime Zest', bg: '#ccff00', text: '#111111', pattern: 'grid', pColor: '#b3e600' },
             { name: 'Lavender', bg: '#e6e6fa', text: '#4b0082', pattern: 'dots', pColor: '#d8bfd8' },
             { name: 'Coral', bg: '#ff6f61', text: '#ffffff', pattern: 'stripes', pColor: '#e05a4f' },
-            
-            // Pastel & Soft
             { name: 'Soft Peach', bg: '#ffdab9', text: '#8b4513', pattern: 'grid', pColor: '#eecbad' },
             { name: 'Baby Blue', bg: '#b0e0e6', text: '#000080', pattern: 'dots', pColor: '#87ceeb' },
             { name: 'Pale Rose', bg: '#ffe4e1', text: '#8b0000', pattern: 'stripes', pColor: '#ffc0cb' },
@@ -300,36 +336,26 @@
             { name: 'Muted Clay', bg: '#d2b48c', text: '#ffffff', pattern: 'stripes', pColor: '#bc8f8f' },
             { name: 'Dusty Blue', bg: '#778899', text: '#f0f8ff', pattern: 'grid', pColor: '#708090' },
             { name: 'Warm Sand', bg: '#fdf5e6', text: '#8b4513', pattern: 'dots', pColor: '#ffebcd' },
-
-            // Neon / Synthwave
             { name: 'Cyberpunk', bg: '#2b00ff', text: '#ff00ff', pattern: 'grid', pColor: '#1a00cc' },
             { name: 'Outrun', bg: '#240046', text: '#ff9e00', pattern: 'stripes', pColor: '#3c096c' },
             { name: 'Neon Green', bg: '#000000', text: '#bfff00', pattern: 'dots', pColor: '#111111' },
             { name: 'Laser Pink', bg: '#000000', text: '#ff00aa', pattern: 'grid', pColor: '#220011' },
             { name: 'Electric', bg: '#001eff', text: '#00ffcc', pattern: 'stripes', pColor: '#0017cc' },
-
-            // Monotone & Minimal
             { name: 'Pure White', bg: '#ffffff', text: '#000000', pattern: 'none', pColor: '#ffffff' },
             { name: 'True Black', bg: '#000000', text: '#ffffff', pattern: 'none', pColor: '#000000' },
             { name: 'Concrete', bg: '#95a5a6', text: '#2c3e50', pattern: 'dots', pColor: '#7f8c8d' },
             { name: 'Slate', bg: '#34495e', text: '#ecf0f1', pattern: 'stripes', pColor: '#2c3e50' },
             { name: 'Silver', bg: '#bdc3c7', text: '#2c3e50', pattern: 'grid', pColor: '#95a5a6' },
-
-            // Earth & Nature
             { name: 'Forest', bg: '#1e3f20', text: '#e9f5e9', pattern: 'dots', pColor: '#152b16' },
             { name: 'Ocean', bg: '#005f73', text: '#e0fbfc', pattern: 'stripes', pColor: '#0a9396' },
             { name: 'Autumn', bg: '#ca6702', text: '#ffffff', pattern: 'grid', pColor: '#bb3e03' },
             { name: 'Terracotta', bg: '#e07a5f', text: '#f4f1de', pattern: 'dots', pColor: '#c25c43' },
             { name: 'Moss', bg: '#556b2f', text: '#ffffe0', pattern: 'stripes', pColor: '#6b8e23' },
-
-            // Premium / Elegant
             { name: 'Gold Noir', bg: '#111111', text: '#ffd700', pattern: 'dots', pColor: '#222222' },
             { name: 'Royal Blue', bg: '#002366', text: '#ffffff', pattern: 'grid', pColor: '#001845' },
             { name: 'Wine', bg: '#580f1c', text: '#f8edeb', pattern: 'stripes', pColor: '#3a0a12' },
             { name: 'Emerald', bg: '#046307', text: '#ffffff', pattern: 'dots', pColor: '#024004' },
             { name: 'Ivory Gold', bg: '#fffff0', text: '#b8860b', pattern: 'grid', pColor: '#eee8aa' },
-
-            // Funky & Abstract
             { name: 'Watermelon', bg: '#fc6c85', text: '#000000', pattern: 'dots', pColor: '#43aa8b' },
             { name: 'Mustard', bg: '#e1ad01', text: '#3e2723', pattern: 'stripes', pColor: '#c29200' },
             { name: 'Plum', bg: '#dda0dd', text: '#4a0e4e', pattern: 'grid', pColor: '#ba55d3' },
@@ -338,12 +364,11 @@
             { name: 'Sunset', bg: '#ff4e50', text: '#f9d423', pattern: 'grid', pColor: '#e02a2c' }
         ];
 
-        // Ensure fonts are loaded before drawing
         document.fonts.ready.then(() => {
             drawMeme();
         });
 
-        // Generate 50 Preset Buttons
+        // Generate Presets
         presets.forEach((preset, index) => {
             const btn = document.createElement('div');
             btn.className = 'preset-btn';
@@ -366,14 +391,12 @@
             presetContainer.appendChild(btn);
         });
 
-        // Function to draw background patterns
+        // Draw Pattern
         function drawPattern(ctx, preset) {
             if (preset.pattern === 'none') return;
 
             ctx.fillStyle = preset.pColor;
             ctx.strokeStyle = preset.pColor;
-            
-            // Set opacity for patterns so they act as a subtle background design
             ctx.globalAlpha = 0.5;
 
             if (preset.pattern === 'dots') {
@@ -402,22 +425,22 @@
                 }
             }
             
-            // Reset alpha
             ctx.globalAlpha = 1.0;
         }
 
-        // Auto-sizing text wrapper
+        // Updated Auto-sizing with SMALLER font and LESS line-spacing
         function wrapAndScaleText(context, text, x, y, maxWidth, maxHeight) {
-            // Determine optimal font size starting from 100px down to 30px
-            let fontSize = 100;
+            // Changed: Max font size reduced from 100 to 65
+            let fontSize = 65; 
             let lines = [];
             let lineHeight = 0;
 
             context.textAlign = 'center';
 
-            while (fontSize >= 30) {
+            while (fontSize >= 24) {
                 context.font = `bold ${fontSize}px "Space Grotesk", sans-serif`;
-                lineHeight = fontSize * 1.2;
+                // Changed: Line height multiplier reduced to 1.1 for tighter spacing
+                lineHeight = fontSize * 1.1; 
                 lines = [];
                 let words = text.split(' ');
                 let line = '';
@@ -435,14 +458,12 @@
                 lines.push(line);
 
                 if (lines.length * lineHeight <= maxHeight) {
-                    break; // Fits perfectly
+                    break;
                 }
-                fontSize -= 5; // Decrease size and try again
+                fontSize -= 3; 
             }
 
-            // Draw the text centrally
             let totalHeight = lines.length * lineHeight;
-            // Shift up slightly to make room for watermark at bottom
             let startY = (canvasHeight - totalHeight) / 2 + (lineHeight / 2) - 40; 
 
             context.fillStyle = activePreset.text;
@@ -457,31 +478,27 @@
             canvas.width = canvasWidth;
             canvas.height = canvasHeight;
 
-            // 1. Base Background
+            // Background
             ctx.fillStyle = activePreset.bg;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // 2. Background Pattern Design
+            // Pattern
             drawPattern(ctx, activePreset);
 
-            // 3. Main Text (Auto-scaling, Space Grotesk Font)
+            // Text
             const text = memeTextInput.value;
-            const maxWidth = canvas.width - 160; 
-            const maxHeight = canvas.height - 250; // Leave room for watermark
+            const maxWidth = canvas.width - 200; 
+            const maxHeight = canvas.height - 300; 
             wrapAndScaleText(ctx, text, canvas.width / 2, canvas.height / 2, maxWidth, maxHeight);
 
-            // 4. Unique Watermark at Middle Bottom
+            // Unique Watermark
             ctx.font = '45px "Permanent Marker", cursive';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'bottom';
-            
-            // Make watermark text color contrast nicely but slightly transparent
             ctx.fillStyle = activePreset.text; 
             ctx.globalAlpha = 0.8;
-            
-            // The position is exactly in the middle at the bottom
             ctx.fillText('@theironicbro', canvas.width / 2, canvas.height - 40);
-            ctx.globalAlpha = 1.0; // reset
+            ctx.globalAlpha = 1.0;
         }
 
         // Listeners
