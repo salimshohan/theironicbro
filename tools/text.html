@@ -3,29 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Ironic Bro - Meme Generator (Light Vibe)</title>
+    <title>The Ironic Bro - Ultimate Meme Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
     <style>
-        /* Define a light vibe theme */
         :root {
-            /* Patterned background for the whole page */
-            --bg-color: #fcfbf9;
-            --page-bg-pattern: radial-gradient(#e0e0e0 1px, transparent 1px);
-            --page-bg-size: 20px 20px;
-
+            --bg-color: #f4f4f9;
             --panel-bg: #ffffff;
             --border-color: #e0e0e0;
             --text-color: #333333;
-            --label-color: #777777;
-            --accent-color: #007bff; /* Classic blue for accents */
-            --accent-hover: #0056b3;
-            --preset-active-border: #ff9800; /* Amber highlight for active preset */
+            --accent-color: #000000; 
+            --accent-hover: #333333;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: var(--bg-color);
-            background-image: var(--page-bg-pattern);
-            background-size: var(--page-bg-size);
             color: var(--text-color);
             margin: 0;
             padding: 20px;
@@ -38,7 +30,7 @@
             max-width: 1200px;
             width: 100%;
             display: grid;
-            grid-template-columns: 1fr 350px;
+            grid-template-columns: 1fr 380px;
             gap: 20px;
             align-items: start;
         }
@@ -58,13 +50,13 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            min-height: 400px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            min-height: 500px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.04);
         }
 
         canvas {
             max-width: 100%;
-            max-height: 60vh;
+            max-height: 70vh;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
@@ -80,7 +72,7 @@
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
         }
 
         .panel h3 {
@@ -89,102 +81,107 @@
             font-size: 16px;
             border-bottom: 1px solid var(--border-color);
             padding-bottom: 10px;
-            color: var(--text-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-size: 14px;
-            color: var(--label-color);
-        }
-
-        textarea, select, input[type="range"] {
+        textarea {
             width: 100%;
             background-color: #f9f9f9;
             color: var(--text-color);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 10px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            font-size: 16px;
             font-family: inherit;
             box-sizing: border-box;
-            margin-bottom: 15px;
+            margin-bottom: 5px;
+            resize: vertical;
+            min-height: 120px;
             transition: border-color 0.2s;
         }
 
-        textarea:focus, select:focus {
+        textarea:focus {
             outline: none;
             border-color: var(--accent-color);
         }
 
-        textarea {
-            resize: vertical;
-            min-height: 100px;
+        /* 50 Presets Grid - Scrollable */
+        .preset-scroll-area {
+            max-height: 350px;
+            overflow-y: auto;
+            padding-right: 5px;
+            margin-bottom: 10px;
         }
 
-        .flex-row {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
+        .preset-scroll-area::-webkit-scrollbar {
+            width: 6px;
+        }
+        .preset-scroll-area::-webkit-scrollbar-thumb {
+            background-color: #ccc;
+            border-radius: 10px;
         }
 
-        .flex-row > div {
-            flex: 1;
-        }
-
-        /* Preset Themes Styling */
         .preset-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 15px;
+            gap: 8px;
         }
 
         .preset-btn {
-            border: 2px solid var(--border-color);
+            border: 2px solid transparent;
             border-radius: 8px;
-            padding: 10px;
+            padding: 8px 5px;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: transform 0.1s, border-color 0.2s;
             text-align: center;
-            font-weight: bold;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            background-color: #f0f0f0;
+        }
+
+        .preset-btn:hover {
+            transform: scale(1.02);
         }
 
         .preset-btn.active {
-            border-color: var(--preset-active-border);
-            box-shadow: 0 0 8px rgba(255,152,0,0.3);
+            border-color: #000;
+            box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
         }
 
         .preset-name {
-            font-size: 12px;
+            font-size: 10px;
+            font-weight: bold;
             margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
         }
 
         .preset-swatch {
             width: 100%;
-            height: 30px;
+            height: 25px;
             border-radius: 4px;
-            border: 1px solid var(--border-color);
+            border: 1px solid rgba(0,0,0,0.1);
         }
 
-        /* Aspect Ratio Logic */
+        /* Aspect Ratio */
         .ratio-buttons {
             display: flex;
             gap: 10px;
-            margin-bottom: 15px;
         }
 
         .ratio-buttons button {
             flex: 1;
             background-color: #f9f9f9;
             color: var(--text-color);
-            border: 1px solid var(--border-color);
-            padding: 8px;
-            border-radius: 6px;
+            border: 2px solid var(--border-color);
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: bold;
             cursor: pointer;
             transition: all 0.2s;
         }
@@ -199,7 +196,7 @@
             background-color: var(--accent-color);
             color: white;
             border: none;
-            padding: 15px;
+            padding: 18px;
             border-radius: 8px;
             font-size: 16px;
             font-weight: bold;
@@ -210,6 +207,8 @@
             justify-content: center;
             align-items: center;
             gap: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .download-btn:hover {
@@ -227,70 +226,31 @@
         <div class="controls-section">
             
             <div class="panel">
-                <h3>Text Editor</h3>
-                <label>Meme Text</label>
+                <h3>Write Text</h3>
                 <textarea id="memeText">It's better to sleep in class than to fall in love with classmates.</textarea>
+            </div>
 
-                <div class="flex-row">
-                    <div>
-                        <label>Font Family</label>
-                        <select id="fontFamily">
-                            <option value="Arial">Arial</option>
-                            <option value="Impact">Impact</option>
-                            <option value="Courier New">Courier New</option>
-                            <option value="Times New Roman">Times New Roman</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label>Font Size</label>
-                        <input type="range" id="fontSize" min="20" max="150" value="60">
-                    </div>
+            <div class="panel">
+                <h3>Choose Style (50 Presets)</h3>
+                <div class="preset-scroll-area">
+                    <div class="preset-container" id="presetContainer">
+                        </div>
                 </div>
             </div>
 
             <div class="panel">
-                <h3>Preset Themes</h3>
-                <label>Select color combination</label>
-                <div class="preset-container" id="presetContainer">
-                    </div>
-            </div>
-
-            <div class="panel">
-                <h3>New Features</h3>
-                <div class="flex-row">
-                    <div>
-                        <label>Text Alignment</label>
-                        <select id="textAlign">
-                            <option value="center">Center</option>
-                            <option value="left">Left</option>
-                            <option value="right">Right</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label>Border Style</label>
-                        <select id="borderStyle">
-                            <option value="none">None</option>
-                            <option value="thin">Thin Solid</option>
-                            <option value="thick">Thick Solid</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="panel">
-                <h3>Layout</h3>
-                <label>Aspect Ratio</label>
+                <h3>Aspect Ratio</h3>
                 <div class="ratio-buttons">
-                    <button class="ratio-btn active" data-width="1080" data-height="1080">1:1</button>
-                    <button class="ratio-btn" data-width="1080" data-height="1350">4:5</button>
-                    <button class="ratio-btn" data-width="1920" data-height="1080">16:9</button>
+                    <button class="ratio-btn active" data-width="1080" data-height="1080">1:1 (Square)</button>
+                    <button class="ratio-btn" data-width="1080" data-height="1350">4:5 (Portrait)</button>
+                    <button class="ratio-btn" data-width="1920" data-height="1080">16:9 (Landscape)</button>
                 </div>
             </div>
 
-            <div class="panel">
+            <div class="panel" style="padding: 0; border: none; box-shadow: none; background: transparent;">
                 <button id="downloadBtn" class="download-btn">
                     <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                    Download High-Quality PNG
+                    Download Meme
                 </button>
             </div>
 
@@ -300,114 +260,90 @@
     <script>
         const canvas = document.getElementById('memeCanvas');
         const ctx = canvas.getContext('2d');
-
-        // Inputs
         const memeTextInput = document.getElementById('memeText');
-        const fontSizeInput = document.getElementById('fontSize');
-        const fontFamilyInput = document.getElementById('fontFamily');
-        const textAlignInput = document.getElementById('textAlign');
-        const borderStyleInput = document.getElementById('borderStyle');
         const presetContainer = document.getElementById('presetContainer');
         const ratioBtns = document.querySelectorAll('.ratio-btn');
         const downloadBtn = document.getElementById('downloadBtn');
 
-        // State for active colors (initially empty, set by first preset)
-        let currentBgColor = '';
-        let currentTextColor = '';
-        let currentWatermarkColor = '';
-
-        // Initial Canvas Settings (High Quality base)
+        let activePreset = null;
         let canvasWidth = 1080;
         let canvasHeight = 1080;
 
-        // Preset Themes Definition
+        // 50 Unique Custom Presets with Backgrounds, Text Colors, and Patterns
         const presets = [
-            { name: 'Light Classic', bg: '#ffffff', text: '#000000', watermark: 'rgba(0,0,0,0.3)' },
-            { name: 'Midnight', bg: '#1a1a1a', text: '#ffffff', watermark: 'rgba(255,255,255,0.4)' },
-            { name: 'Beach', bg: '#e0f7fa', text: '#006064', watermark: 'rgba(0,0,0,0.2)' },
-            { name: 'Minimal Grey', bg: '#f5f5f5', text: '#333333', watermark: 'rgba(0,0,0,0.3)' },
-            { name: 'Serene Teal', bg: '#009688', text: '#ffffff', watermark: 'rgba(255,255,255,0.4)' },
-            { name: 'Sunset Warmth', bg: '#fffde7', text: '#d84315', watermark: 'rgba(0,0,0,0.3)' }
+            // Dark & Moody
+            { name: 'Dark Void', bg: '#0d0d0d', text: '#ffffff', pattern: 'dots', pColor: '#222222' },
+            { name: 'Matrix', bg: '#000000', text: '#00ff41', pattern: 'grid', pColor: '#003300' },
+            { name: 'Midnight Blue', bg: '#0a192f', text: '#64ffda', pattern: 'stripes', pColor: '#112240' },
+            { name: 'Vampire', bg: '#1a0000', text: '#ff3333', pattern: 'dots', pColor: '#330000' },
+            { name: 'Abyss', bg: '#0b0c10', text: '#66fcf1', pattern: 'grid', pColor: '#1f2833' },
+            { name: 'Charcoal', bg: '#2b2b2b', text: '#fca311', pattern: 'stripes', pColor: '#3c3c3c' },
+            { name: 'Deep Purple', bg: '#120024', text: '#d4af37', pattern: 'dots', pColor: '#240046' },
+            { name: 'Hacker', bg: '#0f0f0f', text: '#39ff14', pattern: 'grid', pColor: '#1a1a1a' },
+            
+            // Bright & Pop
+            { name: 'Classic Pop', bg: '#ffcc00', text: '#000000', pattern: 'dots', pColor: '#e6b800' },
+            { name: 'Bubblegum', bg: '#ff77aa', text: '#ffffff', pattern: 'stripes', pColor: '#ee5588' },
+            { name: 'Minty', bg: '#aaffcc', text: '#005522', pattern: 'grid', pColor: '#88eeaa' },
+            { name: 'Sky High', bg: '#70d6ff', text: '#003366', pattern: 'dots', pColor: '#5bc0de' },
+            { name: 'Tangerine', bg: '#ff9900', text: '#ffffff', pattern: 'stripes', pColor: '#cc7a00' },
+            { name: 'Lime Zest', bg: '#ccff00', text: '#111111', pattern: 'grid', pColor: '#b3e600' },
+            { name: 'Lavender', bg: '#e6e6fa', text: '#4b0082', pattern: 'dots', pColor: '#d8bfd8' },
+            { name: 'Coral', bg: '#ff6f61', text: '#ffffff', pattern: 'stripes', pColor: '#e05a4f' },
+            
+            // Pastel & Soft
+            { name: 'Soft Peach', bg: '#ffdab9', text: '#8b4513', pattern: 'grid', pColor: '#eecbad' },
+            { name: 'Baby Blue', bg: '#b0e0e6', text: '#000080', pattern: 'dots', pColor: '#87ceeb' },
+            { name: 'Pale Rose', bg: '#ffe4e1', text: '#8b0000', pattern: 'stripes', pColor: '#ffc0cb' },
+            { name: 'Mint Cream', bg: '#f5fffa', text: '#2e8b57', pattern: 'grid', pColor: '#e0eee0' },
+            { name: 'Lemonade', bg: '#fffacd', text: '#556b2f', pattern: 'dots', pColor: '#eee8aa' },
+            { name: 'Muted Clay', bg: '#d2b48c', text: '#ffffff', pattern: 'stripes', pColor: '#bc8f8f' },
+            { name: 'Dusty Blue', bg: '#778899', text: '#f0f8ff', pattern: 'grid', pColor: '#708090' },
+            { name: 'Warm Sand', bg: '#fdf5e6', text: '#8b4513', pattern: 'dots', pColor: '#ffebcd' },
+
+            // Neon / Synthwave
+            { name: 'Cyberpunk', bg: '#2b00ff', text: '#ff00ff', pattern: 'grid', pColor: '#1a00cc' },
+            { name: 'Outrun', bg: '#240046', text: '#ff9e00', pattern: 'stripes', pColor: '#3c096c' },
+            { name: 'Neon Green', bg: '#000000', text: '#bfff00', pattern: 'dots', pColor: '#111111' },
+            { name: 'Laser Pink', bg: '#000000', text: '#ff00aa', pattern: 'grid', pColor: '#220011' },
+            { name: 'Electric', bg: '#001eff', text: '#00ffcc', pattern: 'stripes', pColor: '#0017cc' },
+
+            // Monotone & Minimal
+            { name: 'Pure White', bg: '#ffffff', text: '#000000', pattern: 'none', pColor: '#ffffff' },
+            { name: 'True Black', bg: '#000000', text: '#ffffff', pattern: 'none', pColor: '#000000' },
+            { name: 'Concrete', bg: '#95a5a6', text: '#2c3e50', pattern: 'dots', pColor: '#7f8c8d' },
+            { name: 'Slate', bg: '#34495e', text: '#ecf0f1', pattern: 'stripes', pColor: '#2c3e50' },
+            { name: 'Silver', bg: '#bdc3c7', text: '#2c3e50', pattern: 'grid', pColor: '#95a5a6' },
+
+            // Earth & Nature
+            { name: 'Forest', bg: '#1e3f20', text: '#e9f5e9', pattern: 'dots', pColor: '#152b16' },
+            { name: 'Ocean', bg: '#005f73', text: '#e0fbfc', pattern: 'stripes', pColor: '#0a9396' },
+            { name: 'Autumn', bg: '#ca6702', text: '#ffffff', pattern: 'grid', pColor: '#bb3e03' },
+            { name: 'Terracotta', bg: '#e07a5f', text: '#f4f1de', pattern: 'dots', pColor: '#c25c43' },
+            { name: 'Moss', bg: '#556b2f', text: '#ffffe0', pattern: 'stripes', pColor: '#6b8e23' },
+
+            // Premium / Elegant
+            { name: 'Gold Noir', bg: '#111111', text: '#ffd700', pattern: 'dots', pColor: '#222222' },
+            { name: 'Royal Blue', bg: '#002366', text: '#ffffff', pattern: 'grid', pColor: '#001845' },
+            { name: 'Wine', bg: '#580f1c', text: '#f8edeb', pattern: 'stripes', pColor: '#3a0a12' },
+            { name: 'Emerald', bg: '#046307', text: '#ffffff', pattern: 'dots', pColor: '#024004' },
+            { name: 'Ivory Gold', bg: '#fffff0', text: '#b8860b', pattern: 'grid', pColor: '#eee8aa' },
+
+            // Funky & Abstract
+            { name: 'Watermelon', bg: '#fc6c85', text: '#000000', pattern: 'dots', pColor: '#43aa8b' },
+            { name: 'Mustard', bg: '#e1ad01', text: '#3e2723', pattern: 'stripes', pColor: '#c29200' },
+            { name: 'Plum', bg: '#dda0dd', text: '#4a0e4e', pattern: 'grid', pColor: '#ba55d3' },
+            { name: 'Coffee', bg: '#6f4e37', text: '#f5deb3', pattern: 'dots', pColor: '#4a3219' },
+            { name: 'Ice', bg: '#e0ffff', text: '#008b8b', pattern: 'stripes', pColor: '#afeeee' },
+            { name: 'Sunset', bg: '#ff4e50', text: '#f9d423', pattern: 'grid', pColor: '#e02a2c' }
         ];
 
-        // Function to wrap text so it fits inside the canvas
-        function wrapText(context, text, x, y, maxWidth, lineHeight, alignment) {
-            const words = text.split(' ');
-            let line = '';
-            let lines = [];
+        // Ensure fonts are loaded before drawing
+        document.fonts.ready.then(() => {
+            drawMeme();
+        });
 
-            for(let n = 0; n < words.length; n++) {
-                let testLine = line + words[n] + ' ';
-                let metrics = context.measureText(testLine);
-                let testWidth = metrics.width;
-                if (testWidth > maxWidth && n > 0) {
-                    lines.push(line);
-                    line = words[n] + ' ';
-                } else {
-                    line = testLine;
-                }
-            }
-            lines.push(line);
-
-            // Calculate starting Y to center text vertically
-            let totalHeight = lines.length * lineHeight;
-            let startY = (canvasHeight - totalHeight) / 2 + (lineHeight / 2);
-
-            // Adjust starting X based on alignment
-            let startX;
-            context.textAlign = alignment;
-            if (alignment === 'left') {
-                startX = 80; // Left padding
-            } else if (alignment === 'right') {
-                startX = canvasWidth - 80; // Right padding
-            } else {
-                startX = canvasWidth / 2; // Center
-            }
-
-            for(let i = 0; i < lines.length; i++) {
-                context.fillText(lines[i].trim(), startX, startY + (i * lineHeight));
-            }
-        }
-
-        function drawMeme() {
-            // Set High-Quality Canvas Dimensions
-            canvas.width = canvasWidth;
-            canvas.height = canvasHeight;
-
-            // 1. Draw Background Color
-            ctx.fillStyle = currentBgColor;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            // 2. Draw Designed Background Border (Optional based on user choice)
-            const borderStyle = borderStyleInput.value;
-            if (borderStyle !== 'none') {
-                ctx.strokeStyle = currentTextColor; // Use text color for border
-                ctx.lineWidth = (borderStyle === 'thin') ? 10 : 25;
-                ctx.strokeRect(ctx.lineWidth/2, ctx.lineWidth/2, canvas.width - ctx.lineWidth, canvas.height - ctx.lineWidth);
-            }
-
-            // 3. Set Font Styling for Main Text
-            const fontSize = parseInt(fontSizeInput.value);
-            ctx.font = `bold ${fontSize}px ${fontFamilyInput.value}`;
-            ctx.fillStyle = currentTextColor;
-            ctx.textBaseline = 'middle';
-
-            // Draw Main Text with wrapping and chosen alignment
-            const maxWidth = canvas.width - 160; // Padding
-            const lineHeight = fontSize * 1.3;
-            const alignment = textAlignInput.value;
-            wrapText(ctx, memeTextInput.value, canvas.width / 2, canvas.height / 2, maxWidth, lineHeight, alignment);
-
-            // 4. Draw Watermark (Mandatory)
-            ctx.font = '24px Arial';
-            ctx.fillStyle = currentWatermarkColor; // Semitransparent based on theme
-            ctx.textAlign = 'right';
-            ctx.fillText('@theironicbro', canvas.width - 40, canvas.height - 40);
-        }
-
-        // --- Event Listeners and Setup ---
-
-        // Initialize Preset Buttons
+        // Generate 50 Preset Buttons
         presets.forEach((preset, index) => {
             const btn = document.createElement('div');
             btn.className = 'preset-btn';
@@ -416,56 +352,158 @@
                 <div class="preset-swatch" style="background-color: ${preset.bg}; border-color: ${preset.text};"></div>
             `;
             
-            btn.addEventListener('click', (e) => {
-                // Remove active class from all, add to this one
+            btn.addEventListener('click', () => {
                 document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-
-                // Update current colors and draw
-                currentBgColor = preset.bg;
-                currentTextColor = preset.text;
-                currentWatermarkColor = preset.watermark;
+                activePreset = preset;
                 drawMeme();
             });
             
-            // Set first preset as active initially
             if (index === 0) {
-                btn.click(); 
+                activePreset = preset;
+                btn.classList.add('active');
             }
-            
             presetContainer.appendChild(btn);
         });
 
-        // Other Inputs Listeners
-        [memeTextInput, fontSizeInput, fontFamilyInput, textAlignInput, borderStyleInput].forEach(input => {
-            input.addEventListener('input', drawMeme);
-        });
+        // Function to draw background patterns
+        function drawPattern(ctx, preset) {
+            if (preset.pattern === 'none') return;
 
-        // Aspect Ratio Logic
+            ctx.fillStyle = preset.pColor;
+            ctx.strokeStyle = preset.pColor;
+            
+            // Set opacity for patterns so they act as a subtle background design
+            ctx.globalAlpha = 0.5;
+
+            if (preset.pattern === 'dots') {
+                for (let i = 15; i < canvasWidth; i += 30) {
+                    for (let j = 15; j < canvasHeight; j += 30) {
+                        ctx.beginPath();
+                        ctx.arc(i, j, 3, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+            } else if (preset.pattern === 'grid') {
+                ctx.lineWidth = 2;
+                for (let i = 0; i < canvasWidth; i += 40) {
+                    ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, canvasHeight); ctx.stroke();
+                }
+                for (let j = 0; j < canvasHeight; j += 40) {
+                    ctx.beginPath(); ctx.moveTo(0, j); ctx.lineTo(canvasWidth, j); ctx.stroke();
+                }
+            } else if (preset.pattern === 'stripes') {
+                ctx.lineWidth = 6;
+                for (let i = -canvasHeight; i < canvasWidth; i += 40) {
+                    ctx.beginPath();
+                    ctx.moveTo(i, 0);
+                    ctx.lineTo(i + canvasHeight, canvasHeight);
+                    ctx.stroke();
+                }
+            }
+            
+            // Reset alpha
+            ctx.globalAlpha = 1.0;
+        }
+
+        // Auto-sizing text wrapper
+        function wrapAndScaleText(context, text, x, y, maxWidth, maxHeight) {
+            // Determine optimal font size starting from 100px down to 30px
+            let fontSize = 100;
+            let lines = [];
+            let lineHeight = 0;
+
+            context.textAlign = 'center';
+
+            while (fontSize >= 30) {
+                context.font = `bold ${fontSize}px "Space Grotesk", sans-serif`;
+                lineHeight = fontSize * 1.2;
+                lines = [];
+                let words = text.split(' ');
+                let line = '';
+
+                for(let n = 0; n < words.length; n++) {
+                    let testLine = line + words[n] + ' ';
+                    let metrics = context.measureText(testLine);
+                    if (metrics.width > maxWidth && n > 0) {
+                        lines.push(line);
+                        line = words[n] + ' ';
+                    } else {
+                        line = testLine;
+                    }
+                }
+                lines.push(line);
+
+                if (lines.length * lineHeight <= maxHeight) {
+                    break; // Fits perfectly
+                }
+                fontSize -= 5; // Decrease size and try again
+            }
+
+            // Draw the text centrally
+            let totalHeight = lines.length * lineHeight;
+            // Shift up slightly to make room for watermark at bottom
+            let startY = (canvasHeight - totalHeight) / 2 + (lineHeight / 2) - 40; 
+
+            context.fillStyle = activePreset.text;
+            for(let i = 0; i < lines.length; i++) {
+                context.fillText(lines[i].trim(), x, startY + (i * lineHeight));
+            }
+        }
+
+        function drawMeme() {
+            if (!activePreset) return;
+
+            canvas.width = canvasWidth;
+            canvas.height = canvasHeight;
+
+            // 1. Base Background
+            ctx.fillStyle = activePreset.bg;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // 2. Background Pattern Design
+            drawPattern(ctx, activePreset);
+
+            // 3. Main Text (Auto-scaling, Space Grotesk Font)
+            const text = memeTextInput.value;
+            const maxWidth = canvas.width - 160; 
+            const maxHeight = canvas.height - 250; // Leave room for watermark
+            wrapAndScaleText(ctx, text, canvas.width / 2, canvas.height / 2, maxWidth, maxHeight);
+
+            // 4. Unique Watermark at Middle Bottom
+            ctx.font = '45px "Permanent Marker", cursive';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'bottom';
+            
+            // Make watermark text color contrast nicely but slightly transparent
+            ctx.fillStyle = activePreset.text; 
+            ctx.globalAlpha = 0.8;
+            
+            // The position is exactly in the middle at the bottom
+            ctx.fillText('@theironicbro', canvas.width / 2, canvas.height - 40);
+            ctx.globalAlpha = 1.0; // reset
+        }
+
+        // Listeners
+        memeTextInput.addEventListener('input', drawMeme);
+
         ratioBtns.forEach(btn => {
             btn.addEventListener('click', (e) => {
-                // Update active class
                 ratioBtns.forEach(b => b.classList.remove('active'));
                 e.target.classList.add('active');
-
-                // Update dimensions
                 canvasWidth = parseInt(e.target.dataset.width);
                 canvasHeight = parseInt(e.target.dataset.height);
                 drawMeme();
             });
         });
 
-        // Download Logic
         downloadBtn.addEventListener('click', () => {
-            // Create a temporary link element
             const link = document.createElement('a');
             link.download = 'theironicbro-meme.png';
-            // Export canvas as high-quality PNG
             link.href = canvas.toDataURL('image/png', 1.0);
             link.click();
         });
 
-        // Initial Draw (already called by first preset click)
     </script>
 </body>
 </html>
