@@ -3,25 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Ironic Bro - Meme Generator</title>
+    <title>The Ironic Bro - Meme Generator (Light Vibe)</title>
     <style>
+        /* Define a light vibe theme */
         :root {
-            --bg-color: #121212;
-            --panel-bg: #1e1e1e;
-            --border-color: #333;
-            --text-color: #ffffff;
-            --accent-color: #3b82f6;
-            --accent-hover: #2563eb;
+            /* Patterned background for the whole page */
+            --bg-color: #fcfbf9;
+            --page-bg-pattern: radial-gradient(#e0e0e0 1px, transparent 1px);
+            --page-bg-size: 20px 20px;
+
+            --panel-bg: #ffffff;
+            --border-color: #e0e0e0;
+            --text-color: #333333;
+            --label-color: #777777;
+            --accent-color: #007bff; /* Classic blue for accents */
+            --accent-hover: #0056b3;
+            --preset-active-border: #ff9800; /* Amber highlight for active preset */
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg-color);
+            background-image: var(--page-bg-pattern);
+            background-size: var(--page-bg-size);
             color: var(--text-color);
             margin: 0;
             padding: 20px;
             display: flex;
             justify-content: center;
+            min-height: 100vh;
         }
 
         .container {
@@ -30,6 +40,7 @@
             display: grid;
             grid-template-columns: 1fr 350px;
             gap: 20px;
+            align-items: start;
         }
 
         @media (max-width: 800px) {
@@ -48,13 +59,14 @@
             justify-content: center;
             overflow: hidden;
             min-height: 400px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
 
         canvas {
             max-width: 100%;
             max-height: 60vh;
             border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
         .controls-section {
@@ -68,6 +80,7 @@
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
 
         .panel h3 {
@@ -76,25 +89,32 @@
             font-size: 16px;
             border-bottom: 1px solid var(--border-color);
             padding-bottom: 10px;
+            color: var(--text-color);
         }
 
         label {
             display: block;
             margin-bottom: 5px;
             font-size: 14px;
-            color: #aaa;
+            color: var(--label-color);
         }
 
-        textarea, select, input[type="number"], input[type="range"] {
+        textarea, select, input[type="range"] {
             width: 100%;
-            background-color: #2a2a2a;
-            color: white;
+            background-color: #f9f9f9;
+            color: var(--text-color);
             border: 1px solid var(--border-color);
             border-radius: 6px;
             padding: 10px;
             font-family: inherit;
             box-sizing: border-box;
             margin-bottom: 15px;
+            transition: border-color 0.2s;
+        }
+
+        textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--accent-color);
         }
 
         textarea {
@@ -112,15 +132,46 @@
             flex: 1;
         }
 
-        input[type="color"] {
-            width: 100%;
-            height: 40px;
-            border: none;
-            border-radius: 6px;
-            background: none;
-            cursor: pointer;
+        /* Preset Themes Styling */
+        .preset-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
         }
 
+        .preset-btn {
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            font-weight: bold;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .preset-btn.active {
+            border-color: var(--preset-active-border);
+            box-shadow: 0 0 8px rgba(255,152,0,0.3);
+        }
+
+        .preset-name {
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .preset-swatch {
+            width: 100%;
+            height: 30px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Aspect Ratio Logic */
         .ratio-buttons {
             display: flex;
             gap: 10px;
@@ -129,17 +180,19 @@
 
         .ratio-buttons button {
             flex: 1;
-            background-color: #2a2a2a;
-            color: white;
+            background-color: #f9f9f9;
+            color: var(--text-color);
             border: 1px solid var(--border-color);
             padding: 8px;
             border-radius: 6px;
             cursor: pointer;
+            transition: all 0.2s;
         }
 
         .ratio-buttons button.active {
             background-color: var(--accent-color);
             border-color: var(--accent-color);
+            color: white;
         }
 
         .download-btn {
@@ -193,33 +246,45 @@
                         <input type="range" id="fontSize" min="20" max="150" value="60">
                     </div>
                 </div>
+            </div>
 
+            <div class="panel">
+                <h3>Preset Themes</h3>
+                <label>Select color combination</label>
+                <div class="preset-container" id="presetContainer">
+                    </div>
+            </div>
+
+            <div class="panel">
+                <h3>New Features</h3>
                 <div class="flex-row">
                     <div>
-                        <label>Text Color</label>
-                        <input type="color" id="textColor" value="#ffffff">
+                        <label>Text Alignment</label>
+                        <select id="textAlign">
+                            <option value="center">Center</option>
+                            <option value="left">Left</option>
+                            <option value="right">Right</option>
+                        </select>
                     </div>
                     <div>
-                        <label>Background Color</label>
-                        <input type="color" id="bgColor" value="#1a1a1a">
+                        <label>Border Style</label>
+                        <select id="borderStyle">
+                            <option value="none">None</option>
+                            <option value="thin">Thin Solid</option>
+                            <option value="thick">Thick Solid</option>
+                        </select>
                     </div>
                 </div>
             </div>
 
             <div class="panel">
-                <h3>Layout & Features</h3>
+                <h3>Layout</h3>
                 <label>Aspect Ratio</label>
                 <div class="ratio-buttons">
                     <button class="ratio-btn active" data-width="1080" data-height="1080">1:1</button>
                     <button class="ratio-btn" data-width="1080" data-height="1350">4:5</button>
                     <button class="ratio-btn" data-width="1920" data-height="1080">16:9</button>
                 </div>
-                
-                <label>Include Emoji Suggestion (💤)</label>
-                <select id="addEmoji">
-                    <option value="no">No</option>
-                    <option value="yes">Yes</option>
-                </select>
             </div>
 
             <div class="panel">
@@ -240,18 +305,33 @@
         const memeTextInput = document.getElementById('memeText');
         const fontSizeInput = document.getElementById('fontSize');
         const fontFamilyInput = document.getElementById('fontFamily');
-        const textColorInput = document.getElementById('textColor');
-        const bgColorInput = document.getElementById('bgColor');
-        const addEmojiInput = document.getElementById('addEmoji');
+        const textAlignInput = document.getElementById('textAlign');
+        const borderStyleInput = document.getElementById('borderStyle');
+        const presetContainer = document.getElementById('presetContainer');
         const ratioBtns = document.querySelectorAll('.ratio-btn');
         const downloadBtn = document.getElementById('downloadBtn');
+
+        // State for active colors (initially empty, set by first preset)
+        let currentBgColor = '';
+        let currentTextColor = '';
+        let currentWatermarkColor = '';
 
         // Initial Canvas Settings (High Quality base)
         let canvasWidth = 1080;
         let canvasHeight = 1080;
 
+        // Preset Themes Definition
+        const presets = [
+            { name: 'Light Classic', bg: '#ffffff', text: '#000000', watermark: 'rgba(0,0,0,0.3)' },
+            { name: 'Midnight', bg: '#1a1a1a', text: '#ffffff', watermark: 'rgba(255,255,255,0.4)' },
+            { name: 'Beach', bg: '#e0f7fa', text: '#006064', watermark: 'rgba(0,0,0,0.2)' },
+            { name: 'Minimal Grey', bg: '#f5f5f5', text: '#333333', watermark: 'rgba(0,0,0,0.3)' },
+            { name: 'Serene Teal', bg: '#009688', text: '#ffffff', watermark: 'rgba(255,255,255,0.4)' },
+            { name: 'Sunset Warmth', bg: '#fffde7', text: '#d84315', watermark: 'rgba(0,0,0,0.3)' }
+        ];
+
         // Function to wrap text so it fits inside the canvas
-        function wrapText(context, text, x, y, maxWidth, lineHeight) {
+        function wrapText(context, text, x, y, maxWidth, lineHeight, alignment) {
             const words = text.split(' ');
             let line = '';
             let lines = [];
@@ -273,8 +353,19 @@
             let totalHeight = lines.length * lineHeight;
             let startY = (canvasHeight - totalHeight) / 2 + (lineHeight / 2);
 
+            // Adjust starting X based on alignment
+            let startX;
+            context.textAlign = alignment;
+            if (alignment === 'left') {
+                startX = 80; // Left padding
+            } else if (alignment === 'right') {
+                startX = canvasWidth - 80; // Right padding
+            } else {
+                startX = canvasWidth / 2; // Center
+            }
+
             for(let i = 0; i < lines.length; i++) {
-                context.fillText(lines[i].trim(), x, startY + (i * lineHeight));
+                context.fillText(lines[i].trim(), startX, startY + (i * lineHeight));
             }
         }
 
@@ -283,37 +374,70 @@
             canvas.width = canvasWidth;
             canvas.height = canvasHeight;
 
-            // Draw Background
-            ctx.fillStyle = bgColorInput.value;
+            // 1. Draw Background Color
+            ctx.fillStyle = currentBgColor;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // Get Text Content
-            let text = memeTextInput.value;
-            if (addEmojiInput.value === 'yes') {
-                text += ' 💤';
+            // 2. Draw Designed Background Border (Optional based on user choice)
+            const borderStyle = borderStyleInput.value;
+            if (borderStyle !== 'none') {
+                ctx.strokeStyle = currentTextColor; // Use text color for border
+                ctx.lineWidth = (borderStyle === 'thin') ? 10 : 25;
+                ctx.strokeRect(ctx.lineWidth/2, ctx.lineWidth/2, canvas.width - ctx.lineWidth, canvas.height - ctx.lineWidth);
             }
 
-            // Set Font Styling
+            // 3. Set Font Styling for Main Text
             const fontSize = parseInt(fontSizeInput.value);
             ctx.font = `bold ${fontSize}px ${fontFamilyInput.value}`;
-            ctx.fillStyle = textColorInput.value;
-            ctx.textAlign = 'center';
+            ctx.fillStyle = currentTextColor;
             ctx.textBaseline = 'middle';
 
-            // Draw Main Text with wrapping
+            // Draw Main Text with wrapping and chosen alignment
             const maxWidth = canvas.width - 160; // Padding
             const lineHeight = fontSize * 1.3;
-            wrapText(ctx, text, canvas.width / 2, canvas.height / 2, maxWidth, lineHeight);
+            const alignment = textAlignInput.value;
+            wrapText(ctx, memeTextInput.value, canvas.width / 2, canvas.height / 2, maxWidth, lineHeight, alignment);
 
-            // Draw Watermark (Mandatory)
+            // 4. Draw Watermark (Mandatory)
             ctx.font = '24px Arial';
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.4)'; // Semi-transparent white
+            ctx.fillStyle = currentWatermarkColor; // Semitransparent based on theme
             ctx.textAlign = 'right';
             ctx.fillText('@theironicbro', canvas.width - 40, canvas.height - 40);
         }
 
-        // Event Listeners to update canvas in real-time
-        [memeTextInput, fontSizeInput, fontFamilyInput, textColorInput, bgColorInput, addEmojiInput].forEach(input => {
+        // --- Event Listeners and Setup ---
+
+        // Initialize Preset Buttons
+        presets.forEach((preset, index) => {
+            const btn = document.createElement('div');
+            btn.className = 'preset-btn';
+            btn.innerHTML = `
+                <div class="preset-name">${preset.name}</div>
+                <div class="preset-swatch" style="background-color: ${preset.bg}; border-color: ${preset.text};"></div>
+            `;
+            
+            btn.addEventListener('click', (e) => {
+                // Remove active class from all, add to this one
+                document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                // Update current colors and draw
+                currentBgColor = preset.bg;
+                currentTextColor = preset.text;
+                currentWatermarkColor = preset.watermark;
+                drawMeme();
+            });
+            
+            // Set first preset as active initially
+            if (index === 0) {
+                btn.click(); 
+            }
+            
+            presetContainer.appendChild(btn);
+        });
+
+        // Other Inputs Listeners
+        [memeTextInput, fontSizeInput, fontFamilyInput, textAlignInput, borderStyleInput].forEach(input => {
             input.addEventListener('input', drawMeme);
         });
 
@@ -341,8 +465,7 @@
             link.click();
         });
 
-        // Initial Draw
-        drawMeme();
+        // Initial Draw (already called by first preset click)
     </script>
 </body>
 </html>
