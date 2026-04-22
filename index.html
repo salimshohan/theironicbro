@@ -6,22 +6,31 @@
     <title>The Ironic Bro</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
-        /* --- Global Styles (Deep Purple Theme from TIB) --- */
+        /* --- Global Styles (Smart Light Mode) --- */
         :root {
-            --bg-body: #130a1f;       /* Deep dark purple background */
-            --bg-card: #23123a;       /* Lighter purple for Cards */
+            --bg-body: #f8fafc;       /* Light slate/grayish white */
+            --bg-card: #ffffff;       /* Pure white for cards */
             
-            --primary: #a855f7;       /* Electric/Neon Purple */
-            --text-main: #f3e8ff;     /* Light purple-tinted white */
-            --text-muted: #d8b4fe;    /* Soft Muted Purple */
-            --border: #581c87;        /* Purple Border */
+            --primary: #4f46e5;       /* Smart Indigo */
+            --primary-hover: #4338ca; /* Darker Indigo for hover */
+            
+            --text-main: #0f172a;     /* Dark Slate (almost black) */
+            --text-muted: #64748b;    /* Medium Gray */
+            --border: #e2e8f0;        /* Light subtle border */
+            
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
 
-        /* --- Content Protection & Flex Layout --- */
+        /* --- Layout & Background --- */
         body { 
             background-color: var(--bg-body); 
+            /* Subtle dotted pattern for a smart tech look */
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 20px 20px;
             color: var(--text-main); 
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', system-ui, sans-serif;
             -webkit-user-select: none; user-select: none; /* No Copy */
             margin: 0; padding: 0;
             min-height: 100vh;
@@ -41,76 +50,136 @@
             padding: 0 20px; 
             flex: 1; /* Pushes footer to bottom */
         }
-        .section-title { font-size: 2rem; margin-bottom: 40px; border-left: 5px solid var(--primary); padding-left: 15px; font-weight: 700; }
+        
+        .section-title { 
+            font-size: 2rem; 
+            margin-bottom: 40px; 
+            border-left: 5px solid var(--primary); 
+            padding-left: 15px; 
+            font-weight: 700; 
+            color: var(--text-main);
+        }
 
-        .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; margin-bottom: 50px; }
+        .blog-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+            gap: 30px; 
+            margin-bottom: 50px; 
+        }
 
-        /* --- Awesome Card Animation --- */
+        /* --- Modern Smart Card --- */
         .blog-card {
-            background: var(--bg-card); border: 1px solid var(--border);
-            border-radius: 16px; overflow: hidden;
+            background: var(--bg-card); 
+            border: 1px solid var(--border);
+            border-radius: 16px; 
+            overflow: hidden;
             position: relative; cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy Hover */
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
         }
 
         /* Hover Effect */
         .blog-card:hover {
-            transform: translateY(-10px) scale(1.02);
+            transform: translateY(-8px);
             border-color: var(--primary);
-            box-shadow: 0 20px 40px rgba(168, 85, 247, 0.25); /* Purple Glow */
+            box-shadow: var(--shadow-lg);
         }
         
-        .blog-img { width: 100%; height: 220px; object-fit: cover; opacity: 0.9; transition: 0.3s; }
-        .blog-card:hover .blog-img { opacity: 1; transform: scale(1.05); }
+        .blog-img { 
+            width: 100%; height: 220px; 
+            object-fit: cover; 
+            transition: transform 0.5s ease; 
+        }
+        .blog-card:hover .blog-img { transform: scale(1.05); }
 
-        .blog-content { padding: 25px; }
-        .blog-date { font-size: 0.85rem; color: var(--primary); margin-bottom: 10px; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; }
-        .blog-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 10px; line-height: 1.3; color: #fff; }
-        .blog-desc { font-size: 1rem; color: var(--text-muted); line-height: 1.6; }
+        .blog-content { padding: 25px; background: #fff; position: relative; z-index: 2; }
+        .blog-date { 
+            font-size: 0.85rem; color: var(--primary); 
+            margin-bottom: 10px; text-transform: uppercase; 
+            font-weight: 700; letter-spacing: 1px; 
+        }
+        .blog-title { 
+            font-size: 1.4rem; font-weight: 700; 
+            margin-bottom: 10px; line-height: 1.3; 
+            color: var(--text-main); 
+        }
+        .blog-desc { 
+            font-size: 1rem; color: var(--text-muted); 
+            line-height: 1.6; 
+        }
 
-        /* Click Ripple Effect (Active State) */
         .blog-card:active {
-            transform: scale(0.95); /* Press down effect */
+            transform: scale(0.98); 
             transition: 0.1s;
         }
 
-        /* --- Load More Button (See More) --- */
+        /* --- Load More Button --- */
         .load-more-container { text-align: center; margin-bottom: 50px; margin-top: 20px; }
         
         .see-more-btn {
             padding: 14px 40px;
-            background: transparent;
-            border: 2px solid var(--primary);
+            background: var(--bg-card);
+            border: 2px solid var(--border);
             color: var(--text-main);
             cursor: pointer;
             border-radius: 50px;
             font-size: 1rem;
             font-weight: 700;
-            transition: 0.3s;
+            transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
+            box-shadow: var(--shadow-sm);
         }
         
         .see-more-btn:hover {
             background: var(--primary);
+            border-color: var(--primary);
             color: #fff;
-            box-shadow: 0 0 20px rgba(168, 85, 247, 0.6); /* Neon Purple Button Glow */
-            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
         }
         
         .fa-spinner { margin-right: 8px; }
 
-        /* --- Footer (IL Style UI) --- */
+        /* --- Footer (IL Style UI with Back to Top) --- */
         footer {
-            width: 100%; padding: 15px; text-align: center;
-            background: #1f2937;
-            border-top: 1px solid #dadada;
-            margin-top: auto; font-size: 14px; color: white;
+            width: 100%; padding: 25px 15px; text-align: center;
+            background: #ffffff;
+            border-top: 1px solid var(--border);
+            margin-top: auto; font-size: 14px; color: var(--text-muted);
+            box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.02);
+            position: relative;
+        }
+        
+        .footer-content { margin-bottom: 15px; font-weight: 500; }
+        .footer-content strong { color: var(--text-main); }
+
+        /* Back to Top Button in Footer */
+        .back-to-top {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 45px;
+            height: 45px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
+            border: none;
+        }
+
+        .back-to-top:hover {
+            background: var(--primary-hover);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
         }
 
         @media (max-width: 768px) {
             .container { margin-top: 60px; padding: 20px; }
+            .blog-grid { gap: 20px; }
         }
     </style>
 </head>
@@ -123,7 +192,7 @@
         <div class="section-title">Fresh Drops</div>
 
         <div class="blog-grid" id="blogContainer">
-            <p style="color: var(--text-muted);">Loading awesome memes...</p>
+            <p style="color: var(--text-muted);">Loading awesome posts...</p>
         </div>
 
         <div class="load-more-container">
@@ -133,9 +202,24 @@
         </div>
     </div>
 
-    <footer>&copy; 2026 The Ironic Bro<br>All rights reserved.</footer>
+    <footer>
+        <div class="footer-content">
+            &copy; 2026 <strong>The Ironic Bro</strong><br>All rights reserved.
+        </div>
+        <button class="back-to-top" onclick="scrollToTop()" title="Back to Top">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+    </footer>
 
     <script>
+        // Back to Top Functionality
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
         // Prevent Copy/Inspect
         document.onkeydown = function(e) {
             if(event.keyCode == 123) return false;
@@ -163,7 +247,7 @@
                 loadMorePosts();
 
             } catch (error) {
-                container.innerHTML = `<p style="color: var(--primary);">Error: posts.json not found.</p>`;
+                container.innerHTML = `<p style="color: var(--primary); font-weight: 500;">Error: posts.json not found.</p>`;
             }
         }
 
