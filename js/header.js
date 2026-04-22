@@ -171,19 +171,9 @@ document.addEventListener("DOMContentLoaded", function () {
           <!a href="/">
               <i class="fa-solid fa-house"></i> Home
           </a>
-          <!a href="/data/pdf.html">
-              <i class="fa-solid fa-file-pdf"></i> PDF Tool
-          </a>
-<!a href="/data/vocab-builder.html"><i class="fa-solid fa-font"></i> Vocab Builder</a>
-          <!a href="/data/quotes.html">
-              <i class="fa-solid fa-quote-left"></i> Quotes Maker
-          </a>
-          <!a href="/data/notice.html">
-              <i class="fa-solid fa-bullhorn"></i> Notice Maker
-          </a>
-<!a href="/data/notes-to-pdf.html"><i class="fa-solid fa-file-lines"></i> Notes to PDF Tool</a>
-
-      </div>
+          <a href="/page/about.html">
+              <i class="fa-solid fa-circle-info"></i> About Us
+          </a> <a href=""><i class="fa-solid fa-envelope"></i> Contact Us</a></div>
     `;
   
     // Inject HTML at the beginning of Body
