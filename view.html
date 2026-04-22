@@ -13,35 +13,38 @@
     <meta property="og:description" content="Relatable memes and student life struggles.">
     <meta property="og:image" content="https://i.postimg.cc/QtjCXTph/logo-tib.png">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     
     <style>
         /* --- Global Styles (Smart Light Mode) --- */
         :root {
-            --bg-body: #f8fafc;       /* Light slate/grayish white */
-            --bg-card: #ffffff;       /* Pure white for cards */
+            --bg-body: #f8fafc;       
+            --bg-card: #ffffff;       
             
-            --primary: #4f46e5;       /* Smart Indigo */
+            --primary: #4f46e5;       
             --primary-hover: #4338ca; 
             
-            --text-main: #0f172a;     /* Dark Slate (almost black) */
-            --text-muted: #475569;    /* Medium Gray for better reading readability */
-            --border: #e2e8f0;        /* Light subtle border */
+            --text-main: #0f172a;     
+            --text-muted: #475569;    
+            --border: #e2e8f0;        
             
             --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
             --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
 
-        /* --- Layout & Background --- */
         body { 
             background-color: var(--bg-body); 
             background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
             background-size: 20px 20px;
             color: var(--text-main); 
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            -webkit-user-select: none; user-select: none; /* No Copy */
+            font-family: 'Lexend', sans-serif; /* Lexend Font Applied */
+            -webkit-user-select: none; user-select: none; 
             margin: 0; padding: 0;
             min-height: 100vh;
             display: flex; 
@@ -53,11 +56,28 @@
         a { text-decoration: none; color: inherit; transition: 0.3s; }
         img { pointer-events: none; max-width: 100%; height: auto; border-radius: 12px; }
 
-        /* --- Blog Content Styles (Updated for Light Theme) --- */
+        /* --- Extra Feature 1: Reading Progress Bar --- */
+        .progress-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 4px;
+            background: transparent;
+            z-index: 9999; /* Stays above everything including header */
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #6366f1, #a855f7);
+            width: 0%;
+            transition: width 0.1s ease-out;
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+
+        /* --- Blog Content Styles --- */
         .content-container { 
             margin-top: 80px; 
             width: 100%; max-width: 900px; 
-            padding: 40px 30px; 
+            padding: 40px 40px; 
             background: var(--bg-card);
             border-radius: 16px;
             box-shadow: var(--shadow-sm);
@@ -66,17 +86,24 @@
         }
 
         .meta-info {
-            display: flex; gap: 15px; align-items: center;
-            font-size: 0.9rem; color: var(--text-muted);
-            margin-bottom: 20px; font-weight: 500;
+            display: flex; flex-wrap: wrap; gap: 15px 25px; align-items: center;
+            font-size: 0.95rem; color: var(--text-muted);
+            margin-bottom: 30px; font-weight: 500;
+            padding-bottom: 20px; border-bottom: 1px solid var(--border);
         }
-        .meta-info i { color: var(--primary); }
+        .meta-info span { display: flex; align-items: center; gap: 8px; }
+        .meta-info i { color: var(--primary); font-size: 1.1rem; }
+        
+        .author-badge {
+            background: #e0e7ff; color: var(--primary-hover);
+            padding: 4px 12px; border-radius: 50px; font-weight: 600;
+        }
 
         #markdown-content { color: var(--text-muted); font-size: 1.1rem; line-height: 1.8; }
         
         #markdown-content h1 { 
             font-size: 2.5rem; margin-bottom: 15px; color: var(--text-main); 
-            line-height: 1.2; font-weight: 800; letter-spacing: -0.5px;
+            line-height: 1.3; font-weight: 800; letter-spacing: -0.5px;
         }
         #markdown-content h2 { 
             font-size: 1.75rem; margin-top: 35px; margin-bottom: 15px; 
@@ -98,25 +125,33 @@
         }
         #markdown-content code { 
             background: #f1f5f9; padding: 4px 8px; border-radius: 6px; 
-            font-family: monospace; color: var(--primary-hover); font-weight: 600;
+            font-family: 'Courier New', Courier, monospace; color: var(--primary-hover); font-weight: 600;
             border: 1px solid var(--border);
         }
 
-        /* --- Extra Feature: Share Button --- */
+        /* --- Extra Feature 2: Tags & Share Button --- */
         .article-footer {
-            margin-top: 40px; padding-top: 20px;
+            margin-top: 40px; padding-top: 25px;
             border-top: 1px solid var(--border);
-            display: flex; justify-content: space-between; align-items: center;
+            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;
+        }
+
+        .post-tags { display: flex; gap: 10px; flex-wrap: wrap; }
+        .tag-item {
+            background: var(--bg-body); border: 1px solid var(--border);
+            color: var(--text-muted); font-size: 0.85rem; font-weight: 600;
+            padding: 5px 12px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px;
         }
         
         .share-btn {
-            background: var(--bg-body); border: 1px solid var(--border);
-            color: var(--text-main); padding: 10px 20px; border-radius: 50px;
+            background: var(--text-main); color: #fff; 
+            padding: 10px 20px; border-radius: 50px; border: none;
             font-weight: 600; cursor: pointer; transition: all 0.3s;
-            display: flex; align-items: center; gap: 8px;
+            display: flex; align-items: center; gap: 8px; font-family: 'Lexend', sans-serif;
+            box-shadow: var(--shadow-sm);
         }
-        .share-btn:hover { background: var(--primary); color: white; border-color: var(--primary); box-shadow: var(--shadow-md); transform: translateY(-2px); }
-        .share-btn.copied { background: #10b981; border-color: #10b981; color: white; }
+        .share-btn:hover { background: var(--primary); box-shadow: var(--shadow-md); transform: translateY(-2px); }
+        .share-btn.copied { background: #10b981; color: white; }
 
         /* --- Relevant Posts Section --- */
         .related-section { width: 100%; max-width: 1100px; padding: 0 20px; margin-bottom: 50px; flex: 1; }
@@ -124,7 +159,6 @@
 
         .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
 
-        /* Modern Smart Card (From Home) */
         .blog-card {
             background: var(--bg-card); border: 1px solid var(--border);
             border-radius: 16px; overflow: hidden; position: relative; cursor: pointer;
@@ -136,21 +170,19 @@
         
         .blog-content { padding: 25px; background: #fff; position: relative; z-index: 2; }
         .blog-date { font-size: 0.85rem; color: var(--primary); margin-bottom: 10px; text-transform: uppercase; font-weight: 700; letter-spacing: 1px; }
-        .blog-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 10px; line-height: 1.3; color: var(--text-main); }
-        .blog-desc { font-size: 1rem; color: var(--text-muted); line-height: 1.6; }
-        .blog-card:active { transform: scale(0.98); transition: 0.1s; }
+        .blog-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; line-height: 1.4; color: var(--text-main); }
+        .blog-desc { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; }
 
         /* --- Footer --- */
         footer {
             width: 100%; padding: 25px 15px; text-align: center;
             background: #ffffff; border-top: 1px solid var(--border);
             margin-top: auto; font-size: 14px; color: var(--text-muted);
-            box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.02);
         }
         .footer-content { font-weight: 500; }
         .footer-content strong { color: var(--text-main); }
 
-        /* --- Floating Back to Top Button --- */
+        /* --- Floating Back to Top --- */
         .back-to-top {
             position: fixed; bottom: 30px; right: 30px;
             width: 50px; height: 50px;
@@ -164,7 +196,6 @@
         }
         .back-to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
         .back-to-top:hover {
-            background: linear-gradient(135deg, var(--primary-hover), var(--primary));
             transform: translateY(-5px) scale(1.05);
             box-shadow: 0 8px 25px rgba(79, 70, 229, 0.6);
         }
@@ -173,28 +204,36 @@
             .content-container { margin-top: 60px; padding: 25px 20px; border-radius: 0; border-left: none; border-right: none; }
             #markdown-content h1 { font-size: 2rem; }
             .back-to-top { bottom: 20px; right: 20px; width: 45px; height: 45px; }
+            .article-footer { flex-direction: column; align-items: flex-start; }
+            .share-btn { width: 100%; justify-content: center; }
         }
     </style>
 </head>
 <body oncontextmenu="return false;">
+
+    <div class="progress-container">
+        <div class="progress-bar" id="myProgressBar"></div>
+    </div>
 
     <div id="header"></div>
     <script type="text/javascript" src="/js/header.js"></script>
 
     <div class="content-container">
         <div id="postMeta" class="meta-info" style="display: none;">
-            <span id="readTime"><i class="far fa-clock"></i> 2 min read</span>
+            <span id="postAuthor" class="author-badge"><i class="fas fa-user-edit"></i> Salim Hosen Shohan</span>
             <span id="postDate"><i class="far fa-calendar-alt"></i> Date</span>
+            <span id="readTime"><i class="far fa-clock"></i> 2 min read</span>
         </div>
 
         <div id="markdown-content">
             <p style="color: var(--text-muted); text-align: center; margin-top: 50px;">
-                <i class="fas fa-spinner fa-spin"></i> Loading post...
+                <i class="fas fa-spinner fa-spin"></i> Fetching details...
             </p>
         </div>
 
         <div class="article-footer" id="articleFooter" style="display: none;">
-            <div style="font-weight: 600; color: var(--text-main);">Thanks for reading!</div>
+            <div class="post-tags" id="postTags">
+                </div>
             <button class="share-btn" id="shareBtn" onclick="copyLink()">
                 <i class="fas fa-link"></i> Copy Link
             </button>
@@ -218,20 +257,30 @@
     </button>
 
     <script>
-        // --- Back to Top Logic ---
+        // --- 1. Reading Progress Bar & Back to Top Logic ---
         const backToTopBtn = document.getElementById('backToTopBtn');
+        const progressBar = document.getElementById('myProgressBar');
+
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
+            // Scroll Progress
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            progressBar.style.width = scrolled + "%";
+
+            // Back to Top Button
+            if (winScroll > 300) {
                 backToTopBtn.classList.add('show');
             } else {
                 backToTopBtn.classList.remove('show');
             }
         });
+
         function scrollToTop() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // --- Prevent Copy ---
+        // --- 2. Prevent Copy ---
         document.onkeydown = function(e) {
             if(event.keyCode == 123) return false;
             if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false;
@@ -240,7 +289,7 @@
             if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
         }
 
-        // --- Share Feature ---
+        // --- 3. Share Link Feature ---
         function copyLink() {
             navigator.clipboard.writeText(window.location.href);
             const btn = document.getElementById('shareBtn');
@@ -252,15 +301,15 @@
             }, 3000);
         }
 
-        // --- Calculate Reading Time Feature ---
+        // --- 4. Read Time Calculator ---
         function calculateReadTime(text) {
             const wordsPerMinute = 200;
             const words = text.trim().split(/\s+/).length;
             const time = Math.ceil(words / wordsPerMinute);
-            return time === 1 ? "1 min read" : `${time} min read`;
+            return time <= 1 ? "1 min read" : `${time} min read`;
         }
 
-        // --- Post Loading Logic ---
+        // --- 5. Post Loading & Formatting Logic ---
         const urlParams = new URLSearchParams(window.location.search);
         const currentPostFile = urlParams.get('post');
 
@@ -299,14 +348,26 @@
                     try {
                         if (currentPost) {
                             updatePageMeta(currentPost.title, currentPost.image, currentPost.excerpt);
+                            
+                            // Author Logic (JSON checking)
+                            const authorName = currentPost.author ? currentPost.author : "Salim Hosen Shohan";
+                            document.getElementById('postAuthor').innerHTML = `<i class="fas fa-user-edit"></i> ${authorName}`;
                             document.getElementById('postDate').innerHTML = `<i class="far fa-calendar-alt"></i> ${currentPost.date}`;
+
+                            // Tags Logic (JSON checking)
+                            const tagsContainer = document.getElementById('postTags');
+                            if (currentPost.tags && currentPost.tags.length > 0) {
+                                tagsContainer.innerHTML = currentPost.tags.map(tag => `<span class="tag-item">#${tag}</span>`).join('');
+                            } else {
+                                tagsContainer.innerHTML = `<span class="tag-item">#TIB</span> <span class="tag-item">#Meme</span>`; // Default Tags
+                            }
                         }
 
                         const postRes = await fetch(`blog/${currentPostFile}`);
                         if(!postRes.ok) throw new Error("Markdown not found");
                         const text = await postRes.text();
                         
-                        // Show Data & Extra Features
+                        // Show Content & Meta
                         document.getElementById('markdown-content').innerHTML = marked.parse(text);
                         document.getElementById('postMeta').style.display = 'flex';
                         document.getElementById('articleFooter').style.display = 'flex';
@@ -317,14 +378,14 @@
                             <div style="text-align:center; padding: 50px;">
                                 <h2 style="color: var(--primary);">404 Not Found</h2>
                                 <p style="color: var(--text-muted);">The post was deleted or moved.</p>
-                                <a href="index.html" style="color: var(--text-main); font-weight: bold; margin-top: 20px; display: inline-block;">Go Home</a>
+                                <a href="index.html" style="color: var(--text-main); font-weight: bold; margin-top: 20px; display: inline-block; text-decoration: underline;">Go Home</a>
                             </div>`;
                     }
                 } else {
                     document.getElementById('markdown-content').innerHTML = `
                         <div style="text-align:center;">
                             <h2 style="color: var(--text-muted);">No post selected</h2>
-                            <a href="index.html" style="color: var(--primary); font-weight: bold;">Go back to Home</a>
+                            <a href="index.html" style="color: var(--primary); font-weight: bold; text-decoration: underline;">Go back to Home</a>
                         </div>`;
                 }
 
@@ -334,7 +395,7 @@
                 
                 // Shuffle Array
                 relevantPosts.sort(() => Math.random() - 0.5);
-                const randomPosts = relevantPosts.slice(0, 6); // Take 6 max
+                const randomPosts = relevantPosts.slice(0, 6); 
 
                 if(randomPosts.length > 0) {
                     randomPosts.forEach(post => {
