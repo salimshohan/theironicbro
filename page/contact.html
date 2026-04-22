@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | The Ironic Bro</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <style>
+        /* --- Global Styles (Smart Light Mode) --- */
+        :root {
+            --bg-body: #f8fafc;       
+            --bg-card: #ffffff;       
+            
+            --primary: #4f46e5;       
+            --primary-hover: #4338ca; 
+            
+            --text-main: #0f172a;     
+            --text-muted: #475569;    
+            --border: #e2e8f0;        
+            
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Prevent Copy & Base Styling */
+        body { 
+            background-color: var(--bg-body); 
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 20px 20px;
+            color: var(--text-main); 
+            font-family: 'Lexend', sans-serif;
+            -webkit-user-select: none; user-select: none; 
+            margin: 0; padding: 0;
+            min-height: 100vh;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+
+        /* --- Contact Page Specific Styles --- */
+        .container { 
+            margin-top: 100px; /* Space for external header */
+            width: 100%; max-width: 1000px; 
+            padding: 0 20px; 
+            flex: 1; 
+            margin-bottom: 60px;
+        }
+        
+        .page-title { 
+            font-size: 2.2rem; margin-bottom: 40px; 
+            border-left: 5px solid var(--primary); padding-left: 15px; 
+            font-weight: 800; color: var(--text-main); 
+        }
+
+        .contact-grid {
+            display: grid; grid-template-columns: 1fr 1.5fr; gap: 30px; 
+        }
+
+        /* Info Card */
+        .info-card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 16px; padding: 40px 30px; height: 100%;
+            box-shadow: var(--shadow-sm); transition: all 0.3s ease;
+        }
+        .info-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+        
+        .info-item { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 35px; }
+        .info-item:last-child { margin-bottom: 0; }
+        
+        .info-icon { 
+            width: 48px; height: 48px; background: rgba(79, 70, 229, 0.1); flex-shrink: 0;
+            color: var(--primary); border-radius: 50%; display: flex; align-items: center; 
+            justify-content: center; font-size: 1.2rem;
+        }
+        .info-text h4 { font-size: 1.1rem; margin-bottom: 6px; color: var(--text-main); font-weight: 700; }
+        .info-text p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
+
+        /* Contact Form */
+        .form-card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 16px; padding: 40px 30px;
+            box-shadow: var(--shadow-sm); transition: all 0.3s ease;
+        }
+        .form-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+        
+        .form-group { margin-bottom: 25px; }
+        .form-label { display: block; margin-bottom: 8px; color: var(--text-muted); font-size: 0.95rem; font-weight: 600; }
+        
+        .form-input {
+            width: 100%; padding: 14px 16px; background: #f8fafc; 
+            border: 1px solid var(--border); border-radius: 10px; 
+            color: var(--text-main); font-size: 1rem; font-family: 'Lexend', sans-serif;
+            outline: none; transition: all 0.3s ease;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);
+        }
+        .form-input::placeholder { color: #94a3b8; }
+        .form-input:focus { 
+            border-color: var(--primary); background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+        }
+        textarea.form-input { resize: vertical; min-height: 160px; line-height: 1.5; }
+
+        .submit-btn {
+            width: 100%; padding: 16px; background: var(--primary); color: white;
+            border: none; border-radius: 10px; font-size: 1.05rem; font-weight: 700; 
+            cursor: pointer; transition: all 0.3s ease; font-family: 'Lexend', sans-serif;
+            display: flex; justify-content: center; align-items: center; gap: 8px;
+            box-shadow: var(--shadow-sm);
+        }
+        .submit-btn:hover { 
+            background: var(--primary-hover); transform: translateY(-2px); 
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container { margin-top: 80px; padding: 0 20px; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .info-card, .form-card { padding: 30px 20px; }
+        }
+
+        /* --- Footer --- */
+        footer {
+            width: 100%; padding: 25px 15px; text-align: center;
+            background: #ffffff; border-top: 1px solid var(--border);
+            margin-top: auto; font-size: 14px; color: var(--text-muted);
+            box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.02);
+        }
+        .footer-content { font-weight: 500; }
+        .footer-content strong { color: var(--text-main); }
+
+        /* --- Floating Back to Top Button --- */
+        .back-to-top {
+            position: fixed; bottom: 30px; right: 30px;
+            width: 50px; height: 50px;
+            background: linear-gradient(135deg, var(--primary), #6366f1);
+            color: white; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.2rem; cursor: pointer; border: none; z-index: 1000;
+            opacity: 0; visibility: hidden; transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
+        }
+        .back-to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
+        .back-to-top:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(79, 70, 229, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            .back-to-top { bottom: 20px; right: 20px; width: 45px; height: 45px; }
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <div id="header"></div>
+    <script type="text/javascript" src="/js/header.js"></script>
+
+    <div class="container">
+        <h2 class="page-title">Get in Touch</h2>
+
+        <div class="contact-grid">
+            <div class="info-card">
+                <h3 style="color: var(--text-main); margin-bottom: 30px; font-weight: 700; font-size: 1.4rem;">Contact Information</h3>
+                
+                <div class="info-item">
+                    <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="info-text">
+                        <h4>Our Office</h4>
+                        <p>Binodpur, Motihar,<br>Rajshahi, Bangladesh</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon"><i class="fas fa-envelope"></i></div>
+                    <div class="info-text">
+                        <h4>Email Address</h4>
+                        <p>theironicbro@proton.me</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon"><i class="fas fa-clock"></i></div>
+                    <div class="info-text">
+                        <h4>Working Hours</h4>
+                        <p>We are online 24/7 (Mostly).</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-card">
+                <h3 style="color: var(--text-main); margin-bottom: 30px; font-weight: 700; font-size: 1.4rem;">Send a Message</h3>
+                
+                <form id="contactForm" onsubmit="return sendMessage(event)">
+                    <div class="form-group">
+                        <label class="form-label">Your Name</label>
+                        <input type="text" name="name" class="form-input" placeholder="Your Full Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" name="email" class="form-input" placeholder="you@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Message</label>
+                        <textarea name="message" class="form-input" placeholder="Tell us what's on your mind..." required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">
+                        Send Message <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            &copy; 2026 <strong>The Ironic Bro</strong><br>All rights reserved.
+        </div>
+    </footer>
+
+    <button id="backToTopBtn" class="back-to-top" onclick="scrollToTop()" title="Back to Top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // --- Back to Top Logic ---
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        window.addEventListener('scroll', () => {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            if (winScroll > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- Prevent Copy ---
+        document.onkeydown = function(e) {
+            if(event.keyCode == 123) return false;
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false;
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) return false;
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false;
+            if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
+        }
+
+        // --- Send Message via Formspree (AJAX) ---
+        async function sendMessage(e) {
+            e.preventDefault();
+            
+            const form = document.getElementById('contactForm');
+            const btn = document.querySelector('.submit-btn');
+
+            // Loading State
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            btn.style.opacity = '0.8';
+
+            // Prepare Data
+            const formData = new FormData(form);
+
+            try {
+                // YOUR FORMSPREE LINK HERE
+                const response = await fetch("https://formspree.io/f/xojjgolv", {
+                    method: "POST",
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    // Success Message
+                    btn.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
+                    btn.style.background = '#10b981'; // Green
+                    btn.style.boxShadow = '0 4px 15px rgba(16, 185, 129, 0.4)';
+                    form.reset(); 
+                } else {
+                    // Error Handling
+                    btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Failed to send';
+                    btn.style.background = '#ef4444'; // Red
+                    btn.style.boxShadow = '0 4px 15px rgba(239, 68, 68, 0.4)';
+                }
+            } catch (error) {
+                // Network Error
+                btn.innerHTML = '<i class="fas fa-wifi"></i> Network Error';
+                btn.style.background = '#ef4444';
+                btn.style.boxShadow = '0 4px 15px rgba(239, 68, 68, 0.4)';
+            }
+
+            // Restore Button after 3 seconds
+            setTimeout(() => {
+                btn.innerHTML = 'Send Message <i class="fas fa-paper-plane"></i>';
+                btn.style.background = 'var(--primary)';
+                btn.style.boxShadow = 'var(--shadow-sm)';
+                btn.style.opacity = '1';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
