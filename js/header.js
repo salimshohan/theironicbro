@@ -157,7 +157,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const headerHTML = `
       <header>
           <a href="/" class="brand-logo">
-              <img class="logo-icon" src="https://i.postimg.cc/jSTKgmrc/ib-logo.png"> The Ironic Bro
+              <img class="logo-icon" src="https://i.postimg.cc/44VPwf7L/tib-logo.jpg"> The Ironic Bro
           </a>
           
           <div class="hamburger" id="hamburgerBtn">
