@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | The Ironic Bro</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <style>
+        /* --- Global Styles (Smart Light Mode) --- */
+        :root {
+            --bg-body: #f8fafc;       
+            --bg-card: #ffffff;       
+            
+            --primary: #4f46e5;       
+            --primary-hover: #4338ca; 
+            
+            --text-main: #0f172a;     
+            --text-muted: #475569;    
+            --border: #e2e8f0;        
+            
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Prevent Copy & Base Styling */
+        body { 
+            background-color: var(--bg-body); 
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 20px 20px;
+            color: var(--text-main); 
+            font-family: 'Lexend', sans-serif;
+            -webkit-user-select: none; user-select: none; 
+            margin: 0; padding: 0;
+            min-height: 100vh;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        img { pointer-events: none; }
+
+        /* --- About Page Specific Styles --- */
+        .container { 
+            margin-top: 100px; /* Space for external header */
+            width: 100%; max-width: 900px; 
+            padding: 0 20px; 
+            flex: 1; 
+            margin-bottom: 60px;
+        }
+        
+        .hero-text { text-align: center; margin-bottom: 60px; }
+        .hero-text h1 { 
+            font-size: 2.8rem; font-weight: 800; margin-bottom: 15px; 
+            color: var(--text-main); line-height: 1.2; letter-spacing: -0.5px;
+        }
+        .hero-text p { 
+            font-size: 1.15rem; color: var(--text-muted); max-width: 700px; 
+            margin: 0 auto; line-height: 1.6; font-weight: 400;
+        }
+        .highlight { color: var(--primary); font-style: italic; }
+
+        /* Extended Story Section */
+        .story-card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 16px; padding: 50px; margin-bottom: 60px;
+            position: relative; overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        .story-card::before {
+            content: '"'; position: absolute; top: -10px; right: 20px;
+            font-size: 10rem; color: rgba(0,0,0,0.03); font-family: serif;
+        }
+        .story-title { 
+            font-size: 1.8rem; margin-bottom: 30px; color: var(--text-main); 
+            border-left: 5px solid var(--primary); padding-left: 20px; font-weight: 700;
+        }
+        
+        .story-content p { 
+            color: var(--text-muted); line-height: 1.9; font-size: 1.05rem; 
+            margin-bottom: 20px; text-align: justify;
+        }
+        .story-content strong { color: var(--text-main); }
+
+        /* CEO Profile */
+        .ceo-section { text-align: center; margin-top: 60px; }
+        .ceo-title { font-size: 2.2rem; color: var(--text-main); margin-bottom: 40px; font-weight: 800; }
+        
+        .ceo-card {
+            background: var(--bg-card); border-radius: 16px; overflow: hidden;
+            border: 1px solid var(--border); transition: all 0.3s ease;
+            max-width: 400px; margin: 0 auto;
+            box-shadow: var(--shadow-md);
+        }
+        .ceo-card:hover { transform: translateY(-10px); border-color: var(--primary); box-shadow: var(--shadow-lg); }
+        
+        .ceo-img { width: 100%; height: 350px; object-fit: cover; background-color: #e2e8f0; }
+        .ceo-info { padding: 30px; }
+        .ceo-name { font-size: 1.5rem; font-weight: 800; color: var(--text-main); margin-bottom: 5px; }
+        .ceo-role { color: var(--primary); font-size: 1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+        .ceo-desc { color: var(--text-muted); font-size: 0.95rem; margin-top: 15px; line-height: 1.6; }
+
+        /* Stats */
+        .stats-bar {
+            display: flex; justify-content: space-around; flex-wrap: wrap; margin-top: 80px;
+            background: rgba(79, 70, 229, 0.05); border-radius: 16px; padding: 40px; border: 1px solid var(--border);
+        }
+        .stat-item { text-align: center; margin: 15px; }
+        .stat-num { font-size: 2.8rem; font-weight: 800; color: var(--primary); display: block; margin-bottom: 5px; line-height: 1; }
+        .stat-label { color: var(--text-muted); font-size: 0.95rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* --- Footer --- */
+        footer {
+            width: 100%; padding: 25px 15px; text-align: center;
+            background: #ffffff; border-top: 1px solid var(--border);
+            margin-top: auto; font-size: 14px; color: var(--text-muted);
+            box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.02);
+        }
+        .footer-content { font-weight: 500; }
+        .footer-content strong { color: var(--text-main); }
+
+        /* --- Floating Back to Top Button --- */
+        .back-to-top {
+            position: fixed; bottom: 30px; right: 30px;
+            width: 50px; height: 50px;
+            background: linear-gradient(135deg, var(--primary), #6366f1);
+            color: white; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.2rem; cursor: pointer; border: none; z-index: 1000;
+            opacity: 0; visibility: hidden; transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
+        }
+        .back-to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
+        .back-to-top:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(79, 70, 229, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            .container { margin-top: 80px; padding: 0 15px; }
+            .hero-text h1 { font-size: 2.2rem; }
+            .story-card { padding: 30px 20px; }
+            .stats-bar { flex-direction: column; gap: 30px; }
+            .back-to-top { bottom: 20px; right: 20px; width: 45px; height: 45px; }
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <div id="header"></div>
+    <script type="text/javascript" src="/js/header.js"></script>
+
+    <div class="container">
+        
+        <div class="hero-text">
+            <h1>We Don't Just Make Memes,<br>We Create a <span class="highlight">Vibe</span></h1>
+            <p>Welcome to the digital space where creativity meets sarcasm. A platform built to make your daily scrolling worth it.</p>
+        </div>
+
+        <div class="story-card">
+            <h3 class="story-title">Where It All Began</h3>
+            <div class="story-content">
+                <p>The idea didn't come from a fancy boardroom. It started in a small room with a simple setup. I was sitting at my desk, scrolling through the internet, and I realized something was missing. The content was there, but the 'soul' was missing.</p>
+
+                <p>I saw pages posting random stuff, but I wanted to create something that felt personal. Something that speaks the unspoken language of students, introverts, and overthinkers. I wanted to build a brand that feels like a friend, not a corporation.</p>
+
+                <p>So, I opened my laptop and started working. I didn't want to just be another page on social media; I wanted a home for my content. A place where I could organize my thoughts and share them with the world in my own style.</p>
+
+                <p><strong>The Ironic Bro</strong> is the result of that vision. It is a one-man mission to bring high-quality humor and relatable content to your screen. Every pixel on this website, every meme in the gallery, and every line of text is crafted with passion (and a lot of coffee) right here from my desk.</p>
+
+                <p>This is just the beginning. The goal is simple: to keep it real, keep it funny, and keep it ironic.</p>
+            </div>
+        </div>
+
+        <div class="ceo-section">
+            <h2 class="ceo-title">The Mastermind</h2>
+            
+            <div class="ceo-card">
+                <img src="https://i.postimg.cc/QtjCXTph/logo-tib.png" alt="CEO" class="ceo-img">
+                <div class="ceo-info">
+                    <h3 class="ceo-name">The Ironic Bro</h3>
+                    <div class="ceo-role">Founder & CEO</div>
+                    <p class="ceo-desc">The brain behind the brand. I handle everything—from coding the website to creating the content. Dedicated to bringing a smile to your face, one post at a time.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-bar">
+            <div class="stat-item">
+                <span class="stat-num">1</span>
+                <span class="stat-label">Visionary</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-num">∞</span>
+                <span class="stat-label">Creativity</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-num">24/7</span>
+                <span class="stat-label">Dedication</span>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            &copy; 2026 <strong>The Ironic Bro</strong><br>All rights reserved.
+        </div>
+    </footer>
+
+    <button id="backToTopBtn" class="back-to-top" onclick="scrollToTop()" title="Back to Top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // --- Back to Top Logic ---
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        window.addEventListener('scroll', () => {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            if (winScroll > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- Prevent Copy/Inspect ---
+        document.onkeydown = function(e) {
+            if(event.keyCode == 123) return false;
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false;
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) return false;
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false;
+            if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
+        }
+    </script>
+</body>
+</html>
