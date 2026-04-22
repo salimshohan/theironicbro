@@ -157,7 +157,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const headerHTML = `
       <header>
           <a href="/" class="brand-logo">
-              <img class="logo-icon" src="https://i.postimg.cc/jSTKgmrc/ib-logo.png"> Interactive Learning
+              <img class="logo-icon" src="https://i.postimg.cc/jSTKgmrc/ib-logo.png"> The Ironic Bro
           </a>
           
           <div class="hamburger" id="hamburgerBtn">
@@ -168,20 +168,20 @@ document.addEventListener("DOMContentLoaded", function () {
       </header>
   
       <div class="mobile-menu" id="mobileMenu">
-          <a href="/">
+          <!a href="/">
               <i class="fa-solid fa-house"></i> Home
           </a>
-          <a href="/data/pdf.html">
+          <!a href="/data/pdf.html">
               <i class="fa-solid fa-file-pdf"></i> PDF Tool
           </a>
-<a href="/data/vocab-builder.html"><i class="fa-solid fa-font"></i> Vocab Builder</a>
-          <a href="/data/quotes.html">
+<!a href="/data/vocab-builder.html"><i class="fa-solid fa-font"></i> Vocab Builder</a>
+          <!a href="/data/quotes.html">
               <i class="fa-solid fa-quote-left"></i> Quotes Maker
           </a>
-          <a href="/data/notice.html">
+          <!a href="/data/notice.html">
               <i class="fa-solid fa-bullhorn"></i> Notice Maker
           </a>
-<a href="/data/notes-to-pdf.html"><i class="fa-solid fa-file-lines"></i> Notes to PDF Tool</a>
+<!a href="/data/notes-to-pdf.html"><i class="fa-solid fa-file-lines"></i> Notes to PDF Tool</a>
 
       </div>
     `;
