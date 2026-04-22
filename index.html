@@ -26,7 +26,6 @@
         /* --- Layout & Background --- */
         body { 
             background-color: var(--bg-body); 
-            /* Subtle dotted pattern for a smart tech look */
             background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
             background-size: 20px 20px;
             color: var(--text-main); 
@@ -45,10 +44,10 @@
 
         /* --- Main Content --- */
         .container { 
-            margin-top: 80px; /* Space for external header */
+            margin-top: 80px; 
             width: 100%; max-width: 1100px; 
             padding: 0 20px; 
-            flex: 1; /* Pushes footer to bottom */
+            flex: 1; 
         }
         
         .section-title { 
@@ -78,7 +77,6 @@
             box-shadow: var(--shadow-sm);
         }
 
-        /* Hover Effect */
         .blog-card:hover {
             transform: translateY(-8px);
             border-color: var(--primary);
@@ -141,45 +139,63 @@
         
         .fa-spinner { margin-right: 8px; }
 
-        /* --- Footer (IL Style UI with Back to Top) --- */
+        /* --- Footer --- */
         footer {
             width: 100%; padding: 25px 15px; text-align: center;
             background: #ffffff;
             border-top: 1px solid var(--border);
             margin-top: auto; font-size: 14px; color: var(--text-muted);
             box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.02);
-            position: relative;
         }
         
-        .footer-content { margin-bottom: 15px; font-weight: 500; }
+        .footer-content { font-weight: 500; }
         .footer-content strong { color: var(--text-main); }
 
-        /* Back to Top Button in Footer */
+        /* --- Floating Back to Top Button --- */
         .back-to-top {
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            width: 45px;
-            height: 45px;
-            background: var(--primary);
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), #6366f1);
             color: white;
             border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             font-size: 1.2rem;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: var(--shadow-md);
             border: none;
+            z-index: 1000;
+            
+            /* Hidden State */
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Glow Effect */
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
+        }
+
+        /* Visible State */
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
         }
 
         .back-to-top:hover {
-            background: var(--primary-hover);
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
+            background: linear-gradient(135deg, var(--primary-hover), var(--primary));
+            transform: translateY(-5px) scale(1.05); /* Bounce up & grow slightly */
+            box-shadow: 0 8px 25px rgba(79, 70, 229, 0.6);
         }
 
         @media (max-width: 768px) {
             .container { margin-top: 60px; padding: 20px; }
             .blog-grid { gap: 20px; }
+            .back-to-top { bottom: 20px; right: 20px; width: 45px; height: 45px; } /* Slightly smaller on mobile */
         }
     </style>
 </head>
@@ -206,13 +222,25 @@
         <div class="footer-content">
             &copy; 2026 <strong>The Ironic Bro</strong><br>All rights reserved.
         </div>
-        <button class="back-to-top" onclick="scrollToTop()" title="Back to Top">
-            <i class="fas fa-arrow-up"></i>
-        </button>
     </footer>
 
+    <button id="backToTopBtn" class="back-to-top" onclick="scrollToTop()" title="Back to Top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
     <script>
-        // Back to Top Functionality
+        // --- Back to Top Logic ---
+        const backToTopBtn = document.getElementById('backToTopBtn');
+
+        window.addEventListener('scroll', () => {
+            // Show button if scrolled down more than 300px
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+
         function scrollToTop() {
             window.scrollTo({
                 top: 0,
@@ -220,7 +248,7 @@
             });
         }
 
-        // Prevent Copy/Inspect
+        // --- Prevent Copy/Inspect ---
         document.onkeydown = function(e) {
             if(event.keyCode == 123) return false;
             if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false;
@@ -229,7 +257,7 @@
             if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
         }
 
-        // Post Logic (Reverse Order + See More)
+        // --- Post Logic ---
         let allPosts = [];
         let visiblePostsCount = 0; 
         const postsPerBatch = 15;  
