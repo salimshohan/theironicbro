@@ -173,7 +173,7 @@ document.addEventListener("DOMContentLoaded", function () {
           </a>
           <a href="/page/about.html">
               <i class="fa-solid fa-circle-info"></i> About Us
-          </a> <a href=""><i class="fa-solid fa-envelope"></i> Contact Us</a></div>
+          </a> <a href="/page/contact.html"><i class="fa-solid fa-envelope"></i> Contact Us</a></div>
     `;
   
     // Inject HTML at the beginning of Body
