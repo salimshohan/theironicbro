@@ -168,7 +168,7 @@ document.addEventListener("DOMContentLoaded", function () {
       </header>
   
       <div class="mobile-menu" id="mobileMenu">
-          <!a href="/">
+          <a href="/">
               <i class="fa-solid fa-house"></i> Home
           </a>
           <a href="/page/about.html">
