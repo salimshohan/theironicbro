@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VAULT — 2FA Authenticator</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080b10;
+    --surface: #0e1420;
+    --border: #1c2640;
+    --accent: #00f5c4;
+    --accent2: #7c3aed;
+    --danger: #ff4d6d;
+    --text: #e2eaf8;
+    --muted: #5a6a8a;
+    --card: #111827;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+    padding: 24px;
+  }
+
+  /* animated grid bg */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,245,196,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,245,196,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    animation: gridShift 20s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(124,58,237,0.12) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 40% at 80% 100%, rgba(0,245,196,0.07) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @keyframes gridShift {
+    0% { background-position: 0 0, 0 0; }
+    100% { background-position: 40px 40px, 40px 40px; }
+  }
+
+  .wrapper {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* Header */
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 6px;
+  }
+
+  .logo {
+    width: 42px; height: 42px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    font-size: 20px;
+    box-shadow: 0 0 20px rgba(0,245,196,0.3);
+  }
+
+  .header-text h1 {
+    font-family: 'Space Mono', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: var(--text);
+  }
+
+  .header-text p {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 1px;
+  }
+
+  /* Panel */
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .panel::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0.5;
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  /* Input area */
+  .input-row {
+    display: flex;
+    gap: 10px;
+    align-items: stretch;
+  }
+
+  .secret-input {
+    flex: 1;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 13px 16px;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: var(--text);
+    letter-spacing: 2px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .secret-input::placeholder { color: var(--muted); letter-spacing: 1px; }
+
+  .secret-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(0,245,196,0.1);
+  }
+
+  .add-btn {
+    background: linear-gradient(135deg, var(--accent), #00c9a7);
+    border: none;
+    border-radius: 10px;
+    padding: 13px 20px;
+    color: #080b10;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 0 16px rgba(0,245,196,0.3);
+  }
+
+  .add-btn:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 0 24px rgba(0,245,196,0.5); }
+  .add-btn:active { transform: translateY(0); }
+
+  /* Name input */
+  .name-row {
+    margin-bottom: 14px;
+  }
+
+  .name-input {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 11px 16px;
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .name-input::placeholder { color: var(--muted); }
+
+  .name-input:focus {
+    border-color: var(--accent2);
+    box-shadow: 0 0 0 3px rgba(124,58,237,0.12);
+  }
+
+  /* Error */
+  .error-msg {
+    font-size: 12px;
+    color: var(--danger);
+    margin-top: 8px;
+    display: none;
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* Account cards */
+  .accounts-panel { display: flex; flex-direction: column; gap: 12px; }
+
+  .account-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 22px;
+    position: relative;
+    overflow: hidden;
+    animation: slideIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(12px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .account-card::after {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--accent), var(--accent2));
+    border-radius: 3px 0 0 3px;
+  }
+
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 14px;
+  }
+
+  .account-name {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .delete-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 0;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+
+  .delete-btn:hover { color: var(--danger); }
+
+  /* OTP display */
+  .otp-display {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+
+  .otp-digits {
+    display: flex;
+    gap: 5px;
+  }
+
+  .digit-box {
+    width: 38px; height: 50px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent);
+    text-shadow: 0 0 12px rgba(0,245,196,0.6);
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .digit-box.refreshing {
+    animation: digitFlip 0.3s ease;
+  }
+
+  @keyframes digitFlip {
+    0%   { transform: rotateX(0deg); }
+    50%  { transform: rotateX(90deg); opacity: 0.3; }
+    100% { transform: rotateX(0deg); }
+  }
+
+  .otp-sep {
+    font-family: 'Space Mono', monospace;
+    font-size: 22px;
+    color: var(--muted);
+    opacity: 0.5;
+  }
+
+  .copy-btn {
+    margin-left: auto;
+    background: rgba(0,245,196,0.08);
+    border: 1px solid rgba(0,245,196,0.2);
+    border-radius: 8px;
+    color: var(--accent);
+    padding: 6px 12px;
+    font-size: 11px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .copy-btn:hover { background: rgba(0,245,196,0.16); }
+  .copy-btn.copied { color: #080b10; background: var(--accent); border-color: var(--accent); }
+
+  /* Progress bar */
+  .progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .progress-bar-bg {
+    flex: 1;
+    height: 4px;
+    background: var(--border);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent2), var(--accent));
+    border-radius: 99px;
+    transition: width 1s linear;
+  }
+
+  .progress-bar-fill.danger { background: linear-gradient(90deg, var(--danger), #ff8c69); }
+
+  .timer-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    min-width: 24px;
+    text-align: right;
+  }
+
+  /* Empty state */
+  .empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--muted);
+  }
+
+  .empty-icon {
+    font-size: 40px;
+    margin-bottom: 12px;
+    opacity: 0.4;
+  }
+
+  .empty-state p {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .empty-state strong {
+    display: block;
+    font-size: 15px;
+    margin-bottom: 6px;
+    color: var(--text);
+    opacity: 0.6;
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--accent);
+    color: #080b10;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 10px 22px;
+    border-radius: 99px;
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 999;
+    white-space: nowrap;
+  }
+
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    opacity: 0.5;
+  }
+
+  .count-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px; height: 20px;
+    background: var(--accent2);
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 700;
+    color: white;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+
+  <div class="header">
+    <div class="logo">🔐</div>
+    <div class="header-text">
+      <h1>VAULT</h1>
+      <p>2FA Authenticator</p>
+    </div>
+  </div>
+
+  <!-- Add Account Panel -->
+  <div class="panel">
+    <div class="section-label">➕ Add New Account</div>
+
+    <div class="name-row">
+      <input class="name-input" id="nameInput" type="text" placeholder="Account name (e.g. Google, GitHub)">
+    </div>
+
+    <div class="input-row">
+      <input class="secret-input" id="secretInput" type="text" placeholder="Enter TOTP secret key…" autocomplete="off" spellcheck="false">
+      <button class="add-btn" onclick="addAccount()">ADD</button>
+    </div>
+
+    <div class="error-msg" id="errorMsg">⚠ Invalid secret key. Please check and try again.</div>
+  </div>
+
+  <!-- Accounts Panel -->
+  <div class="panel" id="accountsPanel">
+    <div class="section-label">🔑 Your Accounts <span class="count-badge" id="countBadge">0</span></div>
+    <div class="accounts-panel" id="accountsList">
+      <div class="empty-state">
+        <div class="empty-icon">🛡️</div>
+        <strong>No accounts yet</strong>
+        <p>Add your first 2FA secret above to get started</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">VAULT · Runs locally · No data leaves your device</div>
+
+</div>
+
+<div class="toast" id="toast">✓ Copied to clipboard</div>
+
+<script>
+// ── Base32 decode ─────────────────────────────────────────────────────────────
+function base32Decode(input) {
+  const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+  const cleaned = input.toUpperCase().replace(/\s/g,'').replace(/=/g,'');
+  let bits = 0, value = 0;
+  const output = new Uint8Array(Math.floor(cleaned.length * 5 / 8));
+  let idx = 0;
+  for (const char of cleaned) {
+    const i = alphabet.indexOf(char);
+    if (i === -1) throw new Error('Invalid base32 char: ' + char);
+    value = (value << 5) | i;
+    bits += 5;
+    if (bits >= 8) {
+      output[idx++] = (value >>> (bits - 8)) & 0xff;
+      bits -= 8;
+    }
+  }
+  return output;
+}
+
+// ── HMAC-SHA1 ─────────────────────────────────────────────────────────────────
+async function hmacSHA1(keyBytes, msgBytes) {
+  const key = await crypto.subtle.importKey(
+    'raw', keyBytes, { name: 'HMAC', hash: 'SHA-1' }, false, ['sign']
+  );
+  const sig = await crypto.subtle.sign('HMAC', key, msgBytes);
+  return new Uint8Array(sig);
+}
+
+// ── TOTP ──────────────────────────────────────────────────────────────────────
+async function generateTOTP(secret, period = 30, digits = 6) {
+  const keyBytes = base32Decode(secret);
+  const counter = Math.floor(Date.now() / 1000 / period);
+  const msgBuf = new ArrayBuffer(8);
+  const view = new DataView(msgBuf);
+  view.setUint32(0, Math.floor(counter / 0x100000000), false);
+  view.setUint32(4, counter >>> 0, false);
+
+  const hash = await hmacSHA1(keyBytes, new Uint8Array(msgBuf));
+  const offset = hash[19] & 0xf;
+  const code = (
+    ((hash[offset]     & 0x7f) << 24) |
+    ((hash[offset + 1] & 0xff) << 16) |
+    ((hash[offset + 2] & 0xff) <<  8) |
+     (hash[offset + 3] & 0xff)
+  ) % Math.pow(10, digits);
+  return code.toString().padStart(digits, '0');
+}
+
+// ── Storage ───────────────────────────────────────────────────────────────────
+const STORAGE_KEY = 'vault_2fa_accounts';
+
+function loadAccounts() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+  catch { return []; }
+}
+
+function saveAccounts(accounts) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(accounts));
+}
+
+// ── State ─────────────────────────────────────────────────────────────────────
+let accounts = loadAccounts();  // [{id, name, secret}]
+let otpCache = {};              // id → current OTP string
+
+// ── Render ────────────────────────────────────────────────────────────────────
+function renderAccounts() {
+  const list = document.getElementById('accountsList');
+  const badge = document.getElementById('countBadge');
+  badge.textContent = accounts.length;
+
+  if (accounts.length === 0) {
+    list.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">🛡️</div>
+        <strong>No accounts yet</strong>
+        <p>Add your first 2FA secret above to get started</p>
+      </div>`;
+    return;
+  }
+
+  list.innerHTML = accounts.map(acc => `
+    <div class="account-card" id="card-${acc.id}">
+      <div class="card-top">
+        <div class="account-name">${escHtml(acc.name)}</div>
+        <button class="delete-btn" onclick="deleteAccount('${acc.id}')" title="Remove">✕</button>
+      </div>
+      <div class="otp-display">
+        <div class="otp-digits" id="digits-${acc.id}">
+          ${[0,1,2,3,4,5].map(i => `<div class="digit-box" id="d-${acc.id}-${i}">-</div>`).join('')}
+        </div>
+        <div class="otp-sep" id="sep-${acc.id}" style="display:none">·</div>
+        <button class="copy-btn" id="copybtn-${acc.id}" onclick="copyOTP('${acc.id}')">COPY</button>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="bar-${acc.id}" style="width:100%"></div>
+        </div>
+        <div class="timer-text" id="timer-${acc.id}">30</div>
+      </div>
+    </div>
+  `).join('');
+
+  accounts.forEach(acc => updateOTP(acc));
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── OTP update ────────────────────────────────────────────────────────────────
+async function updateOTP(acc) {
+  const otp = await generateTOTP(acc.secret);
+  const prev = otpCache[acc.id];
+  otpCache[acc.id] = otp;
+
+  const refreshed = prev && prev !== otp;
+
+  for (let i = 0; i < 6; i++) {
+    const dEl = document.getElementById(`d-${acc.id}-${i}`);
+    if (!dEl) return;
+    if (refreshed) {
+      dEl.classList.remove('refreshing');
+      void dEl.offsetWidth;
+      dEl.classList.add('refreshing');
+    }
+    dEl.textContent = otp[i];
+  }
+}
+
+function updateTimers() {
+  const now = Math.floor(Date.now() / 1000);
+  const remaining = 30 - (now % 30);
+  const pct = (remaining / 30) * 100;
+
+  accounts.forEach(acc => {
+    const bar = document.getElementById(`bar-${acc.id}`);
+    const timer = document.getElementById(`timer-${acc.id}`);
+    if (!bar || !timer) return;
+
+    bar.style.width = pct + '%';
+    timer.textContent = remaining;
+
+    if (remaining <= 7) {
+      bar.classList.add('danger');
+    } else {
+      bar.classList.remove('danger');
+    }
+
+    // refresh OTP when new period starts
+    if (remaining === 30) {
+      updateOTP(acc);
+    }
+  });
+}
+
+// ── Add account ───────────────────────────────────────────────────────────────
+async function addAccount() {
+  const nameEl   = document.getElementById('nameInput');
+  const secretEl = document.getElementById('secretInput');
+  const errorEl  = document.getElementById('errorMsg');
+
+  const name   = nameEl.value.trim() || 'Account';
+  const secret = secretEl.value.trim();
+
+  errorEl.style.display = 'none';
+
+  if (!secret) {
+    errorEl.textContent = '⚠ Please enter a secret key.';
+    errorEl.style.display = 'block';
+    return;
+  }
+
+  try {
+    // validate by generating once
+    await generateTOTP(secret);
+  } catch {
+    errorEl.textContent = '⚠ Invalid secret key. Please check and try again.';
+    errorEl.style.display = 'block';
+    return;
+  }
+
+  const account = { id: crypto.randomUUID(), name, secret: secret.toUpperCase().replace(/\s/g,'') };
+  accounts.push(account);
+  saveAccounts(accounts);
+  renderAccounts();
+
+  nameEl.value   = '';
+  secretEl.value = '';
+  showToast('✓ Account added!');
+}
+
+// ── Delete account ────────────────────────────────────────────────────────────
+function deleteAccount(id) {
+  accounts = accounts.filter(a => a.id !== id);
+  delete otpCache[id];
+  saveAccounts(accounts);
+  const card = document.getElementById(`card-${id}`);
+  if (card) {
+    card.style.opacity = '0';
+    card.style.transform = 'scale(0.95)';
+    card.style.transition = 'all 0.25s';
+    setTimeout(() => renderAccounts(), 250);
+  }
+}
+
+// ── Copy OTP ──────────────────────────────────────────────────────────────────
+async function copyOTP(id) {
+  const otp = otpCache[id];
+  if (!otp) return;
+  try {
+    await navigator.clipboard.writeText(otp);
+    const btn = document.getElementById(`copybtn-${id}`);
+    btn.classList.add('copied');
+    btn.textContent = 'COPIED';
+    setTimeout(() => { btn.classList.remove('copied'); btn.textContent = 'COPY'; }, 1800);
+  } catch {
+    showToast('Could not copy – try manually');
+  }
+}
+
+// ── Toast ─────────────────────────────────────────────────────────────────────
+let toastTimer;
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2000);
+}
+
+// ── Enter key support ─────────────────────────────────────────────────────────
+document.getElementById('secretInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') addAccount();
+});
+document.getElementById('nameInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('secretInput').focus();
+});
+
+// ── Boot ──────────────────────────────────────────────────────────────────────
+renderAccounts();
+setInterval(updateTimers, 1000);
+updateTimers();
+</script>
+</body>
+</html>
